@@ -33,7 +33,12 @@ namespace Pendaftaran_Tenant
         [StringLength(12)]
         public string no_telp { get; set; }
 
-        public bool? status_bayar { get; set; }
+        public bool status_bayar { get; set; }
+
+        [StringLength(15)]
+        public string role { get; set; }
+
+        
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Data_UI> Data_UI { get; set; }

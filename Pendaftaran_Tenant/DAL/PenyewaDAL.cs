@@ -32,6 +32,12 @@ namespace Pendaftaran_Tenant.DAL
             }
         }
 
+        public void LogIn(string txtEmail, string txtPassword)
+        {
+            var results = db.Penyewas.SingleOrDefault(m => m.email == txtEmail && m.password == txtPassword);
+  
+        }
+
 
 
 

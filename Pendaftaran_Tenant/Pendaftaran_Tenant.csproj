@@ -276,8 +276,9 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Penyewa\Create.cshtml" />
     <Content Include="Views\Penyewa\Index.cshtml" />
+    <Content Include="Views\Penyewa\Create.cshtml" />
+    <Content Include="Views\Penyewa\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

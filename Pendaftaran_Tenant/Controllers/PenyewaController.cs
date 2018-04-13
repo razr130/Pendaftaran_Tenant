@@ -10,6 +10,7 @@ namespace Pendaftaran_Tenant.Controllers
 {
     public class PenyewaController : Controller
     {
+        private PendaftaranTenant db = new PendaftaranTenant();
         // GET: Penyewa
         public ActionResult Index()
         {
@@ -21,9 +22,30 @@ namespace Pendaftaran_Tenant.Controllers
             }
         }
 
-        public ActionResult Create()
+        public ActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult Login(Penyewa penyewa)
+        {
+            var results = db.Penyewas.SingleOrDefault(m => m.email == penyewa.email && m.password == penyewa.password);
+            if(results != null)
+            {
+                Session["user"] = penyewa;
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        public ActionResult Create()
+        {
+           
+                return View();
         }
 
         [HttpPost]
