@@ -80,8 +80,8 @@ namespace Pendaftaran_Tenant.Controllers
                 }
                 catch (Exception ex)
                 {
-                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
-                    //                      "danger", ex.Message);
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
                 }
             }
             return RedirectToAction("Index");
