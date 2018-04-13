@@ -32,6 +32,12 @@ namespace Pendaftaran_Tenant.DAL
             }
         }
 
+        public string getRole(string email)
+        {
+            var results = (from b in db.Penyewas where b.email == email select b.role).SingleOrDefault();
+            return results;
+        }
+
         public void LogIn(string txtEmail, string txtPassword)
         {
             var results = db.Penyewas.SingleOrDefault(m => m.email == txtEmail && m.password == txtPassword);
