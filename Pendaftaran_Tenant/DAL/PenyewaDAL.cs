@@ -15,7 +15,7 @@ namespace Pendaftaran_Tenant.DAL
             var results = from b in db.Penyewas
                           orderby b.nama_perusahaan
                           select b;
-
+            
             return results;
         }
 
@@ -49,6 +49,12 @@ namespace Pendaftaran_Tenant.DAL
         public string getRole(string email)
         {
             var results = (from b in db.Penyewas where b.email == email select b.role).SingleOrDefault();
+            return results;
+        }
+
+        public string getNamaPerusahaan(int id)
+        {
+            var results = (from b in db.Penyewas where b.id_penyewa == id select b.nama_perusahaan).SingleOrDefault();
             return results;
         }
 
