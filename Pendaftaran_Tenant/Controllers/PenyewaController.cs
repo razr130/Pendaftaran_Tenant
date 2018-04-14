@@ -36,13 +36,22 @@ namespace Pendaftaran_Tenant.Controllers
             var results = db.Penyewas.SingleOrDefault(m => m.email == penyewa.email && m.password == penyewa.password);
             if(results != null)
             {
-                Session["user"] = penyewa;
-                using (PenyewaDAL sewa = new PenyewaDAL())
+                if (results.status_bayar == false)
                 {
-                    
-                    Session["role"] = sewa.getRole(penyewa.email).ToString();
+                    TempData["Pesan"] = Helpers.Message.GetPesan(" ",
+                      "danger", "Maaf, pembayaran anda belum dikonfirmasi");
+                    return View();
                 }
-                return RedirectToAction("Index", "Home");
+                else
+                {
+                    Session["user"] = penyewa;
+                    using (PenyewaDAL sewa = new PenyewaDAL())
+                    {
+
+                        Session["role"] = sewa.getRole(penyewa.email).ToString();
+                    }
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {
@@ -70,6 +79,8 @@ namespace Pendaftaran_Tenant.Controllers
 
     public ActionResult Create(Penyewa penyewa)
         {
+            penyewa.status_bayar = false;
+            penyewa.role = "Penyewa";
             using (PenyewaDAL svPny = new PenyewaDAL())
             {
                 try
@@ -83,6 +94,21 @@ namespace Pendaftaran_Tenant.Controllers
                     TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
                                           "danger", ex.Message);
                 }
+            }
+            return RedirectToAction("Index","Home");
+        }
+
+        
+        public ActionResult Edit(int id)
+        {
+            using (PenyewaDAL pny = new PenyewaDAL())
+            {
+                var editstatus = new Penyewa
+                {
+                    id_penyewa = id,
+                    status_bayar = true
+                };
+                pny.Edit(editstatus);
             }
             return RedirectToAction("Index");
         }

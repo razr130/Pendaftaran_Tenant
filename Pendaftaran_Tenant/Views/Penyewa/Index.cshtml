@@ -59,9 +59,9 @@
             @Html.DisplayFor(modelItem => item.role)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id_penyewa }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id_penyewa }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id_penyewa })
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_penyewa }) 
+            @*<button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "Penyewa")?id=item.id_penyewa'">Edit Status Bayar</button>*@
+
         </td>
     </tr>
 }

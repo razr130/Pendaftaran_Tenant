@@ -19,6 +19,20 @@ namespace Pendaftaran_Tenant.DAL
             return results;
         }
 
+        public Penyewa GetDataById(int id)
+
+        {
+
+            var result = (from b in db.Penyewas
+
+                          where b.id_penyewa == id
+
+                          select b).SingleOrDefault();
+
+            return result;
+
+        }
+
         public void Add(Penyewa penyewa)
         {
             try
@@ -44,7 +58,22 @@ namespace Pendaftaran_Tenant.DAL
   
         }
 
+        public void Edit(Penyewa pny)
+        {
+            var result = GetDataById(pny.id_penyewa);
 
+            if (result != null)
+
+            {
+                result.status_bayar = pny.status_bayar;
+                db.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("Data tidak ditemukan !");
+            }
+
+        }
 
 
         public void Dispose()
