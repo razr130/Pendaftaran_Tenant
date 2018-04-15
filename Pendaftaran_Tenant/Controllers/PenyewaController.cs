@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Pendaftaran_Tenant.Models;
 using Pendaftaran_Tenant.DAL;
 using System.Data.SqlClient;
+using Microsoft.SqlServer.Management.Smo;
+using Microsoft.SqlServer.Management.Common;
 
 namespace Pendaftaran_Tenant.Controllers
 {
@@ -128,15 +130,15 @@ namespace Pendaftaran_Tenant.Controllers
                 conn.Open();
                 string query = "USE [MultiTenancy_Sablon]" + 
 
-                    " GO" +
+                    
 
                     " SET ANSI_NULLS ON" +
 
-                    " GO" +
+                    
 
                     " SET QUOTED_IDENTIFIER ON" +
 
-                    " GO" +
+                    
 
                     " CREATE TABLE[dbo].[Karyawan_" + nama_perusahaan + "](" +
 
@@ -168,19 +170,19 @@ namespace Pendaftaran_Tenant.Controllers
 
                     ") ON[PRIMARY]" +
 
-                    " GO" +
+                    
 
                     " USE[MultiTenancy_Sablon]" +
 
-                    " GO" +
+                    
 
                     " SET ANSI_NULLS ON" +
 
-                    " GO" +
+                    
 
                     " SET QUOTED_IDENTIFIER ON" +
 
-                    " GO" +
+                    
 
                     " CREATE TABLE[dbo].[Customer_" + nama_perusahaan + "]" +
 
@@ -214,17 +216,17 @@ namespace Pendaftaran_Tenant.Controllers
 
                     ") ON[PRIMARY]" +
 
-                    " GO" +
+                    
 
                     " USE[MultiTenancy_Sablon]" +
 
-                    " GO" +
+                    
 
                     " SET ANSI_NULLS ON" +
 
-                    " GO" +
+                    
                     " SET QUOTED_IDENTIFIER ON" +
-                    " GO" +
+                    
                     " CREATE TABLE[dbo].[Produk_" + nama_perusahaan + "]" +
                     "(" +
                     "[id_produk][int] IDENTITY(1,1) NOT NULL," +
@@ -236,13 +238,13 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_produk] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]" +
-                    " GO" +
+                    
                     " USE[MultiTenancy_Sablon]" +
-                    " GO" +
+                    
                     " SET ANSI_NULLS ON" +
-                    " GO" +
+                    
                     " SET QUOTED_IDENTIFIER ON" +
-                    " GO" +
+                    
                     " CREATE TABLE[dbo].[Bahan_" + nama_perusahaan + "]" +
                     "(" +
                     "[id_bahan][int] IDENTITY(1,1) NOT NULL," +
@@ -253,20 +255,20 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_bahan] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[Bahan_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Bahan_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "] FOREIGN KEY([id_produk])" +
                     " REFERENCES[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([id_produk])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[Bahan_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Bahan_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " USE[MultiTenancy_Sablon]" +
-                    "GO" +
+                    
                     " SET ANSI_NULLS ON" +
-                    " GO" +
+                    
                     " SET QUOTED_IDENTIFIER ON" +
-                    " GO" +
+                    
                     " CREATE TABLE[dbo].[JenisSablon_" + nama_perusahaan + "]" +
                     "(" +
                     "[id_jns_sablon][int] IDENTITY(1,1) NOT NULL," +
@@ -277,20 +279,20 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_jns_sablon] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[JenisSablon_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_JenisSablon_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "] FOREIGN KEY([id_produk])" +
                     " REFERENCES[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([id_produk])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[JenisSablon_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_JenisSablon_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " USE[MultiTenancy_Sablon]" +
-                    " GO" +
+                    
                     " SET ANSI_NULLS ON" +
-                    " GO" +
+                    
                     " SET QUOTED_IDENTIFIER ON" +
-                    " GO" +
+                    
                     " CREATE TABLE[dbo].[Harga_" + nama_perusahaan + "]" +
                     "(" +
                     "[id_produk][int] NULL," +
@@ -298,34 +300,34 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_jns_sablon][int] NULL," +
                     "[harga][int] NULL" +
                     ") ON[PRIMARY]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Harga_" + nama_perusahaan + "_Bahan_" + nama_perusahaan + "] FOREIGN KEY([id_bahan])" +
                     " REFERENCES[dbo].[Bahan_" + nama_perusahaan + "]" +
                     "([id_bahan])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Harga_" + nama_perusahaan + "_Bahan_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Harga_" + nama_perusahaan + "_JenisSablon_" + nama_perusahaan + "] FOREIGN KEY([id_jns_sablon])" +
                     " REFERENCES[dbo].[JenisSablon_" + nama_perusahaan + "]" +
                     "([id_jns_sablon])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Harga_" + nama_perusahaan + "_JenisSablon_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Harga_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "] FOREIGN KEY([id_produk])" +
                     " REFERENCES[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([id_produk])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Harga_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " USE[MultiTenancy_Sablon]" + 
-                    " GO" +
+                    
                     " SET ANSI_NULLS ON" +
-                    " GO" +
+                    
                     " SET QUOTED_IDENTIFIER ON" +
-                    " GO" +
+                    
                     " CREATE TABLE[dbo].[Ukuran_" + nama_perusahaan + "]" +
                     "(" +
                     "[id_ukuran][int] IDENTITY(1,1) NOT NULL," +
@@ -335,13 +337,13 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_ukuran] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY]" +
-                    " GO" +
+                    
                     " USE[MultiTenancy_Sablon]" +
-                    " GO" +
+                    
                     " SET ANSI_NULLS ON" +
-                    " GO" +
+                    
                     " SET QUOTED_IDENTIFIER ON" +
-                    " GO" +
+                    
                     " CREATE TABLE[dbo].[Order_" + nama_perusahaan + "]" +
                     "(" +
                     "[no_order][int] IDENTITY(1,1) NOT NULL," +
@@ -353,20 +355,20 @@ namespace Pendaftaran_Tenant.Controllers
                     "[no_order] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[Order_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Order_" + nama_perusahaan + "_Customer_" + nama_perusahaan + "] FOREIGN KEY([id_customer])" +
                     " REFERENCES[dbo].[Customer_" + nama_perusahaan + "]" +
                     "([id_cutomer])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[Order_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Order_" + nama_perusahaan + "_Customer_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " USE[MultiTenancy_Sablon]" +
-                    " GO" +
+                    
                     " SET ANSI_NULLS ON" +
-                    " GO" +
+                    
                     " SET QUOTED_IDENTIFIER ON" +
-                    " GO" +
+                    
                     " CREATE TABLE[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     "(" +
                     "[no_detail][int] IDENTITY(1,1) NOT NULL," +
@@ -381,68 +383,81 @@ namespace Pendaftaran_Tenant.Controllers
                     "[no_detail] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Bahan_" + nama_perusahaan + "] FOREIGN KEY([id_bahan])" +
                     " REFERENCES[dbo].[Bahan_" + nama_perusahaan + "]" +
                     "([id_bahan])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Bahan_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_JenisSablon_" + nama_perusahaan + "] FOREIGN KEY([id_jns_sablon])" +
                     " REFERENCES[dbo].[JenisSablon_" + nama_perusahaan + "]" +
                     "([id_jns_sablon])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_JenisSablon_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Order_" + nama_perusahaan + "] FOREIGN KEY([no_order])" +
                     " REFERENCES[dbo].[Order_" + nama_perusahaan + "]" +
                     "([no_order])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Order_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "] FOREIGN KEY([id_produk])" +
                     " REFERENCES[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([id_produk])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " USE[MultiTenancy_Sablon]" +
-                    " GO" +
+                    
                     " SET ANSI_NULLS ON" +
-                    " GO" +
+                    
                     " SET QUOTED_IDENTIFIER ON" +
-                    " GO" +
+                    
                     " CREATE TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
                     "(" +
                     "[id_ukuran][int] NULL," +
                     "[no_detail][int] NULL," +
                     "[jumlah][int] NULL" +
                     ") ON[PRIMARY]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_DetailOrder_" + nama_perusahaan + "] FOREIGN KEY([no_detail])" +
                     " REFERENCES[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     "([no_detail])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_DetailOrder_" + nama_perusahaan + "]" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "] FOREIGN KEY([id_ukuran])" +
                     " REFERENCES[dbo].[Ukuran_" + nama_perusahaan + "]" +
                     "([id_ukuran])" +
-                    " GO" +
+                    
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
-                    " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "]" +
-                    " GO";
+                    " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "]"
+                    ;
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
-                sqlcom.ExecuteNonQuery();
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "Tabel untuk perusahaan " + nama_perusahaan+ " berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+                
                 conn.Close();
             }
             return RedirectToAction("Index");
         }
+
+        
     }
 }
