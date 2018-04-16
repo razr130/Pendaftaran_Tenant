@@ -64,7 +64,11 @@ namespace Pendaftaran_Tenant.DAL
             var results = (from b in db.Penyewas where b.email == email select b.role).SingleOrDefault();
             return results;
         }
-
+        public int getId(string email)
+        {
+            var results = (from b in db.Penyewas where b.email == email select b.id_penyewa).SingleOrDefault();
+            return results;
+        }
         public string getNamaPerusahaan(int id)
         {
             var results = (from b in db.Penyewas where b.id_penyewa == id select b.nama_perusahaan).SingleOrDefault();

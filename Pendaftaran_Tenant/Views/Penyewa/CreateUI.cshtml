@@ -1,13 +1,33 @@
 ﻿@model Pendaftaran_Tenant.Data_UI
 
+@section farbtastic {
+
+    <script type="text/javascript" src="~/Scripts/farbtastic.js"></script>
+    <link rel="stylesheet" href="~/Content/farbtastic.css" type="text/css" />
+    <style type="text/css" media="screen">
+
+        .colorwell {
+            border: 2px solid #fff;
+            width: 6em;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        body .colorwell-selected {
+            border: 2px solid #000;
+            font-weight: bold;
+        }
+    </style>
+}
+
 @{
     ViewBag.Title = "CreateUI";
 }
 
 <h2>CreateUI</h2>
-
-@using (Html.BeginForm(Html.BeginForm("CreateUI", "Penyewa", FormMethod.Post,
-                                                new { enctype = "multipart/form-data" })))
+@Html.Raw(TempData["Pesan"])
+@using (Html.BeginForm("CreateUI", "Penyewa", FormMethod.Post,
+                                                new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -18,24 +38,39 @@
 
 
         <div class="form-group">
-            <label class="control-label col-md-2" style="color:white" for="uploadlogo">Gambar Barang</label>
+            <label class="control-label col-md-2" style="color:black" for="uploadimage">Gambar Barang</label>
             <div class="col-md-10">
-                <input name="uploadlogo" type="file" class="form-control" />
+                <input name="uploadimage" type="file" class="form-control" />
             </div>
         </div>
-
-        <form action="" style="width: 400px;">
-            <div class="form-item"><label for="color">Color:</label><input type="text" id="color" name="color" value="#123456" /></div><div id="picker"></div>
-        </form>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.warna_navbar, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.warna_navbar, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.warna_navbar, "", new { @class = "text-danger" })
+            <div class="col-md-6">
+                <script type="text/javascript" charset="utf-8">
+                    $(document).ready(function () {
+                        $('#demo').hide();
+                        var f = $.farbtastic('#picker');
+                        var p = $('#picker').css('opacity', 0.25);
+                        var selected;
+                        $('.colorwell')
+                            .each(function () { f.linkTo(this); $(this).css('opacity', 0.75); })
+                            .focus(function () {
+                                if (selected) {
+                                    $(selected).css('opacity', 0.75).removeClass('colorwell-selected');
+                                }
+                                f.linkTo(this);
+                                p.css('opacity', 1);
+                                $(selected = this).css('opacity', 1).addClass('colorwell-selected');
+                            });
+                    });
+                </script>
+                <form action="" style="width: 500px;">
+                    <div id="picker" style="float: right;"></div>
+                    <div class="form-item"><label for="color1">Color 1:</label><input type="text" id="color1" name="color1" class="colorwell" value="#123456" /></div>
+                    <div class="form-item"><label for="color2">Color 2:</label><input type="text" id="color2" name="color2" class="colorwell" value="#123456" /></div>
+                </form>
             </div>
+            
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -45,9 +80,4 @@
 }
 
 
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function () {
-        $('#demo').hide();
-        $('#picker').farbtastic('#color');
-    });
-</script>
+

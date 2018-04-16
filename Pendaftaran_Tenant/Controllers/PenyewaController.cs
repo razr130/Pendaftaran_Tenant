@@ -53,8 +53,9 @@ namespace Pendaftaran_Tenant.Controllers
                     {
 
                         Session["role"] = sewa.getRole(penyewa.email).ToString();
+                        Session["id_penyewa"] = sewa.getId(penyewa.email).ToString();
                     }
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("CreateUI", "Penyewa");
                 }
             }
             else
@@ -123,17 +124,20 @@ namespace Pendaftaran_Tenant.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateUI(Data_UI dataui, HttpPostedFile uploadlogo)
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateUI(Data_UI dataui, HttpPostedFileBase uploadimage, string color1, string color2)
         {
             string filePath = "";
-            if (uploadlogo.ContentLength > 0)
+            if (uploadimage.ContentLength > 0)
             {
-                string fileName = Guid.NewGuid().ToString() + "_" + uploadlogo.FileName;
+                string fileName = Guid.NewGuid().ToString() + "_" + uploadimage.FileName;
                 filePath = Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), fileName);
-                uploadlogo.SaveAs(filePath);
+                uploadimage.SaveAs(filePath);
                 dataui.logo = fileName;
             }
-
+            dataui.warna_bg = color1;
+            dataui.warna_navbar = color2;
+            dataui.id_penyewa = Convert.ToInt32(Session["id_penyewa"]);
             using (PenyewaDAL svBrg = new PenyewaDAL())
             {
                 try
