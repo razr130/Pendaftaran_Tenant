@@ -19,8 +19,8 @@ namespace Pendaftaran_Tenant
 
         public int id_penyewa { get; set; }
 
-        [Column(TypeName = "image")]
-        public byte[] logo { get; set; }
+        [StringLength(100)]
+        public string logo { get; set; }
 
         [StringLength(7)]
         public string warna_bg { get; set; }

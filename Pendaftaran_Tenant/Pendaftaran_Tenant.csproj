@@ -289,9 +289,11 @@
     <Content Include="Views\Penyewa\Create.cshtml" />
     <Content Include="Views\Penyewa\Login.cshtml" />
     <Content Include="Views\Penyewa\Edit.cshtml" />
+    <Content Include="Views\Penyewa\CreateUI.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -33,6 +33,19 @@ namespace Pendaftaran_Tenant.DAL
 
         }
 
+        public void AddUI(Data_UI ui)
+        {
+            try
+            {
+                db.Data_UI.Add(ui);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public void Add(Penyewa penyewa)
         {
             try

@@ -13,8 +13,8 @@ namespace Pendaftaran_Tenant
 
         public int id_ui { get; set; }
 
-        [Column(TypeName = "image")]
-        public byte[] gambar { get; set; }
+        [StringLength(100)]
+        public string gambar { get; set; }
 
         public virtual Data_UI Data_UI { get; set; }
     }

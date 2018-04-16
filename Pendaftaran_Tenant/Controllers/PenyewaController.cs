@@ -8,6 +8,7 @@ using Pendaftaran_Tenant.DAL;
 using System.Data.SqlClient;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
+using System.IO;
 
 namespace Pendaftaran_Tenant.Controllers
 {
@@ -116,6 +117,39 @@ namespace Pendaftaran_Tenant.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult CreateUI()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateUI(Data_UI dataui, HttpPostedFile uploadlogo)
+        {
+            string filePath = "";
+            if (uploadlogo.ContentLength > 0)
+            {
+                string fileName = Guid.NewGuid().ToString() + "_" + uploadlogo.FileName;
+                filePath = Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), fileName);
+                uploadlogo.SaveAs(filePath);
+                dataui.logo = fileName;
+            }
+
+            using (PenyewaDAL svBrg = new PenyewaDAL())
+            {
+                try
+                {
+                    svBrg.AddUI(dataui);
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
+                      "success", "Data UI berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+            }
+            return View();
+        }
         public ActionResult Addtable(int id)
         {
             string nama_perusahaan;
