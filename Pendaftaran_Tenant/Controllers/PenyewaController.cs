@@ -55,7 +55,15 @@ namespace Pendaftaran_Tenant.Controllers
                         Session["role"] = sewa.getRole(penyewa.email).ToString();
                         Session["id_penyewa"] = sewa.getId(penyewa.email).ToString();
                     }
-                    return RedirectToAction("CreateUI", "Penyewa");
+                    if(Session["role"].ToString() == "Admin")
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToAction("CreateUI", "Penyewa");
+                    }
+                   
                 }
             }
             else
@@ -73,15 +81,12 @@ namespace Pendaftaran_Tenant.Controllers
             Session["role"] = null;
             return RedirectToAction("Index", "Home");
         }
-
         public ActionResult Create()
         {
 
             return View();
         }
-
         [HttpPost]
-
         public ActionResult Create(Penyewa penyewa)
         {
             penyewa.status_bayar = false;
@@ -102,8 +107,6 @@ namespace Pendaftaran_Tenant.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-
-
         public ActionResult Edit(int id)
         {
             using (PenyewaDAL pny = new PenyewaDAL())
@@ -117,12 +120,10 @@ namespace Pendaftaran_Tenant.Controllers
             }
             return RedirectToAction("Index");
         }
-
         public ActionResult CreateUI()
         {
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateUI(Data_UI dataui, HttpPostedFileBase uploadimage, string color1, string color2)
@@ -215,6 +216,59 @@ namespace Pendaftaran_Tenant.Controllers
                 return View();
             }
                 
+        }
+        public ActionResult CreateProduk()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateProduk(string namaproduk, string deskripsi, HttpPostedFileBase fotoproduk)
+        {
+            string filePath = "";
+            string fileName = Guid.NewGuid().ToString() + "_" + fotoproduk.FileName;
+            if (fotoproduk.ContentLength > 0)
+            {
+                
+                filePath = Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), fileName);
+                fotoproduk.SaveAs(filePath);
+                
+            }
+            string nama_perusahaan;
+            int id = Convert.ToInt32(Session["id_penyewa"]);
+
+            using (PenyewaDAL sewa = new PenyewaDAL())
+            {
+
+                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
+            }
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[Produk_"+ nama_perusahaan +"]" +
+                    "([nama_produk]" +
+                    ",[deskripsi]" +
+                    ",[foto_produk])" +
+                    "VALUES" +
+                    "('" + namaproduk + "' ,'"+ deskripsi +"' ,'"+ fileName +"')";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "data produk berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+                return View();
         }
         public ActionResult Addtable(int id)
         {
@@ -332,12 +386,12 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_produk][int] IDENTITY(1,1) NOT NULL," +
                     "[nama_produk] [varchar] (50) NULL," +
                     "[deskripsi] [varchar] (100) NULL," +
-                    "[foto_produk] [image] NULL," +
+                    "[foto_produk] [varchar] (100) NULL," +
                     "CONSTRAINT[PK_Produk_" + nama_perusahaan + "] PRIMARY KEY CLUSTERED" +
                     "(" +
                     "[id_produk] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
-                    ") ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]" +
+                    ") ON[PRIMARY]" +
                     
                     " USE[MultiTenancy_Sablon]" +
                     

@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "CreateProduk";
+}
+
+<h2>CreateProduk</h2>
+<hr />
+@Html.Raw(TempData["Pesan"])
+<div class="row">
+    <div class="col-md-8">
+
+        @using (Html.BeginForm("CreateProduk", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <hr />
+
+        <div class="form-group">
+            <label for="namaproduk" class="col-md-2 control-label">Nama Produk</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="namaproduk" name="namaproduk" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="deskripsi" class="col-md-2 control-label">Deskripsi</label>
+            <div class="col-md-10">
+                <textarea rows="4" class="form-control" id="deskripsi" name="deskripsi"></textarea>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" style="color:black" for="fotoproduk">Gambar Produk</label>
+            <div class="col-md-10">
+                <input name="fotoproduk" type="file" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Simpan" class="btn btn-default" />
+            </div>
+        </div>
+
+}
+
+    </div>
+
+</div>
