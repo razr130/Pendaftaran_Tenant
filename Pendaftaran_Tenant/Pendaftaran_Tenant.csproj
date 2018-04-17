@@ -295,6 +295,7 @@
     <Content Include="Views\Penyewa\Login.cshtml" />
     <Content Include="Views\Penyewa\Edit.cshtml" />
     <Content Include="Views\Penyewa\CreateUI.cshtml" />
+    <Content Include="Views\Penyewa\CreateCarausel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

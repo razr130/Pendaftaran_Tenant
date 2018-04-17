@@ -1,0 +1,36 @@
+﻿@model Pendaftaran_Tenant.Data_carausel
+
+@{
+    ViewBag.Title = "CreateCarausel";
+}
+
+<h2>CreateCarausel</h2>
+@Html.Raw(TempData["Pesan"])
+@using (Html.BeginForm("CreateCarausel", "Penyewa", FormMethod.Post,
+                                                new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Data_carausel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="color:black" for="uploadimage">Gambar Barang</label>
+            <div class="col-md-10">
+                <input name="uploadimage" type="file" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

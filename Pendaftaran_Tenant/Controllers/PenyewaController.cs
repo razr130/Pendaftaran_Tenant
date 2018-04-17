@@ -145,6 +145,7 @@ namespace Pendaftaran_Tenant.Controllers
                     svBrg.AddUI(dataui);
                     TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
                       "success", "Data UI berhasil ditambah");
+                    Session["id_ui"] = svBrg.getIdUI(Convert.ToInt32(Session["id_penyewa"]));
                 }
                 catch (Exception ex)
                 {
@@ -152,7 +153,68 @@ namespace Pendaftaran_Tenant.Controllers
                                           "danger", ex.Message);
                 }
             }
+            return RedirectToAction("CreateCarausel");
+        }
+        public int GetCount()
+        {
+            string stmt = "SELECT COUNT(gambar) FROM Data_carausel WHERE id_ui = " + Session["id_ui"].ToString() + ";";
+            int count = 0;
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+
+            using (SqlConnection thisConnection = new SqlConnection(connstring))
+            {
+                using (SqlCommand cmdCount = new SqlCommand(stmt, thisConnection))
+                {
+                    thisConnection.Open();
+                    count = (int)cmdCount.ExecuteScalar();
+                }
+            }
+            return count;
+        }
+        public ActionResult CreateCarausel()
+        {
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCarausel(Data_carausel datacarausel, HttpPostedFileBase uploadimage)
+        {
+           if(GetCount() == 4)
+            {
+                TempData["Pesan"] = Helpers.Message.GetPesan("Melebihi kapasitas",
+                          "danger", "Anda sudah memasukkan 4 gambar carausel");
+                return View();
+
+            }
+           else
+            {
+                string filePath = "";
+                if (uploadimage.ContentLength > 0)
+                {
+                    string fileName = Guid.NewGuid().ToString() + "_" + uploadimage.FileName;
+                    filePath = Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), fileName);
+                    uploadimage.SaveAs(filePath);
+                    datacarausel.gambar = fileName;
+                }
+
+                datacarausel.id_ui = Convert.ToInt32(Session["id_ui"]);
+                using (PenyewaDAL svBrg = new PenyewaDAL())
+                {
+                    try
+                    {
+                        svBrg.AddCarausel(datacarausel);
+                        TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
+                          "success", "Data UI berhasil ditambah");
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                              "danger", ex.Message);
+                    }
+                }
+                return View();
+            }
+                
         }
         public ActionResult Addtable(int id)
         {

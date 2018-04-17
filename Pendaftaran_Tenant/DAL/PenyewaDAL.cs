@@ -46,6 +46,19 @@ namespace Pendaftaran_Tenant.DAL
             }
         }
 
+        public void AddCarausel(Data_carausel carausel)
+        {
+            try
+            {
+                db.Data_carausel.Add(carausel);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public void Add(Penyewa penyewa)
         {
             try
@@ -69,6 +82,12 @@ namespace Pendaftaran_Tenant.DAL
             var results = (from b in db.Penyewas where b.email == email select b.id_penyewa).SingleOrDefault();
             return results;
         }
+        public int getIdUI(int id_penyewa)
+        {
+            var results = (from b in db.Data_UI where b.id_penyewa == id_penyewa select b.id_ui).SingleOrDefault();
+            return results;
+        }
+
         public string getNamaPerusahaan(int id)
         {
             var results = (from b in db.Penyewas where b.id_penyewa == id select b.nama_perusahaan).SingleOrDefault();
