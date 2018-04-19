@@ -55,7 +55,17 @@ namespace Pendaftaran_Tenant.Controllers
                         Session["role"] = sewa.getRole(penyewa.email).ToString();
                         Session["id_penyewa"] = sewa.getId(penyewa.email).ToString();
                     }
-                    if(Session["role"].ToString() == "Admin")
+                    string nama_perusahaan;
+                    int idpenyewa = Convert.ToInt32(Session["id_penyewa"]);
+
+                    using (PenyewaDAL sewa = new PenyewaDAL())
+                    {
+
+                        nama_perusahaan = sewa.getNamaPerusahaan(idpenyewa).ToString();
+                        Session["nama_perusahaan"] = nama_perusahaan;
+
+                    }
+                    if (Session["role"].ToString() == "Admin")
                     {
                         return RedirectToAction("Index", "Home");
                     }
@@ -271,16 +281,12 @@ namespace Pendaftaran_Tenant.Controllers
                 return View();
         }
 
+
+
         public ActionResult IndexProduk()
         {
-            string nama_perusahaan;
-            int id = Convert.ToInt32(Session["id_penyewa"]);
-
-            using (PenyewaDAL sewa = new PenyewaDAL())
-            {
-
-                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
-            }
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+            
 
 
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
@@ -324,6 +330,188 @@ namespace Pendaftaran_Tenant.Controllers
             return View(result);
         }
 
+        public string GetNamaproduk(int id)
+        {
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+            
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            List<string> result = new List<string>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [nama_produk]" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[Produk_" + nama_perusahaan + "] WHERE [id_produk]=" + id;
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            
+                            result.Add(reader.GetString(0));
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            return result.ToString();
+        }
+
+        public ActionResult IndexBahan()
+        {
+
+
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+            
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            List<Bahan> result = new List<Bahan>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [id_bahan]" +
+                    ",[id_produk]" +
+                    ",[nama_bahan]" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + nama_perusahaan + "]";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Bahan item = new Bahan()
+                            {
+                                id_bahan = (int)reader["id_produk"],
+                                id_produk = (int)reader["id_produk"],
+                                nama_bahan = reader["nama_bahan"].ToString()
+                            };
+                            result.Add(item);
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
+        public ActionResult CreateBahan(int id)
+        {
+            Session["id_produk"] = id;
+            ViewBag.namaproduk = GetNamaproduk(id).ToString();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateBahan(string namabahan)
+        {
+            int idproduk = (int)Session["id_produk"];
+            string nama_perusahaan;
+            int id = Convert.ToInt32(Session["id_penyewa"]);
+
+            using (PenyewaDAL sewa = new PenyewaDAL())
+            {
+
+                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
+            }
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[Bahan_" + nama_perusahaan + "]" +
+                    "([id_produk]" +
+                    ",[nama_bahan])" +
+                    " VALUES" +
+                    "('" + idproduk + "' ,'" + namabahan + "')";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "data produk berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+
+
+
+            return RedirectToAction("IndexBahan","Penyewa");
+        }
+
+        public ActionResult CreateBahan2()
+        {        
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateBahan2(string namabahan)
+        {
+            int idproduk = (int)Session["id_produk"];
+            string nama_perusahaan;
+            int id = Convert.ToInt32(Session["id_penyewa"]);
+
+            using (PenyewaDAL sewa = new PenyewaDAL())
+            {
+
+                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
+            }
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[Bahan_" + nama_perusahaan + "]" +
+                    "([id_produk]" +
+                    ",[nama_bahan])" +
+                    "VALUES" +
+                    "('" + idproduk + "' ,'" + namabahan + "')";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "data produk berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+
+
+
+            return RedirectToAction("IndexBahan", "Penyewa");
+        }
         public ActionResult Addtable(int id)
         {
             string nama_perusahaan;

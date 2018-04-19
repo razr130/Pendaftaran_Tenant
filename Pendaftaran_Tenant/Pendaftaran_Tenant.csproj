@@ -206,6 +206,7 @@
     <Compile Include="DAL\PenyewaDAL.cs" />
     <Compile Include="DAL\ProdukDAL.cs" />
     <Compile Include="Helpers\Message.cs" />
+    <Compile Include="Models\Bahan.cs" />
     <Compile Include="Models\Data_carausel.cs" />
     <Compile Include="Models\Data_UI.cs" />
     <Compile Include="Global.asax.cs">
@@ -300,6 +301,9 @@
     <Content Include="Views\Penyewa\CreateCarausel.cshtml" />
     <Content Include="Views\Penyewa\CreateProduk.cshtml" />
     <Content Include="Views\Penyewa\IndexProduk.cshtml" />
+    <Content Include="Views\Penyewa\IndexBahan.cshtml" />
+    <Content Include="Views\Penyewa\CreateBahan.cshtml" />
+    <Content Include="Views\Penyewa\CreateBahan2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
