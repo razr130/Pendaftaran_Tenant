@@ -204,6 +204,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PenyewaController.cs" />
     <Compile Include="DAL\PenyewaDAL.cs" />
+    <Compile Include="DAL\ProdukDAL.cs" />
     <Compile Include="Helpers\Message.cs" />
     <Compile Include="Models\Data_carausel.cs" />
     <Compile Include="Models\Data_UI.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PendaftaranTenant.cs" />
     <Compile Include="Models\Penyewa.cs" />
+    <Compile Include="Models\Produk.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -297,6 +299,7 @@
     <Content Include="Views\Penyewa\CreateUI.cshtml" />
     <Content Include="Views\Penyewa\CreateCarausel.cshtml" />
     <Content Include="Views\Penyewa\CreateProduk.cshtml" />
+    <Content Include="Views\Penyewa\IndexProduk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

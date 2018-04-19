@@ -270,6 +270,60 @@ namespace Pendaftaran_Tenant.Controllers
             }
                 return View();
         }
+
+        public ActionResult IndexProduk()
+        {
+            string nama_perusahaan;
+            int id = Convert.ToInt32(Session["id_penyewa"]);
+
+            using (PenyewaDAL sewa = new PenyewaDAL())
+            {
+
+                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
+            }
+
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            List<Produk> result = new List<Produk>();
+            
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [id_produk]" +
+                    ",[nama_produk]" +
+                    ",[deskripsi]" +
+                    ",[foto_produk]" +
+                    "FROM[MultiTenancy_Sablon].[dbo].[Produk_" + nama_perusahaan + "]";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Produk item = new Produk()
+                            {
+                                id_produk = (int)reader["id_produk"],
+                                nama_produk = reader["nama_produk"].ToString(),
+                                deskripsi = reader["deskripsi"].ToString(),
+                                foto_produk = reader["foto_produk"].ToString()
+                            };
+                             result.Add(item);
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
+
         public ActionResult Addtable(int id)
         {
             string nama_perusahaan;
