@@ -35,8 +35,9 @@
             @Html.DisplayFor(modelItem => item.foto_produk)
         </td>
         <td>
-            @Html.ActionLink("Tambah Bahan", "CreateBahan", new { id=item.id_produk }) 
-           
+            @Html.ActionLink("Tambah Bahan", "CreateBahan", new { id = item.id_produk }) |
+            @Html.ActionLink("Tambah Jenis Sablon", "CreateJenisSablon", new { id = item.id_produk })
+
         </td>
     </tr>
 }

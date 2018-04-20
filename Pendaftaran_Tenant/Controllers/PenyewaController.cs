@@ -286,7 +286,7 @@ namespace Pendaftaran_Tenant.Controllers
         public ActionResult IndexProduk()
         {
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
-            
+            //string nama_perusahaan = "b";            
 
 
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
@@ -330,28 +330,28 @@ namespace Pendaftaran_Tenant.Controllers
             return View(result);
         }
 
-        public string GetNamaproduk(int id)
+        public string GetNamaproduk()
         {
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
+            //string nama_perusahaan = "b";
             
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
-            List<string> result = new List<string>();
+            string result = "";
 
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
                 string query = "SELECT [nama_produk]" +
-                    " FROM[MultiTenancy_Sablon].[dbo].[Produk_" + nama_perusahaan + "] WHERE [id_produk]=" + id;
+                    " FROM[MultiTenancy_Sablon].[dbo].[Produk_" + nama_perusahaan + "] WHERE [id_produk]=" + Session["id_produk"].ToString();
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
                 {
                     using (SqlDataReader reader = sqlcom.ExecuteReader())
                     {
-                        while (reader.Read())
+                        if(reader.Read())
                         {
-                            
-                            result.Add(reader.GetString(0));
+                            result = string.Format("{0}", reader["nama_produk"]);
                         }
                     }
 
@@ -363,7 +363,7 @@ namespace Pendaftaran_Tenant.Controllers
 
                 conn.Close();
             }
-            return result.ToString();
+            return result;
         }
 
         public ActionResult IndexBahan()
@@ -414,7 +414,7 @@ namespace Pendaftaran_Tenant.Controllers
         public ActionResult CreateBahan(int id)
         {
             Session["id_produk"] = id;
-            ViewBag.namaproduk = GetNamaproduk(id).ToString();
+            Session["nama_produk"] = GetNamaproduk().ToString();
 
             return View();
         }
@@ -511,6 +511,153 @@ namespace Pendaftaran_Tenant.Controllers
 
 
             return RedirectToAction("IndexBahan", "Penyewa");
+        }
+
+        public ActionResult IndexJenisSablon()
+        {
+
+
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            List<JenisSablon> result = new List<JenisSablon>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [id_jns_sablon]" +
+                    ",[id_produk]" +
+                    ",[nama_sablon]" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + nama_perusahaan + "]";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            JenisSablon item = new JenisSablon()
+                            {
+                                id_jns_sablon = (int)reader["id_jns_sablon"],
+                                id_produk = (int)reader["id_produk"],
+                                nama_sablon = reader["nama_sablon"].ToString()
+                            };
+                            result.Add(item);
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
+        public ActionResult CreateJenisSablon(int id)
+        {
+            Session["id_produk"] = id;
+            Session["nama_produk"] = GetNamaproduk().ToString();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateJenisSablon(string namajenissablon)
+        {
+            int idproduk = (int)Session["id_produk"];
+            string nama_perusahaan;
+            int id = Convert.ToInt32(Session["id_penyewa"]);
+
+            using (PenyewaDAL sewa = new PenyewaDAL())
+            {
+
+                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
+            }
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[JenisSablon_" + nama_perusahaan + "]" +
+                    "([id_produk]" +
+                    ",[nama_sablon])" +
+                    " VALUES" +
+                    "('" + idproduk + "' ,'" + namajenissablon + "')";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "data produk berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+
+
+
+            return RedirectToAction("IndexJenisSablon", "Penyewa");
+        }
+
+        public ActionResult CreateJenisSablon2()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateJenisSablon2(string namajenissablon)
+        {
+            int idproduk = (int)Session["id_produk"];
+            string nama_perusahaan;
+            int id = Convert.ToInt32(Session["id_penyewa"]);
+
+            using (PenyewaDAL sewa = new PenyewaDAL())
+            {
+
+                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
+            }
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[JenisSablon_" + nama_perusahaan + "]" +
+                    "([id_produk]" +
+                    ",[nama_sablon])" +
+                    "VALUES" +
+                    "('" + idproduk + "' ,'" + namajenissablon + "')";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "data produk berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+
+
+
+            return RedirectToAction("IndexJenisSablon", "Penyewa");
         }
         public ActionResult Addtable(int id)
         {

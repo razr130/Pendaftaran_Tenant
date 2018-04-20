@@ -214,6 +214,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\JenisSablon.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PendaftaranTenant.cs" />
     <Compile Include="Models\Penyewa.cs" />
@@ -304,6 +305,9 @@
     <Content Include="Views\Penyewa\IndexBahan.cshtml" />
     <Content Include="Views\Penyewa\CreateBahan.cshtml" />
     <Content Include="Views\Penyewa\CreateBahan2.cshtml" />
+    <Content Include="Views\Penyewa\IndexJenisSablon.cshtml" />
+    <Content Include="Views\Penyewa\CreateJenisSablon.cshtml" />
+    <Content Include="Views\Penyewa\CreateJenisSablon2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

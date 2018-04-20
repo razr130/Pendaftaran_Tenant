@@ -1,4 +1,9 @@
-﻿@Html.Raw(TempData["Pesan"])
+﻿
+@{ var namaproduk = Session["nama_produk"];}
+
+
+<h2>Isi Bahan untuk produk @namaproduk</h2>
+@Html.Raw(TempData["Pesan"])
 <div class="row">
     <div class="col-md-8">
 

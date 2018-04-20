@@ -6,16 +6,16 @@
 <div class="row">
     <div class="col-md-8">
 
-        @using (Html.BeginForm("CreateBahan2", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("CreateJenisSablon2", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
 
             <hr />
 
             <div class="form-group">
-                <label for="namabahan" class="col-md-2 control-label">Nama Bahan</label>
+                <label for="namajenissablon" class="col-md-2 control-label">Nama Jenis Sablon</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="namabahan" name="namabahan" />
+                    <input type="text" class="form-control" id="namajenissablon" name="namajenissablon" />
 
                 </div>
             </div>
@@ -31,5 +31,6 @@
     </div>
 
 </div>
+
 
 
