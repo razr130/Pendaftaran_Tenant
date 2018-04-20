@@ -837,11 +837,16 @@ namespace Pendaftaran_Tenant.Controllers
                     " SET QUOTED_IDENTIFIER ON" +
                     
                     " CREATE TABLE[dbo].[Harga_" + nama_perusahaan + "]" +
-                    "(" +
+                    "([id_harga] [int] IDENTITY(1,1) NOT NULL," +
                     "[id_produk][int] NULL," +
                     "[id_bahan][int] NULL," +
                     "[id_jns_sablon][int] NULL," +
-                    "[harga][int] NULL" +
+                    "[harga][int] NULL," +
+                    "CONSTRAINT[PK_Harga_" + nama_perusahaan + "]" + "PRIMARY KEY CLUSTERED" +
+                    "(" +
+                    "[id_harga] ASC" +
+                    ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
+                   
                     ") ON[PRIMARY]" +
                     
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Harga_" + nama_perusahaan + "_Bahan_" + nama_perusahaan + "] FOREIGN KEY([id_bahan])" +
@@ -962,10 +967,15 @@ namespace Pendaftaran_Tenant.Controllers
                     " SET QUOTED_IDENTIFIER ON" +
                     
                     " CREATE TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
-                    "(" +
+                    "([id_ukuran_order] [int] IDENTITY(1,1) NOT NULL," +
                     "[id_ukuran][int] NULL," +
                     "[no_detail][int] NULL," +
-                    "[jumlah][int] NULL" +
+                    "[jumlah][int] NULL," +
+                    "CONSTRAINT[PK_UkuranOrder_c] PRIMARY KEY CLUSTERED" +
+                    "(" +
+                    "[id_ukuran_order] ASC" +
+                    ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
+                    
                     ") ON[PRIMARY]" +
                     
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_DetailOrder_" + nama_perusahaan + "] FOREIGN KEY([no_detail])" +
@@ -980,7 +990,43 @@ namespace Pendaftaran_Tenant.Controllers
                     "([id_ukuran])" +
                     
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
-                    " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "]"
+                    " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "]" +
+                    "USE [MultiTenancy_Sablon]" +
+                    "SET ANSI_NULLS ON" +
+                    "SET QUOTED_IDENTIFIER ON" +
+                    "CREATE VIEW[dbo].[ViewHarga_" + nama_perusahaan + "]" +
+                    "AS" +
+                    "SELECT        dbo.Bahan_" + nama_perusahaan + "." + "nama_bahan, dbo.JenisSablon_" + nama_perusahaan + "." + "nama_sablon, dbo.Produk_" + nama_perusahaan + "." + "nama_produk, dbo.Harga_" + nama_perusahaan + "." + "harga, dbo.Bahan_" + nama_perusahaan + "." + "id_bahan, dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon, dbo.Produk_" + nama_perusahaan + "." + "id_produk" +
+                    "FROM            dbo.Bahan_" + nama_perusahaan + " LEFT OUTER JOIN" +
+                    "dbo.Produk_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_produk = dbo.Produk_" + nama_perusahaan + "." + "id_produk LEFT OUTER JOIN" +
+                    "dbo.JenisSablon_" + nama_perusahaan + " ON dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.JenisSablon_" + nama_perusahaan + "." + "id_produk LEFT OUTER JOIN" +
+                    "dbo.Harga_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_bahan = dbo.Harga_" + nama_perusahaan + "." + "id_bahan AND dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.Harga_" + nama_perusahaan + "." + "id_produk AND dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon = dbo.Harga_" + nama_perusahaan + "." + "id_jns_sablon" +
+                    "USE [MultiTenancy_Sablon]" +
+                    "SET ANSI_NULLS ON" +
+                    "SET QUOTED_IDENTIFIER ON" +
+                    "CREATE TRIGGER[dbo].[ShowInsert_" + nama_perusahaan + "]" + "on[MultiTenancy_Sablon].[dbo].[ViewHarga_" + nama_perusahaan + "]" +
+                    "INSTEAD OF UPDATE" +
+                    "AS" +
+                    "BEGIN" +
+                    "declare @id_produk int" +
+                    "declare @id_bahan int" +
+                    "declare @id_jns_sablon int" +
+                    "declare @harga int" +
+                    "select @id_produk = p.id_produk" +
+                    "from Produk_" + nama_perusahaan + " p" +
+                    "join inserted" +
+                    "on inserted.nama_produk = p.nama_produk" +
+                    "select @id_bahan = b.id_bahan" +
+                    "from Bahan_" + nama_perusahaan + " b" +
+                    "join inserted" +
+                    "on inserted.nama_bahan = b.nama_bahan" +
+                    "select @id_jns_sablon = j.id_jns_sablon" +
+                    "from JenisSablon_" + nama_perusahaan + " j" +
+                    "join inserted" +
+                    "on inserted.nama_sablon = j.nama_sablon" +
+                    "select @harga = harga from inserted where id_produk = @id_produk and id_bahan = @id_bahan and id_jns_sablon = @id_jns_sablon" +
+                    "insert into Harga_" + nama_perusahaan + "(id_produk, id_bahan, id_jns_sablon, harga) values(@id_produk, @id_bahan, @id_jns_sablon, @harga)" +
+                    "END"                   
                     ;
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
