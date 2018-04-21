@@ -37,6 +37,8 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Simpan" class="btn btn-default" />
+                @Html.ActionLink("Lanjut ke penambahan harga", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')" })
+
             </div>
         </div>
 

@@ -38,6 +38,7 @@ namespace Pendaftaran_Tenant.Controllers
         public ActionResult Login(Penyewa penyewa)
         {
             var results = db.Penyewas.SingleOrDefault(m => m.email == penyewa.email && m.password == penyewa.password);
+            
             if (results != null)
             {
                 if (results.status_bayar == false)
@@ -54,6 +55,7 @@ namespace Pendaftaran_Tenant.Controllers
 
                         Session["role"] = sewa.getRole(penyewa.email).ToString();
                         Session["id_penyewa"] = sewa.getId(penyewa.email).ToString();
+                        
                     }
                     string nama_perusahaan;
                     int idpenyewa = Convert.ToInt32(Session["id_penyewa"]);
@@ -71,7 +73,16 @@ namespace Pendaftaran_Tenant.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("CreateUI", "Penyewa");
+                        var results2 = db.Data_UI.SingleOrDefault(m => m.id_penyewa == idpenyewa);
+                        if(results2 != null)
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            return RedirectToAction("CreateUI", "Penyewa");
+                        }
+                        
                     }
                    
                 }
@@ -156,7 +167,7 @@ namespace Pendaftaran_Tenant.Controllers
                     svBrg.AddUI(dataui);
                     TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
                       "success", "Data UI berhasil ditambah");
-                    Session["id_ui"] = svBrg.getIdUI(Convert.ToInt32(Session["id_penyewa"]));
+                    //Session["id_ui"] = svBrg.getIdUI(Convert.ToInt32(Session["id_penyewa"]));
                 }
                 catch (Exception ex)
                 {
@@ -168,7 +179,12 @@ namespace Pendaftaran_Tenant.Controllers
         }
         public int GetCount()
         {
-            string stmt = "SELECT COUNT(gambar) FROM Data_carausel WHERE id_ui = " + Session["id_ui"].ToString() + ";";
+            int idui;
+            using (PenyewaDAL svui = new PenyewaDAL())
+            {
+                idui = svui.getIdUI(Convert.ToInt32(Session["id_penyewa"]));
+            }
+                string stmt = "SELECT COUNT(gambar) FROM Data_carausel WHERE id_ui = " + idui + ";";
             int count = 0;
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
 
@@ -184,6 +200,8 @@ namespace Pendaftaran_Tenant.Controllers
         }
         public ActionResult CreateCarausel()
         {
+            TempData["Pesan2"] = Helpers.Message.GetPesan("Info data carausel",
+                          "warning", "Anda sudah memasukkan " + GetCount().ToString() + " gambar carausel dari maksimal 4 gambar");
             return View();
         }
         [HttpPost]
@@ -199,6 +217,7 @@ namespace Pendaftaran_Tenant.Controllers
             }
            else
             {
+
                 string filePath = "";
                 if (uploadimage.ContentLength > 0)
                 {
@@ -208,14 +227,17 @@ namespace Pendaftaran_Tenant.Controllers
                     datacarausel.gambar = fileName;
                 }
 
-                datacarausel.id_ui = Convert.ToInt32(Session["id_ui"]);
+                //datacarausel.id_ui = Convert.ToInt32(Session["id_ui"]);
                 using (PenyewaDAL svBrg = new PenyewaDAL())
                 {
                     try
                     {
+                        datacarausel.id_ui = svBrg.getIdUI(Convert.ToInt32(Session["id_penyewa"]));
                         svBrg.AddCarausel(datacarausel);
                         TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
-                          "success", "Data UI berhasil ditambah");
+                          "success", "Data carausel berhasil ditambah");
+                        TempData["Pesan2"] = Helpers.Message.GetPesan("Info data carausel",
+                          "warning", "Anda sudah memasukkan " + GetCount().ToString() + " gambar carausel dari maksimal 4 gambar");
                     }
                     catch (Exception ex)
                     {
@@ -278,7 +300,7 @@ namespace Pendaftaran_Tenant.Controllers
 
                 conn.Close();
             }
-                return View();
+                return RedirectToAction("IndexProduk","Penyewa");
         }
 
 
@@ -549,9 +571,10 @@ namespace Pendaftaran_Tenant.Controllers
                     }
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
                 }
 
                 conn.Close();
@@ -659,6 +682,122 @@ namespace Pendaftaran_Tenant.Controllers
 
             return RedirectToAction("IndexJenisSablon", "Penyewa");
         }
+
+        public ActionResult IndexViewHarga()
+        {
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            List<HargaViewModel> result = new List<HargaViewModel>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [nama_bahan]" +
+                    ",[nama_sablon]" +
+                    ",[nama_produk]" +
+                    ",[harga]" +
+                    ",[id_bahan]" +
+                    ",[id_jns_sablon]" +
+                    ",[id_produk]" +
+                    " FROM [MultiTenancy_Sablon].[dbo].[ViewHarga_" + nama_perusahaan + "]";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader["harga"] == DBNull.Value)
+                            {
+                                HargaViewModel item = new HargaViewModel()
+                                {
+                                    nama_bahan = reader["nama_bahan"].ToString(),
+                                    nama_sablon = reader["nama_sablon"].ToString(),
+                                    nama_produk = reader["nama_produk"].ToString(),
+                                    harga = 0,
+                                    id_bahan = (int)reader["id_bahan"],
+                                    id_jns_sablon = (int)reader["id_jns_sablon"],
+                                    id_produk = (int)reader["id_produk"]
+
+                                };
+                                result.Add(item);
+                            }
+                            else
+                            {
+                                HargaViewModel item = new HargaViewModel()
+                                {
+                                    nama_bahan = reader["nama_bahan"].ToString(),
+                                    nama_sablon = reader["nama_sablon"].ToString(),
+                                    nama_produk = reader["nama_produk"].ToString(),
+                                    harga = (int)reader["harga"],
+                                    id_bahan = (int)reader["id_bahan"],
+                                    id_jns_sablon = (int)reader["id_jns_sablon"],
+                                    id_produk = (int)reader["id_produk"]
+
+                                };
+                                result.Add(item);
+                            }
+                            
+                           
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
+
+        public ActionResult CreateViewHarga()
+        {
+            string nama_perusahaan;
+            int id = Convert.ToInt32(Session["id_penyewa"]);
+            using (PenyewaDAL sewa = new PenyewaDAL())
+            {
+
+                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
+            }
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = 
+                    " CREATE VIEW[dbo].[ViewHarga_" + nama_perusahaan + "]" +
+                    " AS" +
+                    " SELECT        dbo.Bahan_" + nama_perusahaan + "." + "nama_bahan, dbo.JenisSablon_" + nama_perusahaan + "." + "nama_sablon, dbo.Produk_" + nama_perusahaan + "." + "nama_produk, dbo.Harga_" + nama_perusahaan + "." + "harga, dbo.Bahan_" + nama_perusahaan + "." + "id_bahan, dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon, dbo.Produk_" + nama_perusahaan + "." + "id_produk" +
+                    " FROM            dbo.Bahan_" + nama_perusahaan + " LEFT OUTER JOIN" +
+                    " dbo.Produk_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_produk = dbo.Produk_" + nama_perusahaan + "." + "id_produk LEFT OUTER JOIN" +
+                    " dbo.JenisSablon_" + nama_perusahaan + " ON dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.JenisSablon_" + nama_perusahaan + "." + "id_produk LEFT OUTER JOIN" +
+                    " dbo.Harga_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_bahan = dbo.Harga_" + nama_perusahaan + "." + "id_bahan AND dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.Harga_" + nama_perusahaan + "." + "id_produk AND dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon = dbo.Harga_" + nama_perusahaan + "." + "id_jns_sablon" 
+                    ;
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          //"success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+
+                conn.Close();
+            }
+            return RedirectToAction("IndexViewHarga","Penyewa");
+        
+         }
         public ActionResult Addtable(int id)
         {
             string nama_perusahaan;
@@ -992,16 +1131,6 @@ namespace Pendaftaran_Tenant.Controllers
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "]" +
                    
-                     " USE [MultiTenancy_Sablon]" +
-
-                    " SET QUOTED_IDENTIFIER ON" +
-                    " CREATE VIEW[dbo].[ViewHarga_" + nama_perusahaan + "]" +
-                    " AS" +
-                    " SELECT        dbo.Bahan_" + nama_perusahaan + "." + "nama_bahan, dbo.JenisSablon_" + nama_perusahaan + "." + "nama_sablon, dbo.Produk_" + nama_perusahaan + "." + "nama_produk, dbo.Harga_" + nama_perusahaan + "." + "harga, dbo.Bahan_" + nama_perusahaan + "." + "id_bahan, dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon, dbo.Produk_" + nama_perusahaan + "." + "id_produk" +
-                    " FROM            dbo.Bahan_" + nama_perusahaan + " LEFT OUTER JOIN" +
-                    " dbo.Produk_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_produk = dbo.Produk_" + nama_perusahaan + "." + "id_produk LEFT OUTER JOIN" +
-                    " dbo.JenisSablon_" + nama_perusahaan + " ON dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.JenisSablon_" + nama_perusahaan + "." + "id_produk LEFT OUTER JOIN" +
-                    " dbo.Harga_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_bahan = dbo.Harga_" + nama_perusahaan + "." + "id_bahan AND dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.Harga_" + nama_perusahaan + "." + "id_produk AND dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon = dbo.Harga_" + nama_perusahaan + "." + "id_jns_sablon" +
                     " USE [MultiTenancy_Sablon]" +
 
                     " SET QUOTED_IDENTIFIER ON" +

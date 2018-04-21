@@ -213,6 +213,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\HargaViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JenisSablon.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -308,6 +309,7 @@
     <Content Include="Views\Penyewa\IndexJenisSablon.cshtml" />
     <Content Include="Views\Penyewa\CreateJenisSablon.cshtml" />
     <Content Include="Views\Penyewa\CreateJenisSablon2.cshtml" />
+    <Content Include="Views\Penyewa\IndexViewHarga.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

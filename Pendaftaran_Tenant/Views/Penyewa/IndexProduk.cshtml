@@ -4,11 +4,13 @@
     ViewBag.Title = "IndexProduk";
 }
 
-<h2>IndexProduk</h2>
+<h2>Data Produk perusahaan @Session["nama_perusahaan"]</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@Html.Partial("CreateProduk")
+
+<h3>Daftar produk</h3>
+<p><h5>anda bisa menambahkan bahan dan jenis sablon sesuai produk yang diinginkan</h5></p>
+
 <table class="table">
     <tr>
         <th>

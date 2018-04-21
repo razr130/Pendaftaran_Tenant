@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Pendaftaran_Tenant.Models.HargaViewModel>
+
+@{
+    ViewBag.Title = "IndexViewHarga";
+}
+
+<h2>IndexViewHarga</h2>
+@Html.Raw(TempData["Pesan"])
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nama_bahan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nama_sablon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nama_produk)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.harga)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nama_bahan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nama_sablon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nama_produk)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.harga)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>
