@@ -798,6 +798,81 @@ namespace Pendaftaran_Tenant.Controllers
             return RedirectToAction("IndexViewHarga","Penyewa");
         
          }
+
+        public ActionResult AddHarga(string namabahan, string namaproduk, string namajenissablon, int harga)
+        {
+            string nama_perusahaan;
+            int id = Convert.ToInt32(Session["id_penyewa"]);
+            using (PenyewaDAL sewa = new PenyewaDAL())
+            {
+
+                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
+            }
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = " CREATE TRIGGER[dbo].[UpdateHargaTrigger_" + nama_perusahaan + "]" + "on [MultiTenancy_Sablon].[dbo].[ViewHarga_" + nama_perusahaan + "]" +
+                    " INSTEAD OF UPDATE" +
+                    " AS" +
+                    " BEGIN" +
+                    " declare @id_produk int" +
+                    " declare @id_bahan int" +
+                    " declare @id_jns_sablon int" +
+                    " declare @harga int" +
+                    " select @id_produk = p.id_produk" +
+                    " from Produk_" + nama_perusahaan + " p" +
+                    " join inserted" +
+                    " on inserted.nama_produk = p.nama_produk" +
+                    " select @id_bahan = b.id_bahan" +
+                    " from Bahan_" + nama_perusahaan + " b" +
+                    " join inserted" +
+                    " on inserted.nama_bahan = b.nama_bahan" +
+                    " select @id_jns_sablon = j.id_jns_sablon" +
+                    " from JenisSablon_" + nama_perusahaan + " j" +
+                    " join inserted" +
+                    " on inserted.nama_sablon = j.nama_sablon" +
+                    " select @harga = harga from inserted where id_produk = @id_produk and id_bahan = @id_bahan and id_jns_sablon = @id_jns_sablon" +
+                    " insert into Harga_" + nama_perusahaan + "(id_produk, id_bahan, id_jns_sablon, harga) values(@id_produk, @id_bahan, @id_jns_sablon, @harga)" +
+                    " END";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    sqlcom.CommandText = "UPDATE [dbo].[ViewHarga_" + nama_perusahaan + "]" +
+                        "SET" +
+                        "[nama_bahan] = '"+namabahan+"'" +
+                        ",[nama_sablon] = '" + namajenissablon + "'" +
+                        ",[nama_produk] = '" + namaproduk + "'" +
+                        ",[harga] = " + harga.ToString() +
+                        "WHERE nama_bahan = '" + namabahan + "' and nama_sablon = '" + namajenissablon + "' and nama_produk = '" + namaproduk + "'";
+
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                    "success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
+                }
+                catch (Exception)
+                {
+                    sqlcom.CommandText = "UPDATE [dbo].[ViewHarga_" + nama_perusahaan + "]" +
+                        "SET" +
+                        "[nama_bahan] = '" + namabahan + "'" +
+                        ",[nama_sablon] = '" + namajenissablon + "'" +
+                        ",[nama_produk] = '" + namaproduk + "'" +
+                        ",[harga] = " + harga.ToString() +
+                        "WHERE nama_bahan = '" + namabahan + "' and nama_sablon = '" + namajenissablon + "' and nama_produk = '" + namaproduk + "'";
+
+                    sqlcom.ExecuteNonQuery();
+
+                }
+
+                conn.Close();
+
+            }
+            return RedirectToAction("IndexViewHarga", "Penyewa");
+        }
+
+        
         public ActionResult Addtable(int id)
         {
             string nama_perusahaan;
@@ -1129,34 +1204,10 @@ namespace Pendaftaran_Tenant.Controllers
                     "([id_ukuran])" +
                     
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
-                    " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "]" +
+                    " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "]" 
                    
-                    " USE [MultiTenancy_Sablon]" +
-
-                    " SET QUOTED_IDENTIFIER ON" +
-                    " CREATE TRIGGER[dbo].[ShowInsert_" + nama_perusahaan + "]" + "on[MultiTenancy_Sablon].[dbo].[ViewHarga_" + nama_perusahaan + "]" +
-                    " INSTEAD OF UPDATE" +
-                    " AS" +
-                    " BEGIN" +
-                    " declare @id_produk int" +
-                    " declare @id_bahan int" +
-                    " declare @id_jns_sablon int" +
-                    " declare @harga int" +
-                    " select @id_produk = p.id_produk" +
-                    " from Produk_" + nama_perusahaan + " p" +
-                    " join inserted" +
-                    " on inserted.nama_produk = p.nama_produk" +
-                    " select @id_bahan = b.id_bahan" +
-                    " from Bahan_" + nama_perusahaan + " b" +
-                    " join inserted" +
-                    " on inserted.nama_bahan = b.nama_bahan" +
-                    " select @id_jns_sablon = j.id_jns_sablon" +
-                    " from JenisSablon_" + nama_perusahaan + " j" +
-                    " join inserted" +
-                    " on inserted.nama_sablon = j.nama_sablon" +
-                    " select @harga = harga from inserted where id_produk = @id_produk and id_bahan = @id_bahan and id_jns_sablon = @id_jns_sablon" +
-                    " insert into Harga_" + nama_perusahaan + "(id_produk, id_bahan, id_jns_sablon, harga) values(@id_produk, @id_bahan, @id_jns_sablon, @harga)" +
-                    " END";
+                    
+                   ;
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
                 {

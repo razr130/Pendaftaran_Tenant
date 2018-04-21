@@ -20,7 +20,7 @@
         <th>
             @Html.DisplayNameFor(model => model.nama_produk)
         </th>
-        <th>
+        <th style="text-align:center">
             @Html.DisplayNameFor(model => model.harga)
         </th>
 
@@ -39,15 +39,27 @@
             <td>
                 @Html.DisplayFor(modelItem => item.nama_produk)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.harga)
+            @if (item.harga == 0)
+            {
+            <td align="center">
+                <input type="text" class="form-control" id="harga" name="harga" style="width:6em" />
             </td>
+            <td align="center">
+                <button class="btn btn-success" onclick="location.href='@Url.Action("AddHarga","Penyewa")?namabahan=' + '@item.nama_bahan' + '&namaproduk=' + '@item.nama_produk' + '&namajenissablon=' + '@item.nama_sablon' + '&harga=' + $('#harga').val()">Tambah Harga</button>
+            </td>
+            }
+            else
+            {
+                <td align="center">
+                    @Html.DisplayFor(modelItem => item.harga)
+                </td>
 
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+                <td align="center">
+                    <span class="glyphicon glyphicon-signal glyphicon-check" style="color:lawngreen"></span>
+                </td>
+            }
+
+
         </tr>
     }
 
