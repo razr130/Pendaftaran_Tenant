@@ -315,6 +315,8 @@
     <Content Include="Views\Penyewa\CreateJenisSablon2.cshtml" />
     <Content Include="Views\Penyewa\IndexViewHarga.cshtml" />
     <Content Include="Views\Penyewa\KonfirmasiDaftar.cshtml" />
+    <Content Include="Views\Shared\_LayoutNoBar.cshtml" />
+    <Content Include="Views\Home\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

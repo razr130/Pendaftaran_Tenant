@@ -28,6 +28,7 @@ namespace Pendaftaran_Tenant.Controllers
 
         public ActionResult Login()
         {
+            
             return View();
         }
 
@@ -76,7 +77,7 @@ namespace Pendaftaran_Tenant.Controllers
                         var results2 = db.Data_UI.SingleOrDefault(m => m.id_penyewa == idpenyewa);
                         if(results2 != null)
                         {
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index2", "Home");
                         }
                         else
                         {
@@ -93,6 +94,7 @@ namespace Pendaftaran_Tenant.Controllers
                       "danger", "Email atau password salah");
 
             }
+           
             return View();
         }
 

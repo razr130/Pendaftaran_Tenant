@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="jumbotron text-center">
+    <h1 style="font-family:Roboto"><b>SELAMAT DATANG </b><span style="font-family:'Compass LT';color:#47a447">@Session["nama_perusahaan"].ToString()</span></h1>
+    <hr />
+    <div class="col-md-4 col-xs-4">
+        <div class="thumbnail clearfix text-center">
+            <span class="glyphicon glyphicon-book" style="font-size:50px"></span>
+            <p style="font-size:15px">Lihat produk yang sudah terdaftar</p>
+            <p><a onclick="location.href='@Url.Action("IndexProduk", "Penyewa")'" class="btn btn-success btn-lg">Lihat Produk</a></p>
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-4">
+        <div class="thumbnail clearfix text-center">
+            <span class="glyphicon glyphicon-certificate" style="font-size:50px"></span>
+            <p style="font-size:15px">Lihat bahan yang sudah terdaftar</p>
+            <p><a onclick="location.href='@Url.Action("IndexBahan", "Penyewa")'" class="btn btn-success btn-lg">Lihat Bahan</a></p>
+
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-4">
+        <div class="thumbnail clearfix text-center">
+            <span class="glyphicon glyphicon-cog" style="font-size:50px"></span>
+            <p style="font-size:15px">Lihat jenis sablon yang sudah terdaftar</p>
+            <p><a onclick="location.href='@Url.Action("IndexJenisSablon", "Penyewa")'" class="btn btn-success btn-lg">Lihat Jenis Sablon</a></p>
+
+        </div>
+    </div>
+    @*<p class="lead">Daftarkan perusahaan sablon anda sekarang!</p>
+        <p><a onclick="location.href='@Url.Action("Create", "Penyewa")'" class="btn btn-success btn-lg">Daftar</a></p>*@
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-4">
+        <h2 style="color:#47a447">Daftarkan Produk-Produk Anda!</h2>
+        <p>
+            Nikmati kemudahan pendataan produk-produk yang dapat dipasarkan
+            melalui website Multi-Tenan Sablon.
+        </p>
+
+    </div>
+    <div class="col-md-4">
+        <h2 style="color:#47a447">Pendaftaran WebSite Mudah!</h2>
+        <p>Hanya dengan mengisikan data yang diperlukan, anda dapat memperoleh website canggih dari kami.</p>
+
+    </div>
+    <div class="col-md-4">
+        <h2 style="color:#47a447">Harga Terjangkau dan Banyak Bonus!</h2>
+        <p>Harga bukanlah hal yang perlu dikhawatirkan, kami menyediakan layanan dengan harga termurah!</p>
+
+    </div>
+</div>
