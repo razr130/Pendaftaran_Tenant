@@ -117,6 +117,7 @@ namespace Pendaftaran_Tenant.Controllers
                 try
                 {
                     svPny.Add(penyewa);
+                    Session["email"] = penyewa.email;
                     //TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
                     //  "success", "Data Barang " + barang.nama_barang + " berhasil ditambah");
                 }
@@ -126,7 +127,18 @@ namespace Pendaftaran_Tenant.Controllers
                                           "danger", ex.Message);
                 }
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("KonfirmasiDaftar", "Penyewa");
+        }
+
+        public ActionResult KonfirmasiDaftar()
+        {
+            using (PenyewaDAL tenan = new PenyewaDAL())
+            {
+                int id = tenan.getId(Session["email"].ToString());
+                var result = tenan.GetDataBaru(id).ToList();
+                return View(result);
+            }
+                
         }
         public ActionResult Edit(int id)
         {
@@ -873,6 +885,7 @@ namespace Pendaftaran_Tenant.Controllers
         }
 
         
+
         public ActionResult Addtable(int id)
         {
             string nama_perusahaan;

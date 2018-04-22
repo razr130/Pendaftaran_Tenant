@@ -233,8 +233,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\farbtastic.css" />
+    <Content Include="Content\Images\Logo Bank BNI JPG.jpeg" />
+    <Content Include="Content\Images\Logo+Bank+BCA+JPG.jpg" />
+    <Content Include="Content\Images\mandiri_logo.png" />
     <Content Include="Content\Images\marker.png" />
     <Content Include="Content\Images\mask.png" />
+    <Content Include="Content\Images\vector-logo-bca.jpg" />
     <Content Include="Content\Images\wheel.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -310,6 +314,7 @@
     <Content Include="Views\Penyewa\CreateJenisSablon.cshtml" />
     <Content Include="Views\Penyewa\CreateJenisSablon2.cshtml" />
     <Content Include="Views\Penyewa\IndexViewHarga.cshtml" />
+    <Content Include="Views\Penyewa\KonfirmasiDaftar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

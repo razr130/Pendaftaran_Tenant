@@ -18,6 +18,15 @@ namespace Pendaftaran_Tenant.DAL
             
             return results;
         }
+        public IQueryable<Penyewa> GetDataBaru(int id)
+        {
+            var results = from b in db.Penyewas
+                          orderby b.nama_perusahaan
+                          where b.id_penyewa == id
+                          select b;
+
+            return results;
+        }
 
         public Penyewa GetDataById(int id)
 

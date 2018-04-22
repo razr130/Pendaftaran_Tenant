@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Pendaftaran_Tenant.Penyewa>
+
+@{
+                /**/
+
+                ViewBag.Title = "Pendataran Berhasil !";
+}
+
+<h2 style="text-align:center;color:#47a447"><b>Pendaftaran Berhasil !</b></h2>
+<hr />
+<div class="col-md-12 col-xs-12 col-md-offset-3">
+    @foreach (var item in Model)
+    {
+        <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
+            <br />
+            <table style="border:0 solid;float:none;margin:0 auto">
+                <tr>
+                    <th style="text-align:right">
+                        <b>Nama Perusahaan &nbsp;&nbsp;: </b>
+                    </th>
+                    <td style="text-align:left">
+                        &nbsp;&nbsp;@Html.DisplayFor(modelItem => item.nama_perusahaan)
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align:right">
+                        <b>Email &nbsp;&nbsp;: </b>
+                    </th>
+                    <td style="text-align:left">
+                        &nbsp;&nbsp;@Html.DisplayFor(modelItem => item.email)
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align:right">
+                        <b>Alamat &nbsp;&nbsp;: </b>
+                    </th>
+                    <td style="text-align:left">
+                        &nbsp;&nbsp;@Html.DisplayFor(modelItem => item.alamat)
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align:right">
+                        <b>No. Telp &nbsp;&nbsp;: </b>
+                    </th>
+                    <td style="text-align:left">
+                        &nbsp;&nbsp;@Html.DisplayFor(modelItem => item.no_telp)
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <p>Kami telah mengirimkan informasi pembayaran ke <b>@Html.DisplayFor(modelItem => item.email)</b>. Konfirmasi pembayaran
+            dapat dilakukan melalui email tersebut.</p>
+            <p>Pembayaran dapat dilakukan melalui : </p>
+            
+                <img src="~/Content/Images/vector-logo-bca.jpg" class="img-rounded" alt="bank BCA" />
+                <img src="~/Content/Images/Logo Bank BNI JPG.jpeg" class="img-rounded" alt="bank BNI" />
+                <img src="~/Content/Images/mandiri_logo.png" class="img-rounded" alt="bank Mandiri" />
+
+            
+        </div>
+    }
+    </div>
