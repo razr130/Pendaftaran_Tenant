@@ -1,38 +1,53 @@
-﻿@model Pendaftaran_Tenant.Data_carausel
+﻿
 
 @{
     ViewBag.Title = "CreateCarausel";
 }
+@section navwizard {
 
-<h2>CreateCarausel</h2>
+
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
+
+}
+<div class="text-center">
+    <ul class="nav nav-wizard" style="display:inline-block">
+        <li><a style="color:#47a447">Design Website</a></li>
+        <li class="active"><a >Gambar Carausel / Homepage</a></li>
+        <li><a style="color:#47a447">Data Produk, Bahan, dan Jenis Sablon</a></li>
+        <li><a style="color:#47a447">Data Harga</a></li>
+
+    </ul>
+</div>
+<hr />
 @Html.Raw(TempData["Pesan2"])
 @Html.Raw(TempData["Pesan"])
-@using (Html.BeginForm("CreateCarausel", "Penyewa", FormMethod.Post,
-                                                new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+<div class="col-md-12 col-xs-12" style="margin-left:27%">
+    <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
+        @using (Html.BeginForm("CreateCarausel", "Penyewa", FormMethod.Post,
+                                                    new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Data_carausel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <label class="control-label col-md-2" style="color:black" for="uploadimage">Gambar Barang</label>
-            <div class="col-md-10">
-                <input name="uploadimage" type="file" class="form-control" />
-            </div>
-        </div>
+            <h2 style="color:#47a447">Gambar Carausel</h2>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-                @Html.ActionLink("Lanjut ke penambahan produk", "CreateProduk", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi carausel dan hendak melanjutkan ke pengisian produk?')" })
-            </div>
-        </div>
+            <table style="border:0 solid;float:none;margin:0 auto">
+                <tr><th style="text-align:center"><label style="color:black" for="uploadimage">Gambar Carausel</label></th></tr>
+                <tr><td style="text-align:center"><input name="uploadimage" type="file" class="form-control text-center" /></td></tr>
+            </table>
+
+            <br />
+
+
+            <input type="submit" value="Create" class="btn btn-default" style="padding-bottom:5px"/><br />
+            <p style="padding-bottom:5px;margin-top:10px"> @Html.ActionLink("Lanjut ke penambahan produk", "CreateProduk", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi carausel dan hendak melanjutkan ke pengisian produk?')", @class = "btn btn-warning btn-sm" })</p>
+            <br />
+
+        }
+
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+<br />
+<br />

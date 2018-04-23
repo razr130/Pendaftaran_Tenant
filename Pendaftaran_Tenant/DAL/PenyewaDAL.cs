@@ -27,6 +27,14 @@ namespace Pendaftaran_Tenant.DAL
 
             return results;
         }
+        public IQueryable<Data_carausel>GetDataCarausel(int id)
+        {
+            var results = from b in db.Data_carausel
+                          where b.id_ui == id
+                          select b;
+            return results;
+
+        }
 
         public Penyewa GetDataById(int id)
 

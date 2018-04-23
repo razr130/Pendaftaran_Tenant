@@ -26,6 +26,16 @@ namespace Pendaftaran_Tenant.Controllers
             }
         }
 
+        public ActionResult IndexCarausel()
+        {
+            using (PenyewaDAL svpenyewa = new PenyewaDAL())
+            {
+                int id = svpenyewa.getIdUI(Convert.ToInt32(Session["id_penyewa"]));
+                var result = svpenyewa.GetDataCarausel(id).ToList();
+                return View(result);
+            }
+        }
+
         public ActionResult Login()
         {
             
@@ -179,8 +189,8 @@ namespace Pendaftaran_Tenant.Controllers
                 try
                 {
                     svBrg.AddUI(dataui);
-                    TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
-                      "success", "Data UI berhasil ditambah");
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
+                      //"success", "Data UI berhasil ditambah");
                     //Session["id_ui"] = svBrg.getIdUI(Convert.ToInt32(Session["id_penyewa"]));
                 }
                 catch (Exception ex)
@@ -259,7 +269,7 @@ namespace Pendaftaran_Tenant.Controllers
                                               "danger", ex.Message);
                     }
                 }
-                return View();
+                return RedirectToAction("IndexCarausel","Penyewa");
             }
                 
         }

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Pendaftaran_Tenant.Data_carausel>
+@section navwizard {
+
+
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
+
+}
+@Html.Partial("CreateCarausel")
+<div class="row">
+    <h2 class="text-center">Gambar Carausel</h2>
+    <hr />
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+
+            <div class="thumbnail">
+                <img src="~/Content/Images/@item.gambar" style="min-height:150px;height:150px;" />
+            </div>
+        </div>
+    }
+</div>

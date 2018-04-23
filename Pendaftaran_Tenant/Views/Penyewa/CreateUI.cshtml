@@ -7,7 +7,6 @@
     <style type="text/css" media="screen">
 
         .colorwell {
-            
             width: 6em;
             text-align: center;
             cursor: pointer;
@@ -19,80 +18,89 @@
         }
     </style>
 }
+@section navwizard {
 
+   
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
+    
+}
 @{
     ViewBag.Title = "CreateUI";
 }
+<br />
+<div class="text-center">
+    <ul class="nav nav-wizard" style="display:inline-block">
+        <li class="active"><a>Design Website</a></li>
+        <li><a style="color:#47a447">Gambar Homepage</a></li>
+        <li><a style="color:#47a447">Data Produk, Bahan, dan Jenis Sablon</a></li>
+        <li><a style="color:#47a447">Data Harga</a></li>
 
-<h2>CreateUI</h2>
-@Html.Raw(TempData["Pesan"])
-@using (Html.BeginForm("CreateUI", "Penyewa", FormMethod.Post,
-                                                new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-<div class="form-horizontal text-center">
-    <h4>Data_UI</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-    <div class="form-group text-center">
-        <label class="control-label col-md-2" style="color:black" for="uploadimage">Gambar Barang</label>
-        <div class="col-md-10">
-            <input name="uploadimage" type="file" class="form-control" />
-        </div>
-    </div>
-
-    <script type="text/javascript" charset="utf-8">
-        $(document).ready(function () {
-            $('#demo').hide();
-            var f = $.farbtastic('#picker');
-            var p = $('#picker').css('opacity', 0.25);
-            var selected;
-            $('.colorwell')
-                .each(function () { f.linkTo(this); $(this).css('opacity', 0.75); })
-                .focus(function () {
-                    if (selected) {
-                        $(selected).css('opacity', 0.75).removeClass('colorwell-selected');
-                    }
-                    f.linkTo(this);
-                    p.css('opacity', 1);
-                    $(selected = this).css('opacity', 1).addClass('colorwell-selected');
-                });
-        });
-    </script>
-    <form action="" style="width: 500px;">
-
-        <div class="form-group">
-            <label class="control-label col-md-2" for="color1">Warna Background </label>
-            <div class="col-md-10">
-                <input type="text" id="color1" name="color1" class="colorwell form-control" value="#123456" />
-            </div>
-            </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" for="color2">Warna Header Web </label>
-            <div class="col-md-10">
-                <input type="text" id="color2" name="color2" class="colorwell form-control" value="#123456" />
-            </div>
-            </div>
-        <div class="form-group">
-            <div class="col-md-10">
-                <div id="picker" style="float: none;"></div>
-                </div>
-            </div>
-</form>
-
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
+    </ul>
 </div>
+
+<hr />
+@Html.Raw(TempData["Pesan"])
+
+
+<div class="col-md-12 col-xs-12" style="margin-left:27%">
+    <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
+        @using (Html.BeginForm("CreateUI", "Penyewa", FormMethod.Post,
+                                                new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <h3 style="color:#47a447">Logo dan Warna Website</h3>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <table style="border:0 solid;float:none;margin:0 auto">
+            <tr>
+                <th style="text-align:center"><label for="uploadimage">Logo Perusahaan</label></th>
+            </tr>
+            <tr>
+                <td style="text-align:center;padding-bottom:15px"><input name="uploadimage" type="file" class="form-control" /></td>
+            </tr>
+            <tr><th style="text-align:center"><label for="color1">Warna Background </label></th></tr>
+            <tr><td style="text-align:center;padding-bottom:15px"><input type="text" id="color1" name="color1" class="colorwell form-control" style="display:inline-block" value="#123456" /></td></tr>
+            <tr><th style="text-align:center"><label for="color2">Warna Header Web </label></th></tr>
+            <tr><td style="text-align:center;padding-bottom:15px"><input type="text" id="color2" name="color2" class="colorwell form-control" style="display:inline-block" value="#123456" /></td></tr>
+            <tr><td style="text-align:center"> <div id="picker" style="float: none;display:inline-block"></div></td></tr>
+        </table>
+
+
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function () {
+                $('#demo').hide();
+                var f = $.farbtastic('#picker');
+                var p = $('#picker').css('opacity', 0.25);
+                var selected;
+                $('.colorwell')
+                    .each(function () { f.linkTo(this); $(this).css('opacity', 0.75); })
+                    .focus(function () {
+                        if (selected) {
+                            $(selected).css('opacity', 0.75).removeClass('colorwell-selected');
+                        }
+                        f.linkTo(this);
+                        p.css('opacity', 1);
+                        $(selected = this).css('opacity', 1).addClass('colorwell-selected');
+                    });
+            });
+        </script>
+
+
+
+        <br />
+        <div>
+
+            <input type="submit" value="Simpan UI" class="btn btn-success" />
+
+            @* <p style="padding-top:10px"> <a onclick="location.href='@Url.Action("CreateCarausel", "Penyewa")'" class="btn btn-warning btn-sm">Selanjutnya >></a></p>*@
+
+        </div>
+        <br />
 }
 
-
+    </div>
+</div>
 
