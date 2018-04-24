@@ -3,45 +3,56 @@
 @{
     ViewBag.Title = "IndexProduk";
 }
+@section navwizard {
 
-<h2>Data Produk perusahaan @Session["nama_perusahaan"]</h2>
 
-@Html.Partial("CreateProduk")
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
 
-<h3>Daftar produk</h3>
-<p><h5>anda bisa menambahkan bahan dan jenis sablon sesuai produk yang diinginkan</h5></p>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.nama_produk)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.deskripsi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.foto_produk)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.nama_produk)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.deskripsi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.foto_produk)
-        </td>
-        <td>
-            @Html.ActionLink("Tambah Bahan", "CreateBahan", new { id = item.id_produk }) |
-            @Html.ActionLink("Tambah Jenis Sablon", "CreateJenisSablon", new { id = item.id_produk })
-
-        </td>
-    </tr>
 }
+<div class="row">
 
-</table>
+    @Html.Partial("CreateProduk")
+
+    <div class="col-md-6 col-xs-6">
+        <div class="thumbnail clearfix text-center" style="max-width:600px;width:100%">
+
+            <h3>Daftar produk</h3>
+            <p><h5>anda bisa menambahkan bahan dan jenis sablon sesuai produk yang diinginkan</h5></p>
+
+            <table style="margin-left:10px;margin-right:10px">
+
+                @foreach (var item in Model.Select((value, i) =>  new {i, value }))
+                {
+                   
+                        if ((item.i % 3) == 0)
+                        {
+                            @:<tr>
+                            }
+                            <td style="padding-right:10px;padding-left:10px;padding-top:10px;padding-bottom:10px">
+                                <div class="thumbnail clearfix text-center">
+                                    <p><img src="~/Content/Images/@item.value.foto_produk" style="max-height:100px" /></p>
+                                    <p>@item.value.nama_produk</p>
+                                    <p>
+                                        @Html.ActionLink("Tambah Bahan", "CreateBahan", new { id = item.value.id_produk }, new { @class = "btn btn-warning btn-xs" })
+                                    </p>
+                                    <p>
+                                        @Html.ActionLink("Tambah Jenis Sablon", "CreateJenisSablon", new { id = item.value.id_produk }, new { @class = "btn btn-warning btn-xs" })
+                                    </p>
+                                </div>
+                            </td>
+
+                    if((item.i % 3) == 2)
+                    {
+                        @:</tr>
+                    }
+
+
+
+
+
+                }
+
+        </table>
+    </div>
+</div>
+</div>

@@ -2,47 +2,47 @@
 @{
     ViewBag.Title = "CreateProduk";
 }
+@section navwizard {
 
 
-@Html.Raw(TempData["Pesan"])
-<div class="row">
-    <div class="col-md-8">
-
-        @using (Html.BeginForm("CreateProduk", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-
-        <hr />
-
-        <div class="form-group">
-            <label for="namaproduk" class="col-md-2 control-label">Nama Produk</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" id="namaproduk" name="namaproduk" />
-
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="deskripsi" class="col-md-2 control-label">Deskripsi</label>
-            <div class="col-md-10">
-                <textarea rows="4" class="form-control" id="deskripsi" name="deskripsi"></textarea>
-
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2" style="color:black" for="fotoproduk">Gambar Produk</label>
-            <div class="col-md-10">
-                <input name="fotoproduk" type="file" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Simpan" class="btn btn-default" />
-                @Html.ActionLink("Lanjut ke penambahan harga", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')" })
-
-            </div>
-        </div>
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
 
 }
+<div class="text-center">
+    <ul class="nav nav-wizard" style="display:inline-block">
+        <li><a style="color:#47a447">Design Website</a></li>
+        <li><a style="color:#47a447">Gambar Homepage</a></li>
+        <li class="active"><a>Data Produk, Bahan, dan Jenis Sablon</a></li>
+        <li><a style="color:#47a447">Data Harga</a></li>
+
+    </ul>
+</div>
+<br />
+@*@Html.Raw(TempData["Pesan"])*@
+<div class="col-md-6 col-xs-6">
+    <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
+
+        @using (Html.BeginForm("CreateProduk", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <h3 style="color:#47a447">Logo dan Warna Website</h3>
+            <hr />
+            <table style="border:0 solid;float:none;margin:0 auto">
+                <tr><th style="text-align:center"><label for="namaproduk">Nama Produk</label></th></tr>
+                <tr><td style="text-align:center"><input type="text" class="form-control" id="namaproduk" name="namaproduk" /></td></tr>
+                <tr><th style="text-align:center"><label for="deskripsi">Deskripsi</label></th></tr>
+                <tr><td style="text-align:center"><textarea rows="4" class="form-control" id="deskripsi" name="deskripsi"></textarea></td></tr>
+                <tr><th style="text-align:center"><label style="color:black" for="fotoproduk">Gambar Produk</label></th></tr>
+                <tr><td style="text-align:center"><input name="fotoproduk" type="file" class="form-control" /></td></tr>
+            </table>
+
+        <br />
+            <input type="submit" value="Simpan" class="btn btn-success" />
+            <p style="padding-bottom:5px;margin-top:10px">
+                @Html.ActionLink("Lanjut ke penambahan harga", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-warning btn-sm" })
+            </p>
+            <br />
+        }
 
     </div>
 
