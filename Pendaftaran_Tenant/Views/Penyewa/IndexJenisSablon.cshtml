@@ -3,34 +3,47 @@
 @{
     ViewBag.Title = "IndexJenisSablon";
 }
+@section navwizard {
 
-@Html.Partial("CreateJenisSablon2")
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.id_produk)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nama_sablon)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.id_produk)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nama_sablon)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id_jns_sablon }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id_jns_sablon }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id_jns_sablon })
-            </td>
-        </tr>
-    }
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
 
-</table>
+}
+<div class="row">
+    @Html.Partial("CreateJenisSablon")
+    <div class="col-md-6 col-xs-6">
+        <div class="thumbnail clearfix text-center" style="max-width:600px;width:100%">
+            <h2>Daftar Jenis Sablon</h2>
+            <hr />
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.id_produk)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.nama_sablon)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.id_produk)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nama_sablon)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id_jns_sablon }, new { @class = "btn btn-warning btn-xs" })
+
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id_jns_sablon }, new { @class = "btn btn-warning btn-xs" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,36 +1,57 @@
 ﻿
 @{ var namaproduk = Session["nama_produk"];}
 
+@section navwizard {
 
-<h2>Isi Bahan untuk produk @namaproduk</h2>
-@Html.Raw(TempData["Pesan"])
+
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
+
+}
+<div class="text-center">
+    <ul class="nav nav-wizard" style="display:inline-block">
+        <li><a style="color:#47a447">Design Website</a></li>
+        <li><a style="color:#47a447">Gambar Homepage</a></li>
+        <li class="active"><a>Data Produk, Bahan, dan Jenis Sablon</a></li>
+        <li><a style="color:#47a447">Data Harga</a></li>
+
+    </ul>
+</div>
+<br />
+<br />
 <div class="row">
-    <div class="col-md-8">
+    <a onclick="location.href='@Url.Action("IndexProduk", "Penyewa")'" class="btn btn-warning btn-sm" style="margin-left:35px"><< Kembali ke daftar produk</a>
+</div>
+<br />
 
-        @using (Html.BeginForm("CreateJenisSablon", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
+@*@Html.Raw(TempData["Pesan"])*@
 
-            <hr />
+    <div class="col-md-6 col-xs-6">
+        <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
 
-            <div class="form-group">
-                <label for="namajenissablon" class="col-md-2 control-label">Nama Jenis Sablon</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" id="namajenissablon" name="namajenissablon" />
+            @using (Html.BeginForm("CreateJenisSablon", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h2>Isi Jenis Sablon untuk produk @namaproduk</h2>
+                <hr />
+
+                <div class="form-group">
+                    <table style="border:0 solid;float:none;margin:0 auto">
+
+                        <tr><td><label for="namajenissablon">Nama Jenis Sablon</label><input type="text" class="form-control" id="namajenissablon" name="namajenissablon" /></td></tr>
+                    </table>
+
 
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Simpan" class="btn btn-default" />
-                </div>
-            </div>
 
-        }
+                <input type="submit" value="Simpan" class="btn btn-success" />
+                <br />
+                <br />
+
+            }
+
+        </div>
 
     </div>
-
-</div>
 
 

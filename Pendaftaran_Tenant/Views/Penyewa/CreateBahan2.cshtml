@@ -16,8 +16,13 @@
 
     </ul>
 </div>
-
+<br />
+<br />
 @*@Html.Raw(TempData["Pesan"])*@
+<div class="row">
+    <a onclick="location.href='@Url.Action("IndexProduk", "Penyewa")'" class="btn btn-warning btn-sm" style="margin-left:35px"><< Kembali ke daftar produk</a>
+</div>
+<br />
 <div class="col-md-6 col-xs-6">
     <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
 
@@ -26,15 +31,18 @@
             @Html.AntiForgeryToken()
             <h2>Isi Bahan untuk produk @namaproduk</h2>
             <hr />
-            <table style="border:0 solid;float:none;margin:0 auto">
-                <tr><th><label for="namabahan">Nama Bahan</label></th></tr>
-                <tr><td><input type="text" class="form-control" id="namabahan" name="namabahan" /></td></tr>
-            </table>
+            <div class="form-group">
+                <table style="border:0 solid;float:none;margin:0 auto">
 
+                    <tr><td><label for="namabahan">Nama Bahan</label><input type="text" class="form-control" id="namabahan" name="namabahan" /></td></tr>
+                </table>
 
+            </div>
 
             <input type="submit" value="Simpan" class="btn btn-success" />
 
+            <br />
+            <br />
 
         }
 

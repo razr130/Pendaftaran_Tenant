@@ -18,6 +18,12 @@
     </ul>
 </div>
 <br />
+
+<br />
+<div class="row">
+    @Html.ActionLink("Lanjut ke penambahan harga >>", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
+</div>
+<br />
 @*@Html.Raw(TempData["Pesan"])*@
 <div class="col-md-6 col-xs-6">
     <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
@@ -36,10 +42,10 @@
                 <tr><td style="text-align:center"><input name="fotoproduk" type="file" class="form-control" /></td></tr>
             </table>
 
-        <br />
+            <br />
             <input type="submit" value="Simpan" class="btn btn-success" />
             <p style="padding-bottom:5px;margin-top:10px">
-                @Html.ActionLink("Lanjut ke penambahan harga", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-warning btn-sm" })
+
             </p>
             <br />
         }

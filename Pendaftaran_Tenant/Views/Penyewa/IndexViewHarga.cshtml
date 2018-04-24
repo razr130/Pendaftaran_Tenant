@@ -6,20 +6,19 @@
 
 <h2>IndexViewHarga</h2>
 @Html.Raw(TempData["Pesan"])
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nama_produk)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.nama_bahan)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.nama_sablon)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nama_produk)
-        </th>
+
         <th style="text-align:center">
             @Html.DisplayNameFor(model => model.harga)
         </th>
@@ -27,31 +26,48 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Select((value, i) => new { i, value }))
     {
         <tr>
+
             <td>
-                @Html.DisplayFor(modelItem => item.nama_bahan)
+                @Html.DisplayFor(modelItem => item.value.nama_produk)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nama_sablon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nama_produk)
-            </td>
-            @if (item.harga == 0)
+            @if (item.value.nama_bahan == null)
             {
-            <td align="center">
-                <input type="text" class="form-control" id="harga" name="harga" style="width:6em" />
-            </td>
-            <td align="center">
-                <button class="btn btn-success" onclick="location.href='@Url.Action("AddHarga","Penyewa")?namabahan=' + '@item.nama_bahan' + '&namaproduk=' + '@item.nama_produk' + '&namajenissablon=' + '@item.nama_sablon' + '&harga=' + $('#harga').val()">Tambah Harga</button>
-            </td>
+                <td>-</td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.value.nama_bahan)
+                </td>
+            }
+            @if (item.value.nama_sablon == null)
+            {
+                <td>-</td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.value.nama_sablon)
+                </td>
+            }
+
+
+            @if (item.value.harga == 0)
+            {
+                <td align="center">
+                    <input type="text" class="form-control" id="harga_@item.i.ToString()" name="harga" style="width:6em" />
+                </td>
+                <td align="center">
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("AddHarga","Penyewa")?idbahan=' + '@item.value.id_bahan' + '&idproduk=' + '@item.value.id_produk' + '&idsablon=' + '@item.value.id_jns_sablon' + '&harga=' + $('#harga_@item.i.ToString()').val()">Tambah Harga</button>
+                </td>
             }
             else
             {
                 <td align="center">
-                    @Html.DisplayFor(modelItem => item.harga)
+                    @Html.DisplayFor(modelItem => item.value.harga)
                 </td>
 
                 <td align="center">

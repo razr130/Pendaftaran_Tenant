@@ -3,13 +3,21 @@
 @{
     ViewBag.Title = "IndexBahan";
 }
+@section navwizard {
 
+
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
+
+}
 
 <div class="row">
-    @Html.Partial("CreateBahan2")
+
+    @Html.Partial("CreateBahan")
     <div class="col-md-6 col-xs-6">
         <div class="thumbnail clearfix text-center" style="max-width:600px;width:100%">
-            <table class="table" style="margin-left:10px;margin-right:10px">
+            <h2>Daftar Bahan</h2>
+            <hr />
+            <table class="table">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.id_produk)
@@ -30,8 +38,8 @@
                             @Html.DisplayFor(modelItem => item.nama_bahan)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.id_bahan }, new { @class = "btn btn-warning btn-xs" }) 
-                           
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id_bahan }, new { @class = "btn btn-warning btn-xs" })
+
                             @Html.ActionLink("Delete", "Delete", new { id = item.id_bahan }, new { @class = "btn btn-warning btn-xs" })
                         </td>
                     </tr>

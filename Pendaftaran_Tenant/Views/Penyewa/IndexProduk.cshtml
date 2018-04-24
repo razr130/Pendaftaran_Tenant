@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
 
 }
+   
 <div class="row">
 
     @Html.Partial("CreateProduk")
@@ -33,10 +34,10 @@
                                     <p><img src="~/Content/Images/@item.value.foto_produk" style="max-height:100px" /></p>
                                     <p>@item.value.nama_produk</p>
                                     <p>
-                                        @Html.ActionLink("Tambah Bahan", "CreateBahan", new { id = item.value.id_produk }, new { @class = "btn btn-warning btn-xs" })
+                                        @Html.ActionLink("Tambah Bahan", "IndexBahan", new { id = item.value.id_produk }, new { @class = "btn btn-warning btn-xs" })
                                     </p>
                                     <p>
-                                        @Html.ActionLink("Tambah Jenis Sablon", "CreateJenisSablon", new { id = item.value.id_produk }, new { @class = "btn btn-warning btn-xs" })
+                                        @Html.ActionLink("Tambah Jenis Sablon", "IndexJenisSablon", new { id = item.value.id_produk }, new { @class = "btn btn-warning btn-xs" })
                                     </p>
                                 </div>
                             </td>

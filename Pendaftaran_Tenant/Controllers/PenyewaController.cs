@@ -38,7 +38,7 @@ namespace Pendaftaran_Tenant.Controllers
 
         public ActionResult Login()
         {
-            
+
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace Pendaftaran_Tenant.Controllers
         public ActionResult Login(Penyewa penyewa)
         {
             var results = db.Penyewas.SingleOrDefault(m => m.email == penyewa.email && m.password == penyewa.password);
-            
+
             if (results != null)
             {
                 if (results.status_bayar == false)
@@ -66,7 +66,7 @@ namespace Pendaftaran_Tenant.Controllers
 
                         Session["role"] = sewa.getRole(penyewa.email).ToString();
                         Session["id_penyewa"] = sewa.getId(penyewa.email).ToString();
-                        
+
                     }
                     string nama_perusahaan;
                     int idpenyewa = Convert.ToInt32(Session["id_penyewa"]);
@@ -85,7 +85,7 @@ namespace Pendaftaran_Tenant.Controllers
                     else
                     {
                         var results2 = db.Data_UI.SingleOrDefault(m => m.id_penyewa == idpenyewa);
-                        if(results2 != null)
+                        if (results2 != null)
                         {
                             return RedirectToAction("Index2", "Home");
                         }
@@ -93,9 +93,9 @@ namespace Pendaftaran_Tenant.Controllers
                         {
                             return RedirectToAction("CreateUI", "Penyewa");
                         }
-                        
+
                     }
-                   
+
                 }
             }
             else
@@ -104,7 +104,7 @@ namespace Pendaftaran_Tenant.Controllers
                       "danger", "Email atau password salah");
 
             }
-           
+
             return View();
         }
 
@@ -150,7 +150,7 @@ namespace Pendaftaran_Tenant.Controllers
                 var result = tenan.GetDataBaru(id).ToList();
                 return View(result);
             }
-                
+
         }
         public ActionResult Edit(int id)
         {
@@ -190,7 +190,7 @@ namespace Pendaftaran_Tenant.Controllers
                 {
                     svBrg.AddUI(dataui);
                     //TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
-                      //"success", "Data UI berhasil ditambah");
+                    //"success", "Data UI berhasil ditambah");
                     //Session["id_ui"] = svBrg.getIdUI(Convert.ToInt32(Session["id_penyewa"]));
                 }
                 catch (Exception ex)
@@ -208,7 +208,7 @@ namespace Pendaftaran_Tenant.Controllers
             {
                 idui = svui.getIdUI(Convert.ToInt32(Session["id_penyewa"]));
             }
-                string stmt = "SELECT COUNT(gambar) FROM Data_carausel WHERE id_ui = " + idui + ";";
+            string stmt = "SELECT COUNT(gambar) FROM Data_carausel WHERE id_ui = " + idui + ";";
             int count = 0;
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
 
@@ -232,14 +232,14 @@ namespace Pendaftaran_Tenant.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateCarausel(Data_carausel datacarausel, HttpPostedFileBase uploadimage)
         {
-           if(GetCount() == 4)
+            if (GetCount() == 4)
             {
                 TempData["Pesan"] = Helpers.Message.GetPesan("Melebihi kapasitas",
                           "danger", "Anda sudah memasukkan 4 gambar carausel");
                 return View();
 
             }
-           else
+            else
             {
 
                 string filePath = "";
@@ -269,9 +269,9 @@ namespace Pendaftaran_Tenant.Controllers
                                               "danger", ex.Message);
                     }
                 }
-                return RedirectToAction("IndexCarausel","Penyewa");
+                return RedirectToAction("IndexCarausel", "Penyewa");
             }
-                
+
         }
         public ActionResult CreateProduk()
         {
@@ -284,10 +284,10 @@ namespace Pendaftaran_Tenant.Controllers
             string fileName = Guid.NewGuid().ToString() + "_" + fotoproduk.FileName;
             if (fotoproduk.ContentLength > 0)
             {
-                
+
                 filePath = Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), fileName);
                 fotoproduk.SaveAs(filePath);
-                
+
             }
             string nama_perusahaan;
             int id = Convert.ToInt32(Session["id_penyewa"]);
@@ -302,12 +302,12 @@ namespace Pendaftaran_Tenant.Controllers
             {
                 conn.Open();
                 string query = "USE [MultiTenancy_Sablon]" +
-                    "INSERT INTO[dbo].[Produk_"+ nama_perusahaan +"]" +
+                    "INSERT INTO[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([nama_produk]" +
                     ",[deskripsi]" +
                     ",[foto_produk])" +
                     "VALUES" +
-                    "('" + namaproduk + "' ,'"+ deskripsi +"' ,'"+ fileName +"')";
+                    "('" + namaproduk + "' ,'" + deskripsi + "' ,'" + fileName + "')";
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -324,7 +324,7 @@ namespace Pendaftaran_Tenant.Controllers
 
                 conn.Close();
             }
-                return RedirectToAction("IndexProduk","Penyewa");
+            return RedirectToAction("IndexProduk", "Penyewa");
         }
 
 
@@ -337,7 +337,7 @@ namespace Pendaftaran_Tenant.Controllers
 
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
             List<Produk> result = new List<Produk>();
-            
+
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
@@ -361,7 +361,54 @@ namespace Pendaftaran_Tenant.Controllers
                                 deskripsi = reader["deskripsi"].ToString(),
                                 foto_produk = reader["foto_produk"].ToString()
                             };
-                             result.Add(item);
+                            result.Add(item);
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
+
+        public ActionResult IndexProdukBig()
+        {
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+            //string nama_perusahaan = "b";            
+
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            List<Produk> result = new List<Produk>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [id_produk]" +
+                    ",[nama_produk]" +
+                    ",[deskripsi]" +
+                    ",[foto_produk]" +
+                    "FROM[MultiTenancy_Sablon].[dbo].[Produk_" + nama_perusahaan + "]";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Produk item = new Produk()
+                            {
+                                id_produk = (int)reader["id_produk"],
+                                nama_produk = reader["nama_produk"].ToString(),
+                                deskripsi = reader["deskripsi"].ToString(),
+                                foto_produk = reader["foto_produk"].ToString()
+                            };
+                            result.Add(item);
                         }
                     }
 
@@ -380,7 +427,7 @@ namespace Pendaftaran_Tenant.Controllers
         {
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
             //string nama_perusahaan = "b";
-            
+
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
             string result = "";
 
@@ -395,7 +442,7 @@ namespace Pendaftaran_Tenant.Controllers
                 {
                     using (SqlDataReader reader = sqlcom.ExecuteReader())
                     {
-                        if(reader.Read())
+                        if (reader.Read())
                         {
                             result = string.Format("{0}", reader["nama_produk"]);
                         }
@@ -412,12 +459,13 @@ namespace Pendaftaran_Tenant.Controllers
             return result;
         }
 
-        public ActionResult IndexBahan()
+        public ActionResult IndexBahan(int id)
         {
-
+            Session["id_produk"] = id;
+            Session["nama_produk"] = GetNamaproduk().ToString();
 
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
-            
+
 
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
             List<Bahan> result = new List<Bahan>();
@@ -428,7 +476,7 @@ namespace Pendaftaran_Tenant.Controllers
                 string query = "SELECT [id_bahan]" +
                     ",[id_produk]" +
                     ",[nama_bahan]" +
-                    " FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + nama_perusahaan + "]";
+                    " FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + nama_perusahaan + "] WHERE [id_produk]=" + Session["id_produk"].ToString();
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -457,10 +505,9 @@ namespace Pendaftaran_Tenant.Controllers
             }
             return View(result);
         }
-        public ActionResult CreateBahan(int id)
+        public ActionResult CreateBahan()
         {
-            Session["id_produk"] = id;
-            Session["nama_produk"] = GetNamaproduk().ToString();
+
 
             return View();
         }
@@ -506,11 +553,11 @@ namespace Pendaftaran_Tenant.Controllers
 
 
 
-            return RedirectToAction("IndexBahan","Penyewa");
+            return RedirectToAction("IndexBahan", "Penyewa", new { id = (int)Session["id_produk"] });
         }
 
         public ActionResult CreateBahan2()
-        {        
+        {
 
             return View();
         }
@@ -559,10 +606,11 @@ namespace Pendaftaran_Tenant.Controllers
             return RedirectToAction("IndexBahan", "Penyewa");
         }
 
-        public ActionResult IndexJenisSablon()
+        public ActionResult IndexJenisSablon(int id)
         {
 
-
+            Session["id_produk"] = id;
+            Session["nama_produk"] = GetNamaproduk().ToString();
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
 
 
@@ -575,7 +623,7 @@ namespace Pendaftaran_Tenant.Controllers
                 string query = "SELECT [id_jns_sablon]" +
                     ",[id_produk]" +
                     ",[nama_sablon]" +
-                    " FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + nama_perusahaan + "]";
+                    " FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + nama_perusahaan + "] WHERE [id_produk]=" + Session["id_produk"].ToString();
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -605,10 +653,9 @@ namespace Pendaftaran_Tenant.Controllers
             }
             return View(result);
         }
-        public ActionResult CreateJenisSablon(int id)
+        public ActionResult CreateJenisSablon()
         {
-            Session["id_produk"] = id;
-            Session["nama_produk"] = GetNamaproduk().ToString();
+
 
             return View();
         }
@@ -654,7 +701,7 @@ namespace Pendaftaran_Tenant.Controllers
 
 
 
-            return RedirectToAction("IndexJenisSablon", "Penyewa");
+            return RedirectToAction("IndexJenisSablon", "Penyewa", new { id = (int)Session["id_produk"] });
         }
 
         public ActionResult CreateJenisSablon2()
@@ -734,7 +781,53 @@ namespace Pendaftaran_Tenant.Controllers
                     {
                         while (reader.Read())
                         {
-                            if (reader["harga"] == DBNull.Value)
+
+                            if (reader["nama_sablon"] == DBNull.Value && reader["id_jns_sablon"] == DBNull.Value && reader["harga"] == DBNull.Value && reader["nama_bahan"] == DBNull.Value && reader["id_bahan"] == DBNull.Value)
+                            {
+                                HargaViewModel item = new HargaViewModel()
+                                {
+                                    nama_bahan = null,
+                                    nama_sablon = null,
+                                    nama_produk = reader["nama_produk"].ToString(),
+                                    harga = 0,
+                                    id_bahan = null,
+                                    id_jns_sablon = null,
+                                    id_produk = (int)reader["id_produk"]
+
+                                };
+                                result.Add(item);
+                            }
+                            else if (reader["nama_bahan"] == DBNull.Value && reader["id_bahan"] == DBNull.Value && reader["harga"] == DBNull.Value)
+                            {
+                                HargaViewModel item = new HargaViewModel()
+                                {
+                                    nama_bahan = null,
+                                    nama_sablon = reader["nama_sablon"].ToString(),
+                                    nama_produk = reader["nama_produk"].ToString(),
+                                    harga = 0,
+                                    id_bahan = null,
+                                    id_jns_sablon = (int)reader["id_jns_sablon"],
+                                    id_produk = (int)reader["id_produk"]
+
+                                };
+                                result.Add(item);
+                            }
+                            else if (reader["nama_sablon"] == DBNull.Value && reader["id_jns_sablon"] == DBNull.Value && reader["harga"] == DBNull.Value)
+                            {
+                                HargaViewModel item = new HargaViewModel()
+                                {
+                                    nama_bahan = reader["nama_bahan"].ToString(),
+                                    nama_sablon = null,
+                                    nama_produk = reader["nama_produk"].ToString(),
+                                    harga = 0,
+                                    id_bahan = (int)reader["id_bahan"],
+                                    id_jns_sablon = null,
+                                    id_produk = (int)reader["id_produk"]
+
+                                };
+                                result.Add(item);
+                            }
+                            else if (reader["harga"] == DBNull.Value)
                             {
                                 HargaViewModel item = new HargaViewModel()
                                 {
@@ -764,8 +857,8 @@ namespace Pendaftaran_Tenant.Controllers
                                 };
                                 result.Add(item);
                             }
-                            
-                           
+
+
                         }
                     }
 
@@ -794,36 +887,37 @@ namespace Pendaftaran_Tenant.Controllers
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
-                string query = 
+                string query =
                     " CREATE VIEW[dbo].[ViewHarga_" + nama_perusahaan + "]" +
                     " AS" +
                     " SELECT        dbo.Bahan_" + nama_perusahaan + "." + "nama_bahan, dbo.JenisSablon_" + nama_perusahaan + "." + "nama_sablon, dbo.Produk_" + nama_perusahaan + "." + "nama_produk, dbo.Harga_" + nama_perusahaan + "." + "harga, dbo.Bahan_" + nama_perusahaan + "." + "id_bahan, dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon, dbo.Produk_" + nama_perusahaan + "." + "id_produk" +
                     " FROM            dbo.Bahan_" + nama_perusahaan + " LEFT OUTER JOIN" +
                     " dbo.Produk_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_produk = dbo.Produk_" + nama_perusahaan + "." + "id_produk LEFT OUTER JOIN" +
                     " dbo.JenisSablon_" + nama_perusahaan + " ON dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.JenisSablon_" + nama_perusahaan + "." + "id_produk LEFT OUTER JOIN" +
-                    " dbo.Harga_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_bahan = dbo.Harga_" + nama_perusahaan + "." + "id_bahan AND dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.Harga_" + nama_perusahaan + "." + "id_produk AND dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon = dbo.Harga_" + nama_perusahaan + "." + "id_jns_sablon" 
+                    " dbo.Harga_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_bahan = dbo.Harga_" + nama_perusahaan + "." + "id_bahan AND dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.Harga_" + nama_perusahaan + "." + "id_produk AND dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon = dbo.Harga_" + nama_perusahaan + "." + "id_jns_sablon"
                     ;
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
                 {
                     sqlcom.ExecuteNonQuery();
                     //TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
-                                          //"success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
+                    //"success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
                 }
                 catch (Exception ex)
                 {
-                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
-                                          "danger", ex.Message);
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                    //"danger", ex.Message);
+                    return RedirectToAction("IndexViewHarga", "Penyewa");
                 }
 
 
                 conn.Close();
             }
-            return RedirectToAction("IndexViewHarga","Penyewa");
-        
-         }
+            return RedirectToAction("IndexViewHarga", "Penyewa");
 
-        public ActionResult AddHarga(string namabahan, string namaproduk, string namajenissablon, int harga)
+        }
+
+        public ActionResult AddHarga(int idbahan, int idproduk, int idsablon, int harga)
         {
             string nama_perusahaan;
             int id = Convert.ToInt32(Session["id_penyewa"]);
@@ -836,57 +930,28 @@ namespace Pendaftaran_Tenant.Controllers
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
-                string query = " CREATE TRIGGER[dbo].[UpdateHargaTrigger_" + nama_perusahaan + "]" + "on [MultiTenancy_Sablon].[dbo].[ViewHarga_" + nama_perusahaan + "]" +
-                    " INSTEAD OF UPDATE" +
-                    " AS" +
-                    " BEGIN" +
-                    " declare @id_produk int" +
-                    " declare @id_bahan int" +
-                    " declare @id_jns_sablon int" +
-                    " declare @harga int" +
-                    " select @id_produk = p.id_produk" +
-                    " from Produk_" + nama_perusahaan + " p" +
-                    " join inserted" +
-                    " on inserted.nama_produk = p.nama_produk" +
-                    " select @id_bahan = b.id_bahan" +
-                    " from Bahan_" + nama_perusahaan + " b" +
-                    " join inserted" +
-                    " on inserted.nama_bahan = b.nama_bahan" +
-                    " select @id_jns_sablon = j.id_jns_sablon" +
-                    " from JenisSablon_" + nama_perusahaan + " j" +
-                    " join inserted" +
-                    " on inserted.nama_sablon = j.nama_sablon" +
-                    " select @harga = harga from inserted where id_produk = @id_produk and id_bahan = @id_bahan and id_jns_sablon = @id_jns_sablon" +
-                    " insert into Harga_" + nama_perusahaan + "(id_produk, id_bahan, id_jns_sablon, harga) values(@id_produk, @id_bahan, @id_jns_sablon, @harga)" +
-                    " END";
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[Harga_"+ nama_perusahaan +"]" +
+                    "([id_produk]" + 
+                    ",[id_bahan]" +
+                    ",[id_jns_sablon]" +
+                    ",[harga])" +
+                    "VALUES" +
+                    "(" + idproduk.ToString() +
+                    "," + idbahan.ToString() +
+                    "," + idsablon.ToString() +
+                    ","+harga+")";
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
                 {
                     sqlcom.ExecuteNonQuery();
-                    sqlcom.CommandText = "UPDATE [dbo].[ViewHarga_" + nama_perusahaan + "]" +
-                        "SET" +
-                        "[nama_bahan] = '"+namabahan+"'" +
-                        ",[nama_sablon] = '" + namajenissablon + "'" +
-                        ",[nama_produk] = '" + namaproduk + "'" +
-                        ",[harga] = " + harga.ToString() +
-                        "WHERE nama_bahan = '" + namabahan + "' and nama_sablon = '" + namajenissablon + "' and nama_produk = '" + namaproduk + "'";
-
-                    sqlcom.ExecuteNonQuery();
-                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
-                    "success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
+                    
                 }
                 catch (Exception)
                 {
-                    sqlcom.CommandText = "UPDATE [dbo].[ViewHarga_" + nama_perusahaan + "]" +
-                        "SET" +
-                        "[nama_bahan] = '" + namabahan + "'" +
-                        ",[nama_sablon] = '" + namajenissablon + "'" +
-                        ",[nama_produk] = '" + namaproduk + "'" +
-                        ",[harga] = " + harga.ToString() +
-                        "WHERE nama_bahan = '" + namabahan + "' and nama_sablon = '" + namajenissablon + "' and nama_produk = '" + namaproduk + "'";
+                    
 
-                    sqlcom.ExecuteNonQuery();
 
                 }
 
@@ -896,7 +961,7 @@ namespace Pendaftaran_Tenant.Controllers
             return RedirectToAction("IndexViewHarga", "Penyewa");
         }
 
-        
+
 
         public ActionResult Addtable(int id)
         {
@@ -910,17 +975,17 @@ namespace Pendaftaran_Tenant.Controllers
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
-                string query = "USE [MultiTenancy_Sablon]" + 
+                string query = "USE [MultiTenancy_Sablon]" +
 
-                    
+
 
                     " SET ANSI_NULLS ON" +
 
-                    
+
 
                     " SET QUOTED_IDENTIFIER ON" +
 
-                    
+
 
                     " CREATE TABLE[dbo].[Karyawan_" + nama_perusahaan + "](" +
 
@@ -952,19 +1017,19 @@ namespace Pendaftaran_Tenant.Controllers
 
                     ") ON[PRIMARY]" +
 
-                    
+
 
                     " USE[MultiTenancy_Sablon]" +
 
-                    
+
 
                     " SET ANSI_NULLS ON" +
 
-                    
+
 
                     " SET QUOTED_IDENTIFIER ON" +
 
-                    
+
 
                     " CREATE TABLE[dbo].[Customer_" + nama_perusahaan + "]" +
 
@@ -998,17 +1063,17 @@ namespace Pendaftaran_Tenant.Controllers
 
                     ") ON[PRIMARY]" +
 
-                    
+
 
                     " USE[MultiTenancy_Sablon]" +
 
-                    
+
 
                     " SET ANSI_NULLS ON" +
 
-                    
+
                     " SET QUOTED_IDENTIFIER ON" +
-                    
+
                     " CREATE TABLE[dbo].[Produk_" + nama_perusahaan + "]" +
                     "(" +
                     "[id_produk][int] IDENTITY(1,1) NOT NULL," +
@@ -1020,13 +1085,13 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_produk] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY]" +
-                    
+
                     " USE[MultiTenancy_Sablon]" +
-                    
+
                     " SET ANSI_NULLS ON" +
-                    
+
                     " SET QUOTED_IDENTIFIER ON" +
-                    
+
                     " CREATE TABLE[dbo].[Bahan_" + nama_perusahaan + "]" +
                     "(" +
                     "[id_bahan][int] IDENTITY(1,1) NOT NULL," +
@@ -1037,20 +1102,20 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_bahan] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY]" +
-                    
+
                     " ALTER TABLE[dbo].[Bahan_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Bahan_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "] FOREIGN KEY([id_produk])" +
                     " REFERENCES[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([id_produk])" +
-                    
+
                     " ALTER TABLE[dbo].[Bahan_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Bahan_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "]" +
-                    
+
                     " USE[MultiTenancy_Sablon]" +
-                    
+
                     " SET ANSI_NULLS ON" +
-                    
+
                     " SET QUOTED_IDENTIFIER ON" +
-                    
+
                     " CREATE TABLE[dbo].[JenisSablon_" + nama_perusahaan + "]" +
                     "(" +
                     "[id_jns_sablon][int] IDENTITY(1,1) NOT NULL," +
@@ -1061,20 +1126,20 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_jns_sablon] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY]" +
-                    
+
                     " ALTER TABLE[dbo].[JenisSablon_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_JenisSablon_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "] FOREIGN KEY([id_produk])" +
                     " REFERENCES[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([id_produk])" +
-                    
+
                     " ALTER TABLE[dbo].[JenisSablon_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_JenisSablon_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "]" +
-                    
+
                     " USE[MultiTenancy_Sablon]" +
-                    
+
                     " SET ANSI_NULLS ON" +
-                    
+
                     " SET QUOTED_IDENTIFIER ON" +
-                    
+
                     " CREATE TABLE[dbo].[Harga_" + nama_perusahaan + "]" +
                     "([id_harga] [int] IDENTITY(1,1) NOT NULL," +
                     "[id_produk][int] NULL," +
@@ -1085,36 +1150,36 @@ namespace Pendaftaran_Tenant.Controllers
                     "(" +
                     "[id_harga] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
-                   
+
                     ") ON[PRIMARY]" +
-                    
+
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Harga_" + nama_perusahaan + "_Bahan_" + nama_perusahaan + "] FOREIGN KEY([id_bahan])" +
                     " REFERENCES[dbo].[Bahan_" + nama_perusahaan + "]" +
                     "([id_bahan])" +
-                    
+
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Harga_" + nama_perusahaan + "_Bahan_" + nama_perusahaan + "]" +
-                    
+
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Harga_" + nama_perusahaan + "_JenisSablon_" + nama_perusahaan + "] FOREIGN KEY([id_jns_sablon])" +
                     " REFERENCES[dbo].[JenisSablon_" + nama_perusahaan + "]" +
                     "([id_jns_sablon])" +
-                    
+
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Harga_" + nama_perusahaan + "_JenisSablon_" + nama_perusahaan + "]" +
-                    
+
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Harga_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "] FOREIGN KEY([id_produk])" +
                     " REFERENCES[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([id_produk])" +
-                    
+
                     " ALTER TABLE[dbo].[Harga_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Harga_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "]" +
-                    
-                    " USE[MultiTenancy_Sablon]" + 
-                    
+
+                    " USE[MultiTenancy_Sablon]" +
+
                     " SET ANSI_NULLS ON" +
-                    
+
                     " SET QUOTED_IDENTIFIER ON" +
-                    
+
                     " CREATE TABLE[dbo].[Ukuran_" + nama_perusahaan + "]" +
                     "(" +
                     "[id_ukuran][int] IDENTITY(1,1) NOT NULL," +
@@ -1124,13 +1189,13 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_ukuran] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY]" +
-                    
+
                     " USE[MultiTenancy_Sablon]" +
-                    
+
                     " SET ANSI_NULLS ON" +
-                    
+
                     " SET QUOTED_IDENTIFIER ON" +
-                    
+
                     " CREATE TABLE[dbo].[Order_" + nama_perusahaan + "]" +
                     "(" +
                     "[no_order][int] IDENTITY(1,1) NOT NULL," +
@@ -1142,20 +1207,20 @@ namespace Pendaftaran_Tenant.Controllers
                     "[no_order] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY]" +
-                    
+
                     " ALTER TABLE[dbo].[Order_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Order_" + nama_perusahaan + "_Customer_" + nama_perusahaan + "] FOREIGN KEY([id_customer])" +
                     " REFERENCES[dbo].[Customer_" + nama_perusahaan + "]" +
                     "([id_cutomer])" +
-                    
+
                     " ALTER TABLE[dbo].[Order_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Order_" + nama_perusahaan + "_Customer_" + nama_perusahaan + "]" +
-                    
+
                     " USE[MultiTenancy_Sablon]" +
-                    
+
                     " SET ANSI_NULLS ON" +
-                    
+
                     " SET QUOTED_IDENTIFIER ON" +
-                    
+
                     " CREATE TABLE[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     "(" +
                     "[no_detail][int] IDENTITY(1,1) NOT NULL," +
@@ -1170,41 +1235,41 @@ namespace Pendaftaran_Tenant.Controllers
                     "[no_detail] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]" +
-                    
+
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Bahan_" + nama_perusahaan + "] FOREIGN KEY([id_bahan])" +
                     " REFERENCES[dbo].[Bahan_" + nama_perusahaan + "]" +
                     "([id_bahan])" +
-                    
+
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Bahan_" + nama_perusahaan + "]" +
-                    
+
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_JenisSablon_" + nama_perusahaan + "] FOREIGN KEY([id_jns_sablon])" +
                     " REFERENCES[dbo].[JenisSablon_" + nama_perusahaan + "]" +
                     "([id_jns_sablon])" +
-                    
+
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_JenisSablon_" + nama_perusahaan + "]" +
-                    
+
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Order_" + nama_perusahaan + "] FOREIGN KEY([no_order])" +
                     " REFERENCES[dbo].[Order_" + nama_perusahaan + "]" +
                     "([no_order])" +
-                    
+
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Order_" + nama_perusahaan + "]" +
-                    
+
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "] FOREIGN KEY([id_produk])" +
                     " REFERENCES[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([id_produk])" +
-                    
+
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "]" +
-                    
+
                     " USE[MultiTenancy_Sablon]" +
-                    
+
                     " SET ANSI_NULLS ON" +
-                    
+
                     " SET QUOTED_IDENTIFIER ON" +
-                    
+
                     " CREATE TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
                     "([id_ukuran_order] [int] IDENTITY(1,1) NOT NULL," +
                     "[id_ukuran][int] NULL," +
@@ -1214,31 +1279,31 @@ namespace Pendaftaran_Tenant.Controllers
                     "(" +
                     "[id_ukuran_order] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
-                    
+
                     ") ON[PRIMARY]" +
-                    
+
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_DetailOrder_" + nama_perusahaan + "] FOREIGN KEY([no_detail])" +
                     " REFERENCES[dbo].[DetailOrder_" + nama_perusahaan + "]" +
                     "([no_detail])" +
-                    
+
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_DetailOrder_" + nama_perusahaan + "]" +
-                    
+
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "] FOREIGN KEY([id_ukuran])" +
                     " REFERENCES[dbo].[Ukuran_" + nama_perusahaan + "]" +
                     "([id_ukuran])" +
-                    
+
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
-                    " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "]" 
-                   
-                    
+                    " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_Ukuran_" + nama_perusahaan + "]"
+
+
                    ;
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
                 {
                     sqlcom.ExecuteNonQuery();
                     TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
-                                          "success", "Tabel untuk perusahaan " + nama_perusahaan+ " berhasil ditambah");
+                                          "success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
                 }
                 catch (Exception ex)
                 {
@@ -1246,12 +1311,12 @@ namespace Pendaftaran_Tenant.Controllers
                                           "danger", ex.Message);
                 }
 
-                
+
                 conn.Close();
             }
             return RedirectToAction("Index");
         }
 
-        
+
     }
 }

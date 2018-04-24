@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Pendaftaran_Tenant.Models.Produk>
+
+@{
+    ViewBag.Title = "Daftar Produk";
+}
+
+<h2 class="text-center">Daftar Produk</h2>
+<hr />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+    <div class="col-md-4">
+        <h3 style="text-align:center">@item.nama_produk</h3>
+        <div class="thumbnail">
+            <img src="~/Content/Images/@item.foto_produk" style="min-height:200px;height:200px;" />
+        </div>
+        <table style="width:100%">
+            <tr>
+                <th>Deskripsi</th>
+            </tr>
+            <tr>
+                <td> @Html.DisplayFor(modelItem => item.deskripsi)</td>
+            </tr>
+        </table>
+        <p>
+            <input type="button" value="Edit" onclick="location.href='@Url.Action("EditProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-primary btn-sm" />
+            <input type="button" value="Delete" onclick="location.href='@Url.Action("DeleteProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-danger btn-sm" />
+        </p>
+        <p>
+            <input type="button" value="Lihat Bahan" onclick="location.href='@Url.Action("IndexBahanBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
+            <input type="button" value="Lihat Jenis Sablon" onclick="location.href='@Url.Action("IndexJenisSablonBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
+
+        </p>
+           
+    </div>
+    }
+</div>
