@@ -322,6 +322,7 @@
     <Content Include="Views\Home\Index2.cshtml" />
     <Content Include="Views\Penyewa\IndexCarausel.cshtml" />
     <Content Include="Views\Penyewa\IndexProdukBig.cshtml" />
+    <Content Include="Views\Penyewa\IndexBahanBig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

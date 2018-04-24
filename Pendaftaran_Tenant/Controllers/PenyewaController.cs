@@ -505,6 +505,98 @@ namespace Pendaftaran_Tenant.Controllers
             }
             return View(result);
         }
+        public ActionResult IndexBahanBig(int id)
+        {
+            Session["id_produk"] = id;
+            Session["nama_produk"] = GetNamaproduk().ToString();
+
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            List<Bahan> result = new List<Bahan>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [id_bahan]" +
+                    ",[id_produk]" +
+                    ",[nama_bahan]" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + nama_perusahaan + "] WHERE [id_produk]=" + Session["id_produk"].ToString();
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Bahan item = new Bahan()
+                            {
+                                id_bahan = (int)reader["id_produk"],
+                                id_produk = (int)reader["id_produk"],
+                                nama_bahan = reader["nama_bahan"].ToString()
+                            };
+                            result.Add(item);
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
+        public ActionResult IndexBahanEdit(int id)
+        {
+            Session["id_produk"] = id;
+            Session["nama_produk"] = GetNamaproduk().ToString();
+
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            List<Bahan> result = new List<Bahan>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [id_bahan]" +
+                    ",[id_produk]" +
+                    ",[nama_bahan]" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + nama_perusahaan + "] WHERE [id_produk]=" + Session["id_produk"].ToString();
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Bahan item = new Bahan()
+                            {
+                                id_bahan = (int)reader["id_produk"],
+                                id_produk = (int)reader["id_produk"],
+                                nama_bahan = reader["nama_bahan"].ToString()
+                            };
+                            result.Add(item);
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
         public ActionResult CreateBahan()
         {
 
@@ -607,6 +699,100 @@ namespace Pendaftaran_Tenant.Controllers
         }
 
         public ActionResult IndexJenisSablon(int id)
+        {
+
+            Session["id_produk"] = id;
+            Session["nama_produk"] = GetNamaproduk().ToString();
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            List<JenisSablon> result = new List<JenisSablon>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [id_jns_sablon]" +
+                    ",[id_produk]" +
+                    ",[nama_sablon]" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + nama_perusahaan + "] WHERE [id_produk]=" + Session["id_produk"].ToString();
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            JenisSablon item = new JenisSablon()
+                            {
+                                id_jns_sablon = (int)reader["id_jns_sablon"],
+                                id_produk = (int)reader["id_produk"],
+                                nama_sablon = reader["nama_sablon"].ToString()
+                            };
+                            result.Add(item);
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
+        public ActionResult IndexJenisSablonBig(int id)
+        {
+
+            Session["id_produk"] = id;
+            Session["nama_produk"] = GetNamaproduk().ToString();
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            List<JenisSablon> result = new List<JenisSablon>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [id_jns_sablon]" +
+                    ",[id_produk]" +
+                    ",[nama_sablon]" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + nama_perusahaan + "] WHERE [id_produk]=" + Session["id_produk"].ToString();
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            JenisSablon item = new JenisSablon()
+                            {
+                                id_jns_sablon = (int)reader["id_jns_sablon"],
+                                id_produk = (int)reader["id_produk"],
+                                nama_sablon = reader["nama_sablon"].ToString()
+                            };
+                            result.Add(item);
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
+        public ActionResult IndexJenisSablonEdit(int id)
         {
 
             Session["id_produk"] = id;
