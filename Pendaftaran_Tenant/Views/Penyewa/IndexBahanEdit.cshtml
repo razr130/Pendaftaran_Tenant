@@ -33,7 +33,7 @@
                     </td>
                     <td>
                         <input type="button" value="Ubah" onclick="location.href='@Url.Action("EditBahan", "Penyewa")?id=' + @item.value.id_bahan" class="btn btn-primary btn-sm" />
-                        <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteProduk", "Penyewa")?id=' + @item.value.id_bahan" class="btn btn-danger btn-sm" />
+                        <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteBahan", "Penyewa")?id=' + @item.value.id_bahan" class="btn btn-danger btn-sm" />
                     </td>
                 </tr>
             }
