@@ -1,0 +1,57 @@
+﻿@model Pendaftaran_Tenant.Models.Produk
+
+@{
+    ViewBag.Title = "EditProduk";
+}
+
+<h2>EditProduk</h2>
+
+<div class="col-md-12 col-xs-12" style="margin-left:32%">
+    <div class="thumbnail clearfix text-center" style="max-width:400px;width:100%">
+        @using (Html.BeginForm("EditProduk", "Penyewa", FormMethod.Post,
+                                                            new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+
+                <h4>Produk</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.id_produk)
+                <table style="border:0 solid;float:none;margin:0 auto">
+                    <tr>
+                        <th style="text-align:center">Nama Produk</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.EditorFor(model => model.nama_produk, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.nama_produk, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:center">Deskripsi</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.EditorFor(model => model.deskripsi, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.deskripsi, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:center">Gambar</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input name="foto_produk" type="file" class="form-control" value="@Model.foto_produk" />
+                        </td>
+                    </tr>
+                </table>
+
+                <br />
+                        <input type="submit" value="Save" class="btn btn-success" />
+<br />
+        <br />
+
+        }
+    </div>
+</div>

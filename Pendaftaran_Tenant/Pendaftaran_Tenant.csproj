@@ -323,6 +323,12 @@
     <Content Include="Views\Penyewa\IndexCarausel.cshtml" />
     <Content Include="Views\Penyewa\IndexProdukBig.cshtml" />
     <Content Include="Views\Penyewa\IndexBahanBig.cshtml" />
+    <Content Include="Views\Penyewa\EditBahan.cshtml" />
+    <Content Include="Views\Penyewa\IndexBahanEdit.cshtml" />
+    <Content Include="Views\Penyewa\IndexJenisSablonBig.cshtml" />
+    <Content Include="Views\Penyewa\IndexJenisSablonEdit.cshtml" />
+    <Content Include="Views\Penyewa\EditJenisSablon.cshtml" />
+    <Content Include="Views\Penyewa\EditProduk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

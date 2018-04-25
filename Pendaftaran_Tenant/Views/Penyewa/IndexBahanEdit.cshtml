@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "IndexBahanBig";
 }
+@Html.Raw(TempData["Pesan"])
 
 <h2 class="text-center">DAFTAR BAHAN</h2>
 <hr />
@@ -31,7 +32,7 @@
                         <p id="nama_@item.i.ToString()">@Html.DisplayFor(modelItem => item.value.nama_bahan)</p>
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "EditBahan", new { id = item.value.id_bahan, namabahan = item.value.nama_bahan }, new { @class = "btn btn-primary btn-sm" })
+                        <input type="button" value="Ubah" onclick="location.href='@Url.Action("EditBahan", "Penyewa")?id=' + @item.value.id_bahan" class="btn btn-primary btn-sm" />
                         <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteProduk", "Penyewa")?id=' + @item.value.id_bahan" class="btn btn-danger btn-sm" />
                     </td>
                 </tr>

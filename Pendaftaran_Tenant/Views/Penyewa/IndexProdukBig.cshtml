@@ -10,32 +10,29 @@
 <div class="row text-center">
     @foreach (var item in Model)
     {
-    <div class="col-md-4">
+        <div class="col-md-4">
 
-        <h3 style="text-align:center">@item.nama_produk</h3>
-        <div class="thumbnail">
-            <img src="~/Content/Images/@item.foto_produk" style="min-height:200px;height:200px;" />
+            <h3 style="text-align:center">@item.nama_produk</h3>
+            <div class="thumbnail">
+                <img src="~/Content/Images/@item.foto_produk" style="min-height:200px;height:200px;" />
+            </div>
+            <table style="width:100%;float:none" class="text-center">
+
+                <tr>
+                    <td> @Html.DisplayFor(modelItem => item.deskripsi)</td>
+                </tr>
+            </table>
+            <hr />
+            <p>
+                <input type="button" value="Ubah" onclick="location.href='@Url.Action("EditProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-primary btn-sm" />
+                <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-danger btn-sm" />
+            </p>
+            <p>
+                <input type="button" value="Lihat Bahan" onclick="location.href='@Url.Action("IndexBahanBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
+                <input type="button" value="Lihat Jenis Sablon" onclick="location.href='@Url.Action("IndexJenisSablonBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
+
+            </p>
+
         </div>
-        <table style="width:100%;float:none" class="text-center">
-            <tr>
-                <th style="text-align:center">DESKRIPSI</th>
-                
-            </tr>
-            <tr>
-                <td> @Html.DisplayFor(modelItem => item.deskripsi)</td>
-            </tr>
-        </table>
-        <hr />
-        <p>
-            <input type="button" value="Ubah" onclick="location.href='@Url.Action("EditProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-primary btn-sm" />
-            <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-danger btn-sm" />
-        </p>
-        <p>
-            <input type="button" value="Lihat Bahan" onclick="location.href='@Url.Action("IndexBahanBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
-            <input type="button" value="Lihat Jenis Sablon" onclick="location.href='@Url.Action("IndexJenisSablonBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
-
-        </p>
-           
-    </div>
     }
 </div>

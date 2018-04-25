@@ -50,6 +50,8 @@ namespace Pendaftaran_Tenant.DAL
 
         }
 
+        
+
         public void AddUI(Data_UI ui)
         {
             try

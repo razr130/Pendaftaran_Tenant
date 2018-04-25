@@ -1,14 +1,14 @@
-﻿@model IEnumerable<Pendaftaran_Tenant.Models.Bahan>
+﻿@model IEnumerable<Pendaftaran_Tenant.Models.JenisSablon>
 
 @{
     ViewBag.Title = "IndexBahanBig";
 }
 
-<h2 class="text-center">DAFTAR BAHAN</h2>
+<h2 class="text-center">DAFTAR JENIS SABLON</h2>
 <hr />
 <div class="row">
     <a onclick="location.href='@Url.Action("IndexProdukBig", "Penyewa")'" class="btn btn-warning btn-sm" style="margin-left:35px"><< Kembali ke daftar produk</a>
-    <a onclick="location.href='@Url.Action("CreateBahan", "Penyewa")'" class="btn btn-warning btn-sm" style="margin-right:35px;float:right">Tambah Bahan >></a>
+    <a onclick="location.href='@Url.Action("CreateJenisSablon", "Penyewa")'" class="btn btn-warning btn-sm" style="margin-right:35px;float:right">Tambah Jenis Sablon >></a>
 </div>
 <br />
 <div class="col-md-12 col-xs-12">
@@ -18,7 +18,7 @@
             <tr>
                 <th style="text-align:center">
 
-                   Nama Bahan
+                    Nama Bahan
                 </th>
                 <th></th>
             </tr>
@@ -28,11 +28,11 @@
                 <tr>
                     <td>
                         @*<input type="text" class="form-control" id="namabahan_@item.i.ToString()" style="display:none" />*@
-                        <p id="nama_@item.i.ToString()">@Html.DisplayFor(modelItem => item.value.nama_bahan)</p>
+                        <p id="nama_@item.i.ToString()">@Html.DisplayFor(modelItem => item.value.nama_sablon)</p>
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "EditBahan", new { id = item.value.id_bahan, namabahan = item.value.nama_bahan }, new { @class = "btn btn-primary btn-sm" })
-                        <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteProduk", "Penyewa")?id=' + @item.value.id_bahan" class="btn btn-danger btn-sm" />
+                        @Html.ActionLink("Edit", "EditJenisSablon", new { id = item.value.id_jns_sablon, namasablon = item.value.nama_sablon }, new { @class = "btn btn-primary btn-sm" })
+                        <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteJenisSablon", "Penyewa")?id=' + @item.value.id_jns_sablon" class="btn btn-danger btn-sm" />
                     </td>
                 </tr>
             }
