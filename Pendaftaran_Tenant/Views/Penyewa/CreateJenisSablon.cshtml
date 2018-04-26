@@ -11,47 +11,52 @@
     <ul class="nav nav-wizard" style="display:inline-block">
         <li><a style="color:#47a447">Design Website</a></li>
         <li><a style="color:#47a447">Gambar Homepage</a></li>
-        <li class="active"><a>Data Produk, Bahan, dan Jenis Sablon</a></li>
+        <li><a style="color:#47a447">Data Karyawan</a></li>
+        <li><a style="color:#47a447">Data Produk</a></li>
+        <li><a style="color:#47a447">Data Bahan</a></li>
+        <li class="active"><a>Data Jenis Sablon</a></li>
         <li><a style="color:#47a447">Data Harga</a></li>
 
     </ul>
 </div>
 <br />
-<br />
+<h2 class="text-center" style="color:#47a447">D A T A &nbsp;&nbsp; J E N I S &nbsp;&nbsp; S A B L O N</h2>
+<hr />
 <div class="row">
-    <a onclick="location.href='@Url.Action("IndexProduk", "Penyewa")'" class="btn btn-warning btn-sm" style="margin-left:35px"><< Kembali ke daftar produk</a>
+    @*@Html.ActionLink("Lanjut ke tambah Jenis Sablon >> ", "IndexJenisSablon", new { id = id }, new { @class = "btn btn-primary btn-md", @style = "float:right;margin-right:3%" })*@
+    @Html.ActionLink("<< Kembali ke produk", "IndexProdukBig", new { sesi = "sablon" }, new { @class = "btn btn-warning btn-md", @style = "margin-left:7%" })
 </div>
 <br />
 
 @*@Html.Raw(TempData["Pesan"])*@
 
-    <div class="col-md-6 col-xs-6">
-        <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
+<div class="col-md-6 col-xs-6">
+    <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%;margin-left:10%">
 
-            @using (Html.BeginForm("CreateJenisSablon", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h2>Isi Jenis Sablon untuk produk @namaproduk</h2>
-                <hr />
+        @using (Html.BeginForm("CreateJenisSablon", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h2 style="color:#47a447">Isi jenis sablon untuk produk @namaproduk</h2>
+            <hr />
 
-                <div class="form-group">
-                    <table style="border:0 solid;float:none;margin:0 auto">
+            <div class="form-group">
+                <table style="border:0 solid;float:none;margin:0 auto">
 
-                        <tr><td><label for="namajenissablon">Nama Jenis Sablon</label><input type="text" class="form-control" id="namajenissablon" name="namajenissablon" /></td></tr>
-                    </table>
-
-
-                </div>
+                    <tr><td><label for="namajenissablon">Nama Jenis Sablon</label><input type="text" class="form-control" id="namajenissablon" name="namajenissablon" /></td></tr>
+                </table>
 
 
-                <input type="submit" value="Simpan" class="btn btn-success" />
-                <br />
-                <br />
+            </div>
 
-            }
 
-        </div>
+            <input type="submit" value="Simpan" class="btn btn-success" />
+            <br />
+            <br />
+
+        }
 
     </div>
+
+</div>
 
 

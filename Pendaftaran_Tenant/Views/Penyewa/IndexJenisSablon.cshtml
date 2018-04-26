@@ -13,15 +13,13 @@
     @Html.Partial("CreateJenisSablon")
     <div class="col-md-6 col-xs-6">
         <div class="thumbnail clearfix text-center" style="max-width:600px;width:100%">
-            <h2>Daftar Jenis Sablon</h2>
+            <h2 style="color:#47a447">Daftar Jenis Sablon</h2>
             <hr />
             <table class="table">
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.id_produk)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.nama_sablon)
+                   
+                    <th style="text-align:center">
+                        Nama Sablon
                     </th>
                     <th></th>
                 </tr>
@@ -29,10 +27,8 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.id_produk)
-                        </td>
-                        <td>
+                        
+                        <td style="text-align:center">
                             @Html.DisplayFor(modelItem => item.nama_sablon)
                         </td>
                         <td>

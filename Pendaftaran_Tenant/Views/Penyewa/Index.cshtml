@@ -59,8 +59,8 @@
                 @Html.DisplayFor(modelItem => item.role)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id_penyewa })
-                @Html.ActionLink("Buat Tabel", "Addtable", new { id = item.id_penyewa })
+                @Html.ActionLink("Konfirmasi Bayar", "Edit", new { id = item.id_penyewa }, new { @class = "btn btn-primary btn-xs" })
+                @Html.ActionLink("Buat Tabel", "Addtable", new { id = item.id_penyewa }, new { @class = "btn btn-primary btn-xs" })
                 @*<button class="btn btn-success" onclick="location.href='@Url.Action("Edit", "Penyewa")?id=item.id_penyewa'">Edit Status Bayar</button>*@
 
             </td>

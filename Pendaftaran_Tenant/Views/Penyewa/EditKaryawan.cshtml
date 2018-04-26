@@ -1,35 +1,12 @@
-﻿
+﻿@model Pendaftaran_Tenant.Models.Karyawan
 
 @{
-    ViewBag.Title = "CreateKaryawan";
+    ViewBag.Title = "EditKaryawan";
 }
-@section navwizard {
 
 
-    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
-
-}
-<div class="text-center">
-    <ul class="nav nav-wizard" style="display:inline-block">
-        <li><a style="color:#47a447">Design Website</a></li>
-        <li><a style="color:#47a447">Gambar Homepage</a></li>
-        <li class="active"><a>Data Karyawan</a></li>
-        <li><a style="color:#47a447">Data Produk</a></li>
-        <li><a style="color:#47a447">Data Bahan</a></li>
-        <li><a style="color:#47a447">Data Jenis Sablon</a></li>
-        <li><a style="color:#47a447">Data Harga</a></li>
-
-    </ul>
-</div>
-<br />
-
-<br />
 <div class="row">
-    @Html.ActionLink("Lanjut ke penambahan produk >>", "CreateProduk2", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi data karyawan dan hendak melanjutkan ke pengisian produk?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
-</div>
-<br />
-@Html.Raw(TempData["Pesan"])
-<div class="row">
+    <br />
     <div class="col-md-12 col-xs-12" style="margin-left:27%">
         <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
             @using (Html.BeginForm())
@@ -37,43 +14,48 @@
                 @Html.AntiForgeryToken()
 
 
-                <h3 style="color:#47a447">I S I &nbsp; &nbsp; D A T A &nbsp;&nbsp; K A R Y A W A N</h3>
+                <h4>Karyawan</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.id_karyawan)
                 <table style="border:0 solid;float:none;margin:0 auto">
                     <tr><th style="text-align:center">Nama Karyawan</th></tr>
                     <tr>
                         <td style="padding-bottom:10px">
-                            <input type="text" class="form-control text-center" id="nama" name="nama_karyawan" />
+                            @Html.EditorFor(model => model.nama_karyawan, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.nama_karyawan, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr><th style="text-align:center">Email Karyawan</th></tr>
                     <tr>
                         <td style="padding-bottom:10px">
-                            <input type="text" class="form-control text-center" id="email" name="email_karyawan" />
+                            @Html.EditorFor(model => model.email_karyawan, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.email_karyawan, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr><th style="text-align:center">Password</th></tr>
                     <tr>
                         <td style="padding-bottom:10px">
-                            <input type="password" class="form-control text-center" id="password" name="password" />
+                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr><th style="text-align:center">Tempat Lahir</th></tr>
                     <tr>
                         <td style="padding-bottom:10px">
-                            <input type="text" class="form-control text-center" id="tempat" name="tempat_lahir" />
+                            @Html.EditorFor(model => model.tempat_lahir, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.tempat_lahir, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr><th style="text-align:center">Tanggal Lahir</th></tr>
                     <tr>
                         <td style="padding-bottom:10px">
                             <div class="dropdown" style="display:inherit;padding-right:10px">
-                                <button class="btn btn-default dropdown-toggle" style="width:60px" type="button" data-toggle="dropdown" name="tanggal" id="btntanggal">
-                                    Tgl
+                                <button class="btn btn-default dropdown-toggle" value="@Model.tanggal" style="width:60px" type="button" data-toggle="dropdown" name="tanggal" id="btntanggal">
+                                    @Model.tanggal
                                     <span class="caret"></span>
                                 </button>
-                                <input type="hidden" id="hiddentanggal" name="tanggal" />
+                                <input value="@Model.tanggal" type="hidden" id="hiddentanggal" name="tanggal" />
                                 <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntanggal">
                                     @for (int tgl = 1; tgl <= 31; tgl++)
                                     {
@@ -82,11 +64,11 @@
                                 </ul>
                             </div>
                             <div class="dropdown" style="display:inherit">
-                                <button class="btn btn-default dropdown-toggle" style="width:100px" type="button" data-toggle="dropdown" name="bulan" id="btnbulan">
-                                    Bulan
+                                <button class="btn btn-default dropdown-toggle" value="@Model.bulan" style="width:100px" type="button" data-toggle="dropdown" name="bulan" id="btnbulan">
+                                    @Model.bulan
                                     <span class="caret"></span>
                                 </button>
-                                <input type="hidden" id="hiddenbulan" name="bulan" />
+                                <input value="@Model.bulan" type="hidden" id="hiddenbulan" name="bulan" />
                                 <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownbulan">
 
                                     <li><a href="#/">Januari</a></li>
@@ -105,11 +87,11 @@
                                 </ul>
                             </div>
                             <div class="dropdown" style="display:inherit;padding-left:10px">
-                                <button class="btn btn-default dropdown-toggle" style="width:80px" type="button" data-toggle="dropdown" name="tahun" id="btntahun">
-                                    Tahun
+                                <button class="btn btn-default dropdown-toggle" value="@Model.tahun" style="width:80px" type="button" data-toggle="dropdown" name="tahun" id="btntahun">
+                                    @Model.tahun
                                     <span class="caret"></span>
                                 </button>
-                                <input type="hidden" id="hiddentahun" name="tahun" />
+                                <input value="@Model.tahun" type="hidden" id="hiddentahun" name="tahun" />
                                 <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntahun">
                                     @for (int tgl = 1960; tgl <= 2018; tgl++)
                                     {
@@ -125,25 +107,27 @@
                     <tr><th style="text-align:center">No Telepon</th></tr>
                     <tr>
                         <td style="padding-bottom:10px">
-                            <input type="text" class="form-control text-center" id="telpon" name="no_telp" />
+                            @Html.EditorFor(model => model.no_telp, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.no_telp, "", new { @class = "text-danger" })
                         </td>
                     </tr>
 
                     <tr><th style="text-align:center">Alamat</th></tr>
                     <tr>
                         <td style="padding-bottom:10px">
-                            <input type="text" class="form-control text-center" id="alamat" name="alamat" />
+                            @Html.EditorFor(model => model.alamat, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.alamat, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr><th style="text-align:center">Jenis Kelamin</th></tr>
                     <tr>
                         <td style="padding-bottom:10px">
                             <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="jns_kelamin" id="btnjk">
-                                    Jenis Kelamin
+                                <button class="btn btn-default dropdown-toggle" value="@Model.jns_kelamin" type="button" data-toggle="dropdown" name="jns_kelamin" id="btnjk">
+                                    @Model.jns_kelamin
                                     <span class="caret"></span>
                                 </button>
-                                <input type="hidden" id="hiddenjk" name="jns_kelamin" />
+                                <input value="@Model.jns_kelamin" type="hidden" id="hiddenjk" name="jns_kelamin" />
                                 <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownjk">
 
                                     <li><a href="#/">L</a></li>
@@ -155,11 +139,10 @@
                     </tr>
 
                 </table>
-
-                <input type="submit" value="Create" class="btn btn-success" />
-                <br />
-                <br />
-                <script type="text/javascript">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                        <br />
+                        <br />
+                        <script type="text/javascript">
                     $(function () {
 
                         $("#dropdowntanggal").on('click', 'li a', function () {
@@ -187,8 +170,10 @@
 
                         });
                     });
-                </script>
+                        </script>
+
             }
         </div>
     </div>
 </div>
+

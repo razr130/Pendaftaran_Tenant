@@ -3,24 +3,46 @@
 @{
     ViewBag.Title = "IndexViewHarga";
 }
+@section navwizard {
 
-<h2>IndexViewHarga</h2>
+
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
+
+}
+<br />
+<div class="text-center">
+    <ul class="nav nav-wizard" style="display:inline-block">
+        <li><a style="color:#47a447">Design Website</a></li>
+        <li><a style="color:#47a447">Gambar Homepage</a></li>
+        <li><a style="color:#47a447">Data Karyawan</a></li>
+        <li><a style="color:#47a447">Data Produk</a></li>
+        <li><a style="color:#47a447">Data Bahan</a></li>
+        <li><a style="color:#47a447">Data Jenis Sablon</a></li>
+        <li class="active"><a>Data Harga</a></li>
+
+    </ul>
+</div>
+<br />
+
+<br />
+<h2 class="text-center" style="color:#47a447">D A F T A R &nbsp;&nbsp; H A R G A</h2>
+<hr />
 @Html.Raw(TempData["Pesan"])
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.nama_produk)
+           Nama Produk
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.nama_bahan)
+            Nama Bahan
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.nama_sablon)
+           Nama Sablon
         </th>
 
         <th style="text-align:center">
-            @Html.DisplayNameFor(model => model.harga)
+            Harga
         </th>
 
         <th></th>
@@ -80,3 +102,9 @@
     }
 
 </table>
+<div class="row">
+    <div class="col-md-12 col-xs-12 text-center">
+        @Html.ActionLink("Selesai", "Selesai", "Penyewa", new { @class = "btn btn-success btn-sm"})
+
+    </div>
+</div>

@@ -333,6 +333,10 @@
     <Content Include="Views\Penyewa\IndexKaryawan.cshtml" />
     <Content Include="Views\Penyewa\CreateKaryawan.cshtml" />
     <Content Include="Views\Penyewa\CreateKaryawan2.cshtml" />
+    <Content Include="Views\Penyewa\EditKaryawan.cshtml" />
+    <Content Include="Views\Penyewa\CreateProduk2.cshtml" />
+    <Content Include="Views\Penyewa\Selesai.cshtml" />
+    <Content Include="Views\Penyewa\IndexKaryawanBig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -130,8 +130,8 @@ namespace Pendaftaran_Tenant.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
-                                          "danger", ex.Message);
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                    //                      "danger", ex.Message);
                 }
             }
             return RedirectToAction("KonfirmasiDaftar", "Penyewa");
@@ -189,8 +189,8 @@ namespace Pendaftaran_Tenant.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
-                                          "danger", ex.Message);
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                    //                      "danger", ex.Message);
                 }
             }
             return RedirectToAction("CreateCarausel");
@@ -252,15 +252,15 @@ namespace Pendaftaran_Tenant.Controllers
                     {
                         datacarausel.id_ui = svBrg.getIdUI(Convert.ToInt32(Session["id_penyewa"]));
                         svBrg.AddCarausel(datacarausel);
-                        TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
-                          "success", "Data carausel berhasil ditambah");
+                        //TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
+                        //  "success", "Data carausel berhasil ditambah");
                         TempData["Pesan2"] = Helpers.Message.GetPesan("Info data carausel",
                           "warning", "Anda sudah memasukkan " + GetCount().ToString() + " gambar carausel dari maksimal 4 gambar");
                     }
                     catch (Exception ex)
                     {
-                        TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
-                                              "danger", ex.Message);
+                        //TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                        //                      "danger", ex.Message);
                     }
                 }
                 return RedirectToAction("IndexCarausel", "Penyewa");
@@ -269,7 +269,7 @@ namespace Pendaftaran_Tenant.Controllers
         }
         public ActionResult IndexKaryawan()
         {
-          
+
 
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
 
@@ -289,9 +289,9 @@ namespace Pendaftaran_Tenant.Controllers
                     ",[no_telp]" +
                     ",[alamat]" +
                     ",[jns_kelamin]" +
-                    " FROM[MultiTenancy_Sablon].[dbo].[Karyawan_"+nama_perusahaan+"]";
-                   
-                    
+                    " FROM[MultiTenancy_Sablon].[dbo].[Karyawan_" + nama_perusahaan + "]";
+
+
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -389,7 +389,7 @@ namespace Pendaftaran_Tenant.Controllers
             }
             return View(result);
         }
-      
+
         public ActionResult CreateKaryawan()
         {
 
@@ -399,7 +399,7 @@ namespace Pendaftaran_Tenant.Controllers
         [HttpPost]
         public ActionResult CreateKaryawan(string nama_karyawan, string email_karyawan, string password, string tempat_lahir, string tanggal, string bulan, string tahun, string no_telp, string alamat, string jns_kelamin)
         {
-           
+
             string nama_perusahaan;
             int id = Convert.ToInt32(Session["id_penyewa"]);
 
@@ -423,7 +423,7 @@ namespace Pendaftaran_Tenant.Controllers
                     ",[no_telp]" +
                     ",[alamat]" +
                     ",[jns_kelamin])" +
-                    
+
                     " VALUES" +
                     "('" + nama_karyawan + "' ,'" + email_karyawan + "' ,'" + password + "' ,'" + tempat_lahir + "' ,'" + tgllahir + "' ,'" + no_telp + "' ,'" + alamat + "' ,'" + jns_kelamin + "')";
 
@@ -431,13 +431,13 @@ namespace Pendaftaran_Tenant.Controllers
                 try
                 {
                     sqlcom.ExecuteNonQuery();
-                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
-                                          "success", "data produk berhasil ditambah");
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                    //                      "success", "data karyawan ditambah, data karyawan dapat direview ulang melalui Beranda setelah menyelesaikan proses pendaftaran");
                 }
                 catch (Exception ex)
                 {
-                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
-                                          "danger", ex.Message);
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                    //                      "danger", ex.Message);
                 }
 
                 conn.Close();
@@ -445,7 +445,7 @@ namespace Pendaftaran_Tenant.Controllers
 
 
 
-            return RedirectToAction("IndexKaryawan", "Penyewa");
+            return View();
         }
 
         public ActionResult CreateKaryawan2()
@@ -509,7 +509,7 @@ namespace Pendaftaran_Tenant.Controllers
 
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
             Session["id_karyawan"] = id.ToString();
-            
+
 
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
             Karyawan result = new Karyawan();
@@ -543,6 +543,9 @@ namespace Pendaftaran_Tenant.Controllers
                             result.password = reader["password"].ToString();
                             result.tempat_lahir = reader["tempat_lahir"].ToString();
                             result.tgl_lahir = reader["tgl_lahir"].ToString();
+                            result.tanggal = reader["tgl_lahir"].ToString().Split('-')[0];
+                            result.bulan = reader["tgl_lahir"].ToString().Split('-')[1];
+                            result.tahun = reader["tgl_lahir"].ToString().Split('-')[2];
                             result.no_telp = reader["no_telp"].ToString();
                             result.alamat = reader["alamat"].ToString();
                             result.jns_kelamin = reader["jns_kelamin"].ToString();
@@ -562,23 +565,24 @@ namespace Pendaftaran_Tenant.Controllers
 
         }
         [HttpPost]
-        public ActionResult EditKaryawan(string namakaryawan, string email, string password, string tempat_lahir, string tgl_lahir, string no_telp, string alamat, string jns_kelamin)
+        public ActionResult EditKaryawan(string nama_karyawan, string email_karyawan, string password, string tempat_lahir, string tanggal, string bulan, string tahun, string no_telp, string alamat, string jns_kelamin)
         {
+            var tgl_lahir = tanggal + "-" + bulan + "-" + tahun;
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
                 string query = "USE [MultiTenancy_Sablon]" +
-                    "UPDATE[dbo].[Karyawan_" + nama_perusahaan +"]" +
-                    "SET[nama_karyawan] = '"+namakaryawan+"'" +
-                    ",[email_karyawan] = '"+email+"'" +
-                    ",[password] = '"+password+"'" +
-                    ",[tempat_lahir] = '"+tempat_lahir+"'" +
-                    ",[tgl_lahir] = '"+tgl_lahir+"'" +
-                    ",[no_telp] = '"+no_telp+"'" +
-                    ",[alamat] = '"+alamat+"'" +
-                    ",[jns_kelamin] = '"+jns_kelamin+"'" +
+                    "UPDATE[dbo].[Karyawan_" + nama_perusahaan + "]" +
+                    "SET[nama_karyawan] = '" + nama_karyawan + "'" +
+                    ",[email_karyawan] = '" + email_karyawan + "'" +
+                    ",[password] = '" + password + "'" +
+                    ",[tempat_lahir] = '" + tempat_lahir + "'" +
+                    ",[tgl_lahir] = '" + tgl_lahir + "'" +
+                    ",[no_telp] = '" + no_telp + "'" +
+                    ",[alamat] = '" + alamat + "'" +
+                    ",[jns_kelamin] = '" + jns_kelamin + "'" +
                     " WHERE [id_karyawan]=" + Session["id_karyawan"].ToString();
 
 
@@ -597,15 +601,95 @@ namespace Pendaftaran_Tenant.Controllers
 
                 conn.Close();
             }
-            return RedirectToAction("IndexKaryawanBig");
+            return RedirectToAction("IndexKaryawan");
         }
+        public ActionResult DeleteKaryawan(int id)
+        {
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "DELETE FROM [dbo].[Karyawan_" + nama_perusahaan + "]" +
+                    " WHERE [id_karyawan]=" + id;
 
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "data produk berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+            return RedirectToAction("IndexProdukBig");
+        }
         public ActionResult CreateProduk()
         {
             return View();
         }
         [HttpPost]
         public ActionResult CreateProduk(string namaproduk, string deskripsi, HttpPostedFileBase fotoproduk)
+        {
+            string filePath = "";
+            string fileName = Guid.NewGuid().ToString() + "_" + fotoproduk.FileName;
+            if (fotoproduk.ContentLength > 0)
+            {
+
+                filePath = Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), fileName);
+                fotoproduk.SaveAs(filePath);
+
+            }
+            string nama_perusahaan;
+            int id = Convert.ToInt32(Session["id_penyewa"]);
+
+            using (PenyewaDAL sewa = new PenyewaDAL())
+            {
+
+                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
+            }
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[Produk_" + nama_perusahaan + "]" +
+                    "([nama_produk]" +
+                    ",[deskripsi]" +
+                    ",[foto_produk])" +
+                    "VALUES" +
+                    "('" + namaproduk + "' ,'" + deskripsi + "' ,'" + fileName + "')";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "data produk berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+            return RedirectToAction("IndexProduk", "Penyewa");
+        }
+        public ActionResult CreateProduk2()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateProduk2(string namaproduk, string deskripsi, HttpPostedFileBase fotoproduk)
         {
             string filePath = "";
             string fileName = Guid.NewGuid().ToString() + "_" + fotoproduk.FileName;
@@ -699,8 +783,9 @@ namespace Pendaftaran_Tenant.Controllers
             }
             return View(result);
         }
-        public ActionResult IndexProdukBig()
+        public ActionResult IndexProdukBig(string sesi)
         {
+            Session["sesi"] = sesi;
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
             //string nama_perusahaan = "b";            
 
@@ -809,8 +894,8 @@ namespace Pendaftaran_Tenant.Controllers
                 string query = "USE [MultiTenancy_Sablon]" +
                     "UPDATE [dbo].[Produk_" + nama_perusahaan + "]" +
                     " SET [nama_produk] ='" + nama_produk + "'," +
-                    "[deskripsi]='"+ deskripsi +"'," +
-                    "[foto_produk]='" + fileName +"'" +
+                    "[deskripsi]='" + deskripsi + "'," +
+                    "[foto_produk]='" + fileName + "'" +
                     " WHERE [id_produk]=" + Session["id_produk"].ToString();
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
@@ -838,7 +923,7 @@ namespace Pendaftaran_Tenant.Controllers
             {
                 conn.Open();
                 string query = "USE [MultiTenancy_Sablon]" +
-                    "DELETE FROM [dbo].[Produk_" + nama_perusahaan + "]" +                   
+                    "DELETE FROM [dbo].[Produk_" + nama_perusahaan + "]" +
                     " WHERE [id_produk]=" + id;
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
@@ -1043,7 +1128,7 @@ namespace Pendaftaran_Tenant.Controllers
         }
         public ActionResult IndexBahanEdit()
         {
-           
+
             Session["nama_produk"] = GetNamaproduk().ToString();
 
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
@@ -1159,7 +1244,7 @@ namespace Pendaftaran_Tenant.Controllers
                 {
                     using (SqlDataReader reader = sqlcom.ExecuteReader())
                     {
-                        
+
                         if (reader.Read())
                         {
                             result.id_bahan = (int)reader["id_bahan"];
@@ -1307,7 +1392,7 @@ namespace Pendaftaran_Tenant.Controllers
         public ActionResult IndexJenisSablonEdit()
         {
 
-            
+
             Session["nama_produk"] = GetNamaproduk().ToString();
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
 
@@ -1540,7 +1625,7 @@ namespace Pendaftaran_Tenant.Controllers
                     ",[id_bahan]" +
                     ",[id_jns_sablon]" +
                     ",[id_produk]" +
-                    " FROM [MultiTenancy_Sablon].[dbo].[ViewHarga_" + nama_perusahaan + "]";
+                    " FROM [MultiTenancy_Sablon].[dbo].[View_" + nama_perusahaan + "]";
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -1633,8 +1718,8 @@ namespace Pendaftaran_Tenant.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
-                                          "danger", ex.Message);
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                    //                      "danger", ex.Message);
                 }
 
                 conn.Close();
@@ -1654,27 +1739,27 @@ namespace Pendaftaran_Tenant.Controllers
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
-                string query =
-                    " CREATE VIEW[dbo].[ViewHarga_" + nama_perusahaan + "]" +
+                string query = " CREATE VIEW [dbo].[View_" + nama_perusahaan + "]" +
                     " AS" +
-                    " SELECT        dbo.Bahan_" + nama_perusahaan + "." + "nama_bahan, dbo.JenisSablon_" + nama_perusahaan + "." + "nama_sablon, dbo.Produk_" + nama_perusahaan + "." + "nama_produk, dbo.Harga_" + nama_perusahaan + "." + "harga, dbo.Bahan_" + nama_perusahaan + "." + "id_bahan, dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon, dbo.Produk_" + nama_perusahaan + "." + "id_produk" +
+                    " SELECT        dbo.Bahan_" + nama_perusahaan + ".nama_bahan, dbo.JenisSablon_" + nama_perusahaan + ".nama_sablon, dbo.Produk_" + nama_perusahaan + ".nama_produk, dbo.Harga_" + nama_perusahaan + ".harga, dbo.Bahan_" + nama_perusahaan + ".id_bahan, dbo.JenisSablon_" + nama_perusahaan + ".id_jns_sablon, " +
+                    " dbo.Produk_" + nama_perusahaan + ".id_produk" +
                     " FROM            dbo.Bahan_" + nama_perusahaan + " LEFT OUTER JOIN" +
-                    " dbo.Produk_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_produk = dbo.Produk_" + nama_perusahaan + "." + "id_produk LEFT OUTER JOIN" +
-                    " dbo.JenisSablon_" + nama_perusahaan + " ON dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.JenisSablon_" + nama_perusahaan + "." + "id_produk LEFT OUTER JOIN" +
-                    " dbo.Harga_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + "." + "id_bahan = dbo.Harga_" + nama_perusahaan + "." + "id_bahan AND dbo.Produk_" + nama_perusahaan + "." + "id_produk = dbo.Harga_" + nama_perusahaan + "." + "id_produk AND dbo.JenisSablon_" + nama_perusahaan + "." + "id_jns_sablon = dbo.Harga_" + nama_perusahaan + "." + "id_jns_sablon"
-                    ;
+                    " dbo.Produk_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + ".id_produk = dbo.Produk_" + nama_perusahaan + ".id_produk LEFT OUTER JOIN" +
+                    " dbo.JenisSablon_" + nama_perusahaan + " ON dbo.Produk_" + nama_perusahaan + ".id_produk = dbo.JenisSablon_" + nama_perusahaan + ".id_produk LEFT OUTER JOIN" +
+                    " dbo.Harga_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + ".id_bahan = dbo.Harga_" + nama_perusahaan + ".id_bahan AND dbo.Produk_" + nama_perusahaan + ".id_produk = dbo.Harga_" + nama_perusahaan + ".id_produk AND" +
+                    " dbo.JenisSablon_" + nama_perusahaan + ".id_jns_sablon = dbo.Harga_" + nama_perusahaan + ".id_jns_sablon";
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
                 {
                     sqlcom.ExecuteNonQuery();
-                    //TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil bikin view!",
                     //"success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
                 }
                 catch (Exception ex)
                 {
-                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error bikin view !",
                     //"danger", ex.Message);
-                    return RedirectToAction("IndexViewHarga", "Penyewa");
+                    //return RedirectToAction("IndexViewHarga", "Penyewa");
                 }
 
 
@@ -1683,7 +1768,7 @@ namespace Pendaftaran_Tenant.Controllers
             return RedirectToAction("IndexViewHarga", "Penyewa");
 
         }
-        public ActionResult AddHarga(int idbahan, int idproduk, int idsablon, int harga)
+        public ActionResult AddHarga(int? idbahan, int idproduk, int? idsablon, int harga)
         {
             string nama_perusahaan;
             int id = Convert.ToInt32(Session["id_penyewa"]);
@@ -1696,7 +1781,34 @@ namespace Pendaftaran_Tenant.Controllers
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
-                string query = "USE [MultiTenancy_Sablon]" +
+                string query = "";
+                if (idbahan == null)
+                {
+                     query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[Harga_" + nama_perusahaan + "]" +
+                    "([id_produk]" +
+                    ",[id_jns_sablon]" +
+                    ",[harga])" +
+                    "VALUES" +
+                    "(" + idproduk.ToString() +
+                    "," + idsablon.ToString() +
+                    "," + harga + ")";
+                }
+                else if(idsablon == null)
+                {
+                     query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[Harga_" + nama_perusahaan + "]" +
+                    "([id_produk]" +
+                    ",[id_bahan]" +
+                    ",[harga])" +
+                    "VALUES" +
+                    "(" + idproduk.ToString() +
+                    "," + idbahan.ToString() +
+                    "," + harga + ")";
+                }
+                else
+                {
+                     query = "USE [MultiTenancy_Sablon]" +
                     "INSERT INTO[dbo].[Harga_" + nama_perusahaan + "]" +
                     "([id_produk]" +
                     ",[id_bahan]" +
@@ -1707,6 +1819,8 @@ namespace Pendaftaran_Tenant.Controllers
                     "," + idbahan.ToString() +
                     "," + idsablon.ToString() +
                     "," + harga + ")";
+                }
+                
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -1714,9 +1828,11 @@ namespace Pendaftaran_Tenant.Controllers
                     sqlcom.ExecuteNonQuery();
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error bikin view !",
+                    //"danger", ex.Message);
 
 
                 }
@@ -1869,7 +1985,7 @@ namespace Pendaftaran_Tenant.Controllers
                     " ALTER TABLE[dbo].[Bahan_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Bahan_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "] FOREIGN KEY([id_produk])" +
                     " REFERENCES[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([id_produk])" +
-                    " ON DELETE CASCADE"+
+                    " ON DELETE CASCADE" +
 
                     " ALTER TABLE[dbo].[Bahan_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Bahan_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "]" +
@@ -1894,7 +2010,7 @@ namespace Pendaftaran_Tenant.Controllers
                     " ALTER TABLE[dbo].[JenisSablon_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_JenisSablon_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "] FOREIGN KEY([id_produk])" +
                     " REFERENCES[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([id_produk])" +
-                    " ON DELETE CASCADE"+
+                    " ON DELETE CASCADE" +
 
                     " ALTER TABLE[dbo].[JenisSablon_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_JenisSablon_" + nama_perusahaan + "_Produk_" + nama_perusahaan + "]" +
@@ -2067,13 +2183,13 @@ namespace Pendaftaran_Tenant.Controllers
                 try
                 {
                     sqlcom.ExecuteNonQuery();
-                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
-                                          "success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                    //                      "success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
                 }
                 catch (Exception ex)
                 {
-                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
-                                          "danger", ex.Message);
+                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                    //                      "danger", ex.Message);
                 }
 
 
@@ -2082,6 +2198,10 @@ namespace Pendaftaran_Tenant.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Selesai()
+        {
+            return View();
+        }
 
     }
 }

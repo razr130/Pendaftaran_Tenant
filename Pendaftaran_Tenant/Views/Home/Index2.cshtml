@@ -12,23 +12,24 @@
         <div class="col-md-4 col-xs-4">
             <div class="thumbnail clearfix text-center">
                 <span class="glyphicon glyphicon-book" style="font-size:50px"></span>
-                <p style="font-size:15px">Lihat produk yang sudah terdaftar</p>
-                <p><a onclick="location.href='@Url.Action("IndexProdukBig", "Penyewa")'" class="btn btn-success btn-lg">Lihat Produk</a></p>
+                <p style="font-size:15px">Lihat produk, bahan, dan jenis sablon yang sudah terdaftar</p>
+                @*<p><a onclick="location.href='@Url.Action("IndexProdukBig", "Penyewa")'" class="btn btn-success btn-lg">Lihat Produk</a></p>*@
+                <p>@Html.ActionLink("Lihat Produk", "IndexProdukBig", "Penyewa", new { sesi = "lihat" }, new { @class = "btn btn-success btn-lg"})</p>
             </div>
         </div>
         <div class="col-md-4 col-xs-4">
             <div class="thumbnail clearfix text-center">
                 <span class="glyphicon glyphicon-certificate" style="font-size:50px"></span>
-                <p style="font-size:15px">Lihat bahan yang sudah terdaftar</p>
-                <p><a onclick="location.href='@Url.Action("IndexBahan", "Penyewa")'" class="btn btn-success btn-lg">Lihat Bahan</a></p>
+                <p style="font-size:15px">Lihat karyawan yang sudah terdaftar</p>
+                <p><a onclick="location.href='@Url.Action("IndexKaryawanBig", "Penyewa")'" class="btn btn-success btn-lg">Lihat Karyawan</a></p>
 
             </div>
         </div>
         <div class="col-md-4 col-xs-4">
             <div class="thumbnail clearfix text-center">
                 <span class="glyphicon glyphicon-cog" style="font-size:50px"></span>
-                <p style="font-size:15px">Lihat jenis sablon yang sudah terdaftar</p>
-                <p><a onclick="location.href='@Url.Action("IndexJenisSablon", "Penyewa")'" class="btn btn-success btn-lg">Lihat Jenis Sablon</a></p>
+                <p style="font-size:15px">Lihat harga yang sudah terdaftar</p>
+                <p><a onclick="location.href='@Url.Action("IndexViewHarga", "Penyewa")'" class="btn btn-success btn-lg">Lihat harga</a></p>
 
             </div>
         </div>

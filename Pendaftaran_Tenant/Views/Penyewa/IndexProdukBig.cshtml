@@ -1,12 +1,65 @@
 ﻿@model IEnumerable<Pendaftaran_Tenant.Models.Produk>
 
 @{
+    /**/
+
     ViewBag.Title = "Daftar Produk";
 }
+@section navwizard {
 
+
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
+
+}
+<br />
+@if (Session["sesi"].ToString() == "bahan")
+{
+    <div class="text-center">
+        <ul class="nav nav-wizard" style="display:inline-block">
+            <li><a style="color:#47a447">Design Website</a></li>
+            <li><a style="color:#47a447">Gambar Homepage</a></li>
+            <li><a style="color:#47a447">Data Karyawan</a></li>
+            <li><a style="color:#47a447">Data Produk</a></li>
+            <li class="active"><a>Data Bahan</a></li>
+            <li><a style="color:#47a447">Data Jenis Sablon</a></li>
+            <li><a style="color:#47a447">Data Harga</a></li>
+
+        </ul>
+    </div>
+}
+else if (Session["sesi"].ToString() == "sablon")
+{
+    <div class="text-center">
+        <ul class="nav nav-wizard" style="display:inline-block">
+            <li><a style="color:#47a447">Design Website</a></li>
+            <li><a style="color:#47a447">Gambar Homepage</a></li>
+            <li><a style="color:#47a447">Data Karyawan</a></li>
+            <li><a style="color:#47a447">Data Produk</a></li>
+            <li><a style="color:#47a447">Data Bahan</a></li>
+            <li class="active"><a>Data Jenis Sablon</a></li>
+            <li><a style="color:#47a447">Data Harga</a></li>
+
+        </ul>
+    </div>
+}
 <h2 class="text-center" style="color:#47a447">D A F T A R     &nbsp;&nbsp; P R O D U K</h2>
 <hr />
+@if (Session["sesi"].ToString() == "bahan")
+{
+    <div class="row">
+        @*@Html.ActionLink("Lanjut ke penambahan harga >>", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })*@
+        @Html.ActionLink("Lanjut ke penambahan jenis sablon >>", "IndexProdukBig", "Penyewa", new { sesi = "sablon" }, new { onclick = "return confirm('Anda yakin sudah selesai mengisi bahan dan hendak melanjutkan ke pengisian jenis sablon?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
 
+    </div>
+}
+else if (Session["sesi"].ToString() == "sablon")
+{
+    <div class="row">
+        @Html.ActionLink("Lanjut ke penambahan harga >>", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
+        @*@Html.ActionLink("Lanjut ke penambahan harga >>", "IndexProdukBig", "Penyewa", new { sesi = "sablon" }, new { onclick = "return confirm('Anda yakin sudah selesai mengisi bahan dan hendak melanjutkan ke pengisian jenis sablon?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })*@
+
+    </div>
+}
 <div class="row text-center">
     @foreach (var item in Model)
     {
@@ -23,15 +76,36 @@
                 </tr>
             </table>
             <hr />
-            <p>
-                <input type="button" value="Ubah" onclick="location.href='@Url.Action("EditProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-primary btn-sm" />
-                <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-danger btn-sm" />
-            </p>
-            <p>
-                <input type="button" value="Lihat Bahan" onclick="location.href='@Url.Action("IndexBahanBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
-                <input type="button" value="Lihat Jenis Sablon" onclick="location.href='@Url.Action("IndexJenisSablonBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
+            @if (Session["sesi"].ToString() == "bahan")
+            {
+                <p>
+                    <input type="button" value="Tambah Bahan" onclick="location.href='@Url.Action("IndexBahan", "Penyewa")?id=' + @item.id_produk" class="btn btn-primary btn-sm" />
 
-            </p>
+
+                </p>
+            }
+            else if (Session["sesi"].ToString() == "sablon")
+            {
+                <p>
+                    <input type="button" value="Tambah Jenis Sablon" onclick="location.href='@Url.Action("IndexJenisSablon", "Penyewa")?id=' + @item.id_produk" class="btn btn-primary btn-sm" />
+
+
+                </p>
+
+            }
+            else
+            {
+                <p>
+                    <input type="button" value="Ubah" onclick="location.href='@Url.Action("EditProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-primary btn-sm" />
+                    <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-danger btn-sm" />
+                </p>
+                <p>
+                    <input type="button" value="Lihat Bahan" onclick="location.href='@Url.Action("IndexBahanBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
+                    <input type="button" value="Lihat Jenis Sablon" onclick="location.href='@Url.Action("IndexJenisSablonBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
+
+                </p>
+            }
+
 
         </div>
     }

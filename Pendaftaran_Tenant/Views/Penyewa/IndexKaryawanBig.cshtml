@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Pendaftaran_Tenant.Models.Karyawan>
+
+@{
+    ViewBag.Title = "IndexKaryawanBig";
+}
+<br />
+<br />
+<div class="col-md-12 col-xs-12">
+    <div class="thumbnail clearfix text-center" style="max-width:100%;width:100%">
+        <h2 class="text-center" style="color:#47a447">D A F T A R &nbsp;&nbsp; K A R Y A W A N</h2>
+
+       <hr />
+        <table class="table">
+            <tr>
+                <th style="text-align:center">
+                   Nama
+                </th>
+                <th style="text-align:center">
+                    E-mail
+                </th>
+               
+                <th style="text-align:center">
+                    Tempat Lahir
+                </th>
+               
+                <th style="text-align:center">
+                    Tanggal Lahir
+                </th>
+                <th style="text-align:center">
+                    No.Telpon
+                </th>
+                <th style="text-align:center">
+                   Alamat
+                </th>
+                <th style="text-align:center">
+                    Jenis Kelamin
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nama_karyawan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.email_karyawan)
+                    </td>
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tempat_lahir)
+                    </td>
+                   
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tgl_lahir)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.no_telp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.alamat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.jns_kelamin)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Ubah", "EditKaryawan", new { id = item.id_karyawan }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Hapus", "DeleteKaryawan", new { id = item.id_karyawan }, new { @class = "btn btn-danger btn-sm" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

@@ -7,46 +7,55 @@
     <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
 
 }
+<br />
 <div class="text-center">
     <ul class="nav nav-wizard" style="display:inline-block">
         <li><a style="color:#47a447">Design Website</a></li>
         <li><a style="color:#47a447">Gambar Homepage</a></li>
-        <li class="active"><a>Data Produk, Bahan, dan Jenis Sablon</a></li>
+        <li><a style="color:#47a447">Data Karyawan</a></li>
+        <li><a style="color:#47a447">Data Produk</a></li>
+        <li class="active"><a>Data Bahan</a></li>
+        <li><a style="color:#47a447">Data Jenis Sablon</a></li>
         <li><a style="color:#47a447">Data Harga</a></li>
 
     </ul>
 </div>
 <br />
-<br />
+<h2 class="text-center" style="color:#47a447">D A T A &nbsp;&nbsp; B A H A N</h2>
+<hr />
+@{
+    int id = (int)Session["id_produk"];
+}
 <div class="row">
-    <a onclick="location.href='@Url.Action("IndexProduk", "Penyewa")'" class="btn btn-warning btn-sm" style="margin-left:35px"><< Kembali ke daftar produk</a>
+    @*@Html.ActionLink("Lanjut ke tambah Jenis Sablon >> ", "IndexJenisSablon", new { id = id }, new { @class = "btn btn-primary btn-md", @style = "float:right;margin-right:3%" })*@
+    @Html.ActionLink("<< Kembali ke produk", "IndexProdukBig", new { sesi = "bahan" }, new { @class = "btn btn-warning btn-md", @style = "margin-left:7%" })
 </div>
 <br />
 @*@Html.Raw(TempData["Pesan"])*@
 
-    <div class="col-md-6 col-xs-6">
-        <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
+<div class="col-md-6 col-xs-6">
+    <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%;margin-left:10%">
 
-            @using (Html.BeginForm("CreateBahan", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h2>Isi Bahan untuk produk @namaproduk</h2>
-                <hr />
-                <div class="form-group">
-                    <table style="border:0 solid;float:none;margin:0 auto">
+        @using (Html.BeginForm("CreateBahan", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h2>Isi Bahan untuk produk @namaproduk</h2>
+            <hr />
+            <div class="form-group">
+                <table style="border:0 solid;float:none;margin:0 auto">
 
-                        <tr><td><label for="namabahan">Nama Bahan</label><input type="text" class="form-control" id="namabahan" name="namabahan" /></td></tr>
-                    </table>
+                    <tr><td><label for="namabahan">Nama Bahan</label><input type="text" class="form-control" id="namabahan" name="namabahan" /></td></tr>
+                </table>
 
-                </div>
+            </div>
 
-                <input type="submit" value="Simpan" class="btn btn-success" />
+            <input type="submit" value="Simpan" class="btn btn-success" />
 
-                <br />
-                <br />
-            }
-
-        </div>
+            <br />
+            <br />
+        }
 
     </div>
+
+</div>
 

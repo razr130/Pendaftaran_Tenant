@@ -35,7 +35,11 @@ section,
 summary {
   display: block;
 }
-
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
 audio,
 canvas,
 video {
