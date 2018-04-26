@@ -18,6 +18,12 @@ namespace Pendaftaran_Tenant.Models
         public string password { get; set; }
         [StringLength(15)]
         public string tempat_lahir { get; set; }
+        public string tanggal { get; set; }
+        public string bulan { get; set; }
+        public string tahun { get; set; }
+        //public string tgl_lahir { get {
+        //        return tanggal + "-" + bulan + "-" + tahun;
+        //    } }
         public string tgl_lahir { get; set; }
         [StringLength(12)]
         public string no_telp { get; set; }

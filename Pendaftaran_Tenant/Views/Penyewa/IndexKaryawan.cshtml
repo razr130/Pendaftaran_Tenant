@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Pendaftaran_Tenant.Models.Karyawan>
+
+@{
+    ViewBag.Title = "IndexKaryawan";
+}
+@section navwizard {
+
+
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
+
+}
+
+
+    <div class="row">
+        @Html.Partial("CreateKaryawan")
+        <div class="col-md-6 col-xs-6">
+            <div class="thumbnail clearfix text-center" style="max-width:600px;width:100%">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nama_karyawan)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.email_karyawan)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.password)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.tempat_lahir)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.tgl_lahir)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.no_telp)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.alamat)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.jns_kelamin)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nama_karyawan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.email_karyawan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.password)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tempat_lahir)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tgl_lahir)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.no_telp)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.alamat)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.jns_kelamin)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id_karyawan }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.id_karyawan }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id_karyawan })
+                        </td>
+                    </tr>
+            }
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+

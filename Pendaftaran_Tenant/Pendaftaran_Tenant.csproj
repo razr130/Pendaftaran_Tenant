@@ -330,6 +330,9 @@
     <Content Include="Views\Penyewa\IndexJenisSablonEdit.cshtml" />
     <Content Include="Views\Penyewa\EditJenisSablon.cshtml" />
     <Content Include="Views\Penyewa\EditProduk.cshtml" />
+    <Content Include="Views\Penyewa\IndexKaryawan.cshtml" />
+    <Content Include="Views\Penyewa\CreateKaryawan.cshtml" />
+    <Content Include="Views\Penyewa\CreateKaryawan2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

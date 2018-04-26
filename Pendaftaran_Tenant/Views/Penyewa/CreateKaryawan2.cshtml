@@ -1,0 +1,127 @@
+﻿@model Pendaftaran_Tenant.Models.Karyawan
+
+@{
+    ViewBag.Title = "CreateKaryawan";
+}
+@section navwizard {
+
+
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
+
+}
+<div class="text-center">
+    <ul class="nav nav-wizard" style="display:inline-block">
+        <li><a style="color:#47a447">Design Website</a></li>
+        <li><a style="color:#47a447">Gambar Homepage</a></li>
+        <li class="active"><a>Data Produk, Bahan, dan Jenis Sablon</a></li>
+        <li><a style="color:#47a447">Data Harga</a></li>
+
+    </ul>
+</div>
+<br />
+
+<br />
+<div class="row">
+    @Html.ActionLink("Lanjut ke penambahan produk >>", "CreateProduk", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi data karyawan dan hendak melanjutkan ke pengisian produk?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12 col-xs-12" style="margin-left:28%">
+        <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+
+                <h4>Karyawan</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <table style="border:0 solid;float:none;margin:0 auto">
+                    <tr><th style="text-align:center">Nama Karyawan</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            @Html.EditorFor(model => model.nama_karyawan, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.nama_karyawan, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">Email Karyawan</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            @Html.EditorFor(model => model.email_karyawan, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.email_karyawan, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">Password</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">Tempat Lahir</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            @Html.EditorFor(model => model.tempat_lahir, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.tempat_lahir, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">Tanggal Lahir</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            @Html.DropDownListFor(model => model.tanggal, Enumerable.Range(1, 31).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+                            &nbsp;
+                            @Html.DropDownListFor(model => model.bulan, new List<SelectListItem> {
+                                                                               new SelectListItem() {Text="Januari", Value="Januari"},
+                                                                               new SelectListItem() {Text="Februari", Value="Februari"},
+                                                                               new SelectListItem() {Text="Maret", Value="Maret"},
+                                                                               new SelectListItem() {Text="April", Value="April"},
+                                                                               new SelectListItem() {Text="May", Value="May"},
+                                                                               new SelectListItem() {Text="Juni", Value="Juni"},
+                                                                               new SelectListItem() {Text="Juli", Value="Juli"},
+                                                                               new SelectListItem() {Text="Agustus", Value="Agustus"},
+                                                                               new SelectListItem() {Text="September", Value="September"},
+                                                                               new SelectListItem() {Text="Oktober", Value="Oktober"},
+                                                                               new SelectListItem() {Text="November", Value="November"},
+                                                                               new SelectListItem() {Text="Desember", Value="Desember"},
+                                                                           })
+                            &nbsp;
+                            @Html.DropDownListFor(model => model.tanggal, Enumerable.Range(1960, 2018).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">No Telepon</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            @Html.EditorFor(model => model.no_telp, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.no_telp, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+
+                    <tr><th style="text-align:center">Alamat</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            @Html.EditorFor(model => model.alamat, new { htmlAttributes = new { @class = "form-control text-center" } })
+                            @Html.ValidationMessageFor(model => model.alamat, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">Jenis Kelamin</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            @Html.DropDownListFor(model => model.jns_kelamin, new List<SelectListItem> {
+                                                                   new SelectListItem() {Text="L", Value="L"},
+                                                                   new SelectListItem() {Text="P", Value="P"},
+
+                                                               })
+                        </td>
+                    </tr>
+
+                </table>
+
+                <input type="submit" value="Create" class="btn btn-success" />
+
+                <br />
+                <br />
+            }
+        </div>
+    </div>
+</div>

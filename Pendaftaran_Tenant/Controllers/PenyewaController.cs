@@ -397,12 +397,70 @@ namespace Pendaftaran_Tenant.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateKaryawan(string namakaryawan, string email, string password, string tempat_lahir, string tgl_lahir, string no_telp, string alamat, string jns_kelamin)
+        public ActionResult CreateKaryawan(string nama_karyawan, string email_karyawan, string password, string tempat_lahir, string tanggal, string bulan, string tahun, string no_telp, string alamat, string jns_kelamin)
         {
            
             string nama_perusahaan;
             int id = Convert.ToInt32(Session["id_penyewa"]);
 
+            using (PenyewaDAL sewa = new PenyewaDAL())
+            {
+
+                nama_perusahaan = sewa.getNamaPerusahaan(id).ToString();
+            }
+            string tgllahir = tanggal + "-" + bulan + "-" + tahun;
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[Karyawan_" + nama_perusahaan + "]" +
+                    " ([nama_karyawan]" +
+                    ",[email_karyawan]" +
+                    ",[password]" +
+                    ",[tempat_lahir]" +
+                    ",[tgl_lahir]" +
+                    ",[no_telp]" +
+                    ",[alamat]" +
+                    ",[jns_kelamin])" +
+                    
+                    " VALUES" +
+                    "('" + nama_karyawan + "' ,'" + email_karyawan + "' ,'" + password + "' ,'" + tempat_lahir + "' ,'" + tgllahir + "' ,'" + no_telp + "' ,'" + alamat + "' ,'" + jns_kelamin + "')";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "data produk berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+
+
+
+            return RedirectToAction("IndexKaryawan", "Penyewa");
+        }
+
+        public ActionResult CreateKaryawan2()
+        {
+
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateKaryawan2(string nama_karyawan, string email_karyawan, string password, string tempat_lahir, string tanggal, string bulan, string tahun, string no_telp, string alamat, string jns_kelamin)
+        {
+
+            string nama_perusahaan;
+            int id = Convert.ToInt32(Session["id_penyewa"]);
+            string tgllahir = tanggal + "-" + bulan + "-" + tahun;
             using (PenyewaDAL sewa = new PenyewaDAL())
             {
 
@@ -422,9 +480,9 @@ namespace Pendaftaran_Tenant.Controllers
                     ",[no_telp]" +
                     ",[alamat]" +
                     ",[jns_kelamin])" +
-                    
+
                     " VALUES" +
-                    "('" + namakaryawan + "' ,'" + email + "' ,'" + password + "' ,'" + tempat_lahir + "' ,'" + tgl_lahir + "' ,'" + no_telp + "' ,'" + alamat + "' ,'" + jns_kelamin + "')";
+                    "('" + nama_karyawan + "' ,'" + email_karyawan + "' ,'" + password + "' ,'" + tempat_lahir + "' ,'" + tgllahir + "' ,'" + no_telp + "' ,'" + alamat + "' ,'" + jns_kelamin + "')";
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
