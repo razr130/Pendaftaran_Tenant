@@ -14,50 +14,305 @@
         <li><a style="color:#47a447">Design Website</a></li>
         <li><a style="color:#47a447">Gambar Homepage</a></li>
         <li><a style="color:#47a447">Data Karyawan</a></li>
-        <li class="active"><a>Data Produk</a></li>
-        <li><a style="color:#47a447">Data Bahan</a></li>
-        <li><a style="color:#47a447">Data Jenis Sablon</a></li>
-        <li><a style="color:#47a447">Data Harga</a></li>
+        <li class="active"><a>Data Produk, bahan, sablon dan harga</a></li>
+        <li><a style="color:#47a447">Ulasan Produk</a></li>
+        
 
     </ul>
 </div>
 <br />
-
-
-<h2 class="text-center" style="color:#47a447">D A T A &nbsp;&nbsp; P R O D U K</h2>
-<hr />
+<br />
 <div class="row">
-    @*@Html.ActionLink("Lanjut ke penambahan harga >>", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })*@
-    @Html.ActionLink("Lanjut ke penambahan bahan >>", "IndexProdukBig", "Penyewa", new { sesi = "bahan" }, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
+    <h2 style="color:#47a447;display:inline;margin-left:36%">D A T A &nbsp;&nbsp; P R O D U K</h2>
+    @Html.ActionLink("Lanjut ke ulasan produk >>", "IndexProdukBig", "Penyewa", new { @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
+</div>
+<hr />
+@*<div class="row">*@
+@*@Html.ActionLink("Lanjut ke penambahan harga >>", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })*@
 
+@*</div>*@
+<div class="row">
+
+    <a class="btn btn-primary" id="scrolldown" href="#listdata" style="margin-left:20px;display:none">Lihat data yang sudah dimasukkan</a>
 </div>
 <br />
-@*@Html.Raw(TempData["Pesan"])*@
-<div class="col-md-6 col-xs-6">
-    <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%;margin-left:10%">
+@Html.Raw(TempData["Pesan"])
+<div class="row">
+    @using (Html.BeginForm("CreateProduk2", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-4 col-xs-4">
+            <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
 
-        @using (Html.BeginForm("CreateProduk", "Penyewa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            <h3 style="color:#47a447">Produk</h3>
-            <hr />
-            <table style="border:0 solid;float:none;margin:0 auto">
-                <tr><th style="text-align:center"><label for="namaproduk">Nama Produk</label></th></tr>
-                <tr><td style="text-align:center"><input type="text" class="form-control" id="namaproduk" name="namaproduk" /></td></tr>
-                <tr><th style="text-align:center"><label for="deskripsi">Deskripsi</label></th></tr>
-                <tr><td style="text-align:center"><textarea rows="4" class="form-control" id="deskripsi" name="deskripsi"></textarea></td></tr>
-                <tr><th style="text-align:center"><label style="color:black" for="fotoproduk">Gambar Produk</label></th></tr>
-                <tr><td style="text-align:center"><input name="fotoproduk" type="file" class="form-control" /></td></tr>
-            </table>
 
-            <br />
-            <input type="submit" value="Simpan" class="btn btn-success" />
-            <p style="padding-bottom:5px;margin-top:10px">
+                @Html.AntiForgeryToken()
+                <h3 style="color:#47a447">Produk</h3>
+                <hr />
+                <table style="border:0 solid;float:none;margin:0 auto">
+                    <tr><th style="text-align:center"><label for="namaproduk">Nama Produk</label></th></tr>
+                    <tr><td style="text-align:center"><input type="text" class="form-control" id="namaproduk" name="namaproduk" /></td></tr>
+                    <tr><th style="text-align:center"><label for="deskripsi">Deskripsi</label></th></tr>
+                    <tr><td style="text-align:center"><textarea rows="4" class="form-control" id="deskripsi" name="deskripsi"></textarea></td></tr>
+                    <tr><th style="text-align:center"><label style="color:black" for="fotoproduk">Gambar Produk</label></th></tr>
+                    <tr><td style="text-align:center"><input name="fotoproduk" type="file" class="form-control" /></td></tr>
+                </table>
 
-            </p>
-            <br />
-        }
+                <br />
 
-    </div>
+                <br />
 
+
+            </div>
+
+        </div>
+        <div class="col-md-4 col-xs-4">
+            <div class="thumbnail clearfix" style="max-width:460px;width:100%">
+
+
+                <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                    <tr>
+                        <th style="text-align:center"> <h4 style="color:#47a447">Bahan</h4></th>
+                        <th style="text-align:center"><h4 style="color:#47a447">Jenis Sablon</h4></th>
+                        <th style="text-align:center"><h4 style="color:#47a447">Harga</h4></th>
+                    </tr>
+                    @*<tr>
+                            <th style="text-align:center"><label for="namaproduk">Bahan 1</label></th>
+                            <th style="text-align:center"><label for="namaproduk">Jenis Sablon 1</label></th>
+                            <th style="text-align:center"><label for="namaproduk">Harga 1</label></th>
+                        </tr>*@
+                    <tr>
+                        <td style="text-align:center;width:150px"><input type="text" class="form-control" id="bahan1" name="bahan1" style="max-width:150px" /></td>
+                        <td style="text-align:center;width:110px"><input type="text" class="form-control" id="sablon1" name="sablon1" style="max-width:150px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="harga1" name="harga1" style="max-width:80px" /></td>
+                    </tr>
+                    @*<tr>
+                            <th style="text-align:center"><label for="namaproduk">Bahan 2</label></th>
+                            <th style="text-align:center"><label for="namaproduk">Jenis Sablon 2</label></th>
+                        </tr>*@
+                    <tr>
+                        <td style="text-align:center"><input type="text" class="form-control" id="bahan2" name="bahan2" style="max-width:150px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="sablon2" name="sablon2" style="max-width:150px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="harga2" name="harga2" style="max-width:80px" /></td>
+                    </tr>
+                    @*<tr>
+                            <th style="text-align:center"><label for="namaproduk">Bahan 3</label></th>
+                            <th style="text-align:center"><label for="namaproduk">Jenis Sablon 3</label></th>
+                        </tr>*@
+                    <tr>
+                        <td style="text-align:center"><input type="text" class="form-control" id="bahan3" name="bahan3" style="max-width:150px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="sablon3" name="sablon3" style="max-width:150px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="harga3" name="harga3" style="max-width:80px" /></td>
+                    </tr>
+                    @*<tr>
+                            <th style="text-align:center"><label for="namaproduk">Bahan 4</label></th>
+                            <th style="text-align:center"><label for="namaproduk">Jenis Sablon 4</label></th>
+                        </tr>*@
+                    <tr>
+                        <td style="text-align:center"><input type="text" class="form-control" id="bahan4" name="bahan4" style="max-width:150px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="sablon4" name="sablon4" style="max-width:150px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="harga4" name="harga4" style="max-width:80px" /></td>
+                    </tr>
+                    @*<tr>
+                            <th style="text-align:center"><label for="namaproduk">Bahan 5</label></th>
+                            <th style="text-align:center"><label for="namaproduk">Jenis Sablon 5</label></th>
+                        </tr>*@
+                    <tr>
+                        <td style="text-align:center"><input type="text" class="form-control" id="bahan5" name="bahan5" style="max-width:150px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="sablon5" name="sablon5" style="max-width:150px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="harga5" name="harga5" style="max-width:80px" /></td>
+                    </tr>
+                </table>
+                <p style="color:lightgrey;margin-left:10px"><h6><i style="color:darkgray;margin-left:10px">*Boleh dikosongkan bila tidak diperlukan</i></h6></p>
+                <br />
+
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-4">
+            <div class="thumbnail clearfix" style="max-width:460px;width:100%">
+                <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                    <tr>
+                        <th style="color:#47a447"><h4>Kebutuhan tambahan</h4></th>
+                        <th style="color:#47a447"><h4>Harga Tambahan</h4></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan1" id="btntam1" style="width:150px">
+                                    Kebutuhan ...
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddentam1" name="tambahan1" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam1">
+
+                                    <li><a href="#/">Ukuran XXL</a></li>
+                                    <li><a href="#/">Ukuran di atas XXL</a></li>
+                                    <li><a href="#/">Lengan Panjang</a></li>
+                                    <li><a href="#/">Raglan</a></li>
+                                    <li><a href="#/">Hoodie</a></li>
+
+                                </ul>
+                            </div>
+                        </td>
+                        <td><input type="text" class="form-control" id="hargatam1" name="hargatam1" style="max-width:80px" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan2" id="btntam2" style="width:150px">
+                                    Kebutuhan ...
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddentam2" name="tambahan2" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam2">
+
+                                    <li><a href="#/">Ukuran XXL</a></li>
+                                    <li><a href="#/">Ukuran di atas XXL</a></li>
+                                    <li><a href="#/">Lengan Panjang</a></li>
+                                    <li><a href="#/">Raglan</a></li>
+                                    <li><a href="#/">Hoodie</a></li>
+
+                                </ul>
+                            </div>
+                        </td>
+                        <td><input type="text" class="form-control" id="hargatam2" name="hargatam2" style="max-width:80px" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan3" id="btntam3" style="width:150px">
+                                    Kebutuhan ...
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddentam3" name="tambahan3" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam3">
+
+                                    <li><a href="#/">Ukuran XXL</a></li>
+                                    <li><a href="#/">Ukuran di atas XXL</a></li>
+                                    <li><a href="#/">Lengan Panjang</a></li>
+                                    <li><a href="#/">Raglan</a></li>
+                                    <li><a href="#/">Hoodie</a></li>
+
+                                </ul>
+                            </div>
+                        </td>
+                        <td><input type="text" class="form-control" id="hargatam3" name="hargatam3" style="max-width:80px" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan4" id="btntam4" style="width:150px">
+                                    Kebutuhan ...
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddentam4" name="tambahan4" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam4">
+
+                                    <li><a href="#/">Ukuran XXL</a></li>
+                                    <li><a href="#/">Ukuran di atas XXL</a></li>
+                                    <li><a href="#/">Lengan Panjang</a></li>
+                                    <li><a href="#/">Raglan</a></li>
+                                    <li><a href="#/">Hoodie</a></li>
+
+                                </ul>
+                            </div>
+                        </td>
+                        <td><input type="text" class="form-control" id="hargatam4" name="hargatam4" style="max-width:80px" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan5" id="btntam5" style="width:150px">
+                                    Kebutuhan ...
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddentam5" name="tambahan5" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam5">
+
+                                    <li><a href="#/">Ukuran XXL</a></li>
+                                    <li><a href="#/">Ukuran di atas XXL</a></li>
+                                    <li><a href="#/">Lengan Panjang</a></li>
+                                    <li><a href="#/">Raglan</a></li>
+                                    <li><a href="#/">Hoodie</a></li>
+
+                                </ul>
+                            </div>
+                        </td>
+                        <td><input type="text" class="form-control" id="hargatam5" name="hargatam5" style="max-width:80px" /></td>
+                    </tr>
+                </table>
+                <p style="color:lightgrey;margin-left:10px"><h6><i style="color:darkgray;margin-left:10px">*Boleh dikosongkan bila tidak diperlukan</i></h6></p>
+<br />
+                <div class="text-center">
+                    <input type="submit" value="Simpan" class="btn btn-success text-center" />
+                </div>
+                <br />
+            </div>
+        </div>
+    }
 </div>
+<br />
+<br />
+
+<script>
+    $(document).ready(function () {
+
+        $(function () {
+
+            $("#dropdowntam5").on('click', 'li a', function () {
+                $("#btntam5").text($(this).text());
+                $("#btntam5").val($(this).text());
+                $("#hiddentam5").val($(this).text());
+
+            });
+            $("#dropdowntam4").on('click', 'li a', function () {
+                $("#btntam4").text($(this).text());
+                $("#btntam4").val($(this).text());
+                $("#hiddentam4").val($(this).text());
+
+            });
+            $("#dropdowntam3").on('click', 'li a', function () {
+                $("#btntam3").text($(this).text());
+                $("#btntam3").val($(this).text());
+                $("#hiddentam3").val($(this).text());
+
+            });
+            $("#dropdowntam2").on('click', 'li a', function () {
+                $("#btntam2").text($(this).text());
+                $("#btntam2").val($(this).text());
+                $("#hiddentam2").val($(this).text());
+
+            });
+            $("#dropdowntam1").on('click', 'li a', function () {
+                $("#btntam1").text($(this).text());
+                $("#btntam1").val($(this).text());
+                $("#hiddentam1").val($(this).text());
+
+            });
+        });
+
+
+
+        // Add smooth scrolling to all links
+        $("#scrolldown").on('click', function (event) {
+
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+                // Prevent default anchor click behavior
+                event.preventDefault();
+
+                // Store hash
+                var hash = this.hash;
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top
+                }, 500, function () {
+
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+                    window.location.hash = hash;
+                });
+            } // End if
+        });
+    });
+
+</script>

@@ -44,22 +44,22 @@ else if (Session["sesi"].ToString() == "sablon")
 }
 <h2 class="text-center" style="color:#47a447">D A F T A R     &nbsp;&nbsp; P R O D U K</h2>
 <hr />
-@if (Session["sesi"].ToString() == "bahan")
+@*@if (Session["sesi"].ToString() == "bahan")
 {
     <div class="row">
-        @*@Html.ActionLink("Lanjut ke penambahan harga >>", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })*@
-        @Html.ActionLink("Lanjut ke penambahan jenis sablon >>", "IndexProdukBig", "Penyewa", new { sesi = "sablon" }, new { onclick = "return confirm('Anda yakin sudah selesai mengisi bahan dan hendak melanjutkan ke pengisian jenis sablon?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
+        @Html.ActionLink("Lanjut ke penambahan harga >>", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })*@
+       @* @Html.ActionLink("Lanjut ke penambahan jenis sablon >>", "IndexProdukBig", "Penyewa", new { sesi = "sablon" }, new { onclick = "return confirm('Anda yakin sudah selesai mengisi bahan dan hendak melanjutkan ke pengisian jenis sablon?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })*@
 
-    </div>
-}
-else if (Session["sesi"].ToString() == "sablon")
-{
-    <div class="row">
+   @* </div>*@
+@*}*@
+@*else if (Session["sesi"].ToString() == "sablon")*@
+@*{
+    <div class="row">*@
         @Html.ActionLink("Lanjut ke penambahan harga >>", "CreateViewHarga", "Penyewa", null, new { onclick = "return confirm('Anda yakin sudah selesai mengisi produk, bahan, serta jenis sablon dan hendak melanjutkan ke pengisian harga?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
         @*@Html.ActionLink("Lanjut ke penambahan harga >>", "IndexProdukBig", "Penyewa", new { sesi = "sablon" }, new { onclick = "return confirm('Anda yakin sudah selesai mengisi bahan dan hendak melanjutkan ke pengisian jenis sablon?')", @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })*@
 
-    </div>
-}
+    @*</div>*@
+@*}*@
 <div class="row text-center">
     @foreach (var item in Model)
     {
