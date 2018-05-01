@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Pendaftaran_Tenant.Models.ProdukLengkapViewModel>
+
+@{
+    ViewBag.Title = "IndexProdukLengkap";
+}
+
+<h2>IndexProdukLengkap</h2>
+
+@section navwizard {
+
+
+    <link rel="stylesheet" href="~/Content/bootstrap-nav-wizard.css" type="text/css" />
+
+}
+<br />
+<div class="text-center">
+    <ul class="nav nav-wizard" style="display:inline-block">
+        <li><a style="color:#47a447">Design Website</a></li>
+        <li><a style="color:#47a447">Gambar Homepage</a></li>
+        <li><a style="color:#47a447">Data Karyawan</a></li>
+        <li><a  style="color:#47a447">Data Produk, bahan, sablon dan harga</a></li>
+        <li class="active"><a>Ulasan Produk</a></li>
+
+
+    </ul>
+</div>
+<br />
+<br />
+<div class="row">
+    <h2 class="text-center" style="color:#47a447">U L A S A N     &nbsp;&nbsp; P R O D U K</h2>
+    @Html.ActionLink("Selesai", "Selesai", "Penyewa", new { @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
+</div>
+<hr />
+<div class="row">
+
+    @*@{ var produk = "";};*@
+    @foreach (var item in Model.GroupBy(x => x.nama_produk).Select(y => y.First()).ToList())
+    {
+        //if (item.nama_produk != produk)
+        //{
+        @*@produk = item.nama_produk;*@
+        <div class="col-md-4">
+            <h3 style="text-align:center">@item.nama_produk</h3>
+            <div class="thumbnail">
+                <img src="~/Content/Images/@item.foto_produk" style="min-height:200px;height:200px;" />
+            </div>
+            <table class="table table-striped">
+
+                <tr>
+                    <th>Bahan</th>
+                    <th>Sablon</th>
+                    <th>Harga</th>
+                    <th>Tambahan</th>
+                    <th>Harga</th>
+
+                </tr>
+                @foreach (var item2 in Model)
+                {
+                    <tr>
+                        @if (item2.nama_produk == item.nama_produk)
+                        {
+                            <td>@item2.nama_bahan</td>
+                            <td>@item2.nama_sablon</td>
+                            <td>@item2.harga</td>
+                            <td>@item2.nama_tambahan</td>
+                            <td>@item2.harga_tambahan</td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+        @*}*@
+
+
+    }
+</div>
+

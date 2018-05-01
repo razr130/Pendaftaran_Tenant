@@ -8,30 +8,31 @@
 <div class="col-md-12 col-xs-12" style="margin-left:32%">
     <div class="thumbnail clearfix text-center" style="max-width:400px;width:100%">
         @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+    {
+        @Html.AntiForgeryToken()
 
 
-            <h4>Edit Sablon @Session["nama_sablon"].ToString()</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.id_jns_sablon)
-            <table style="border:0 solid;float:none;margin:0 auto">
-                <tr>
-                    <th style="text-align:center"> Nama sablon baru</th>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.EditorFor(model => model.nama_sablon, new { htmlAttributes = new { @class = "form-control", id = "namasablon" } })
-                        @Html.ValidationMessageFor(model => model.nama_sablon, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
-            </table>
-            <br />
-            <input type="submit" value="Save" class="btn btn-success" />
-            <br />
-            <br />
-        }
+        <h4>Edit Sablon @Session["nama_sablon"].ToString()</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id_jns_sablon)
+        <table style="border:0 solid;float:none;margin:0 auto">
+            <tr>
+                <th style="text-align:center"> Nama sablon baru</th>
+            </tr>
+            <tr>
+                <td>
+                    @Html.EditorFor(model => model.nama_sablon, new { htmlAttributes = new { @class = "form-control", id = "namasablon" } })
+                    @Html.ValidationMessageFor(model => model.nama_sablon, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </table>
+        <br />
+        <button class="btn btn-warning" onclick="location.href='javascript:history.go(-1)'">Batal</button>
+        <input type="submit" value="Save" class="btn btn-success" />
+        <br />
+        <br />
+}
     </div>
 </div>
 @*@Html.Partial("IndexBahanEdit")*@
