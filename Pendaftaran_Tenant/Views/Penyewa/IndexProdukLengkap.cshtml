@@ -18,7 +18,7 @@
         <li><a style="color:#47a447">Design Website</a></li>
         <li><a style="color:#47a447">Gambar Homepage</a></li>
         <li><a style="color:#47a447">Data Karyawan</a></li>
-        <li><a  style="color:#47a447">Data Produk, bahan, sablon dan harga</a></li>
+        <li><a style="color:#47a447">Data Produk, bahan, sablon dan harga</a></li>
         <li class="active"><a>Ulasan Produk</a></li>
 
 
@@ -31,6 +31,7 @@
     @Html.ActionLink("Selesai", "Selesai", "Penyewa", new { @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
 </div>
 <hr />
+@Html.Raw(TempData["Pesan"])
 <div class="row">
 
     @*@{ var produk = "";};*@
@@ -44,14 +45,14 @@
             <div class="thumbnail">
                 <img src="~/Content/Images/@item.foto_produk" style="min-height:200px;height:200px;" />
             </div>
-            <table class="table table-striped">
 
-                <tr>
-                    <th>Bahan</th>
-                    <th>Sablon</th>
-                    <th>Harga</th>
-                    <th>Tambahan</th>
-                    <th>Harga</th>
+            <table class="table">
+
+                <tr style="background-color:#ededed">
+                    <th style="text-align:center">Bahan</th>
+                    <th style="text-align:center">Sablon</th>
+                    <th style="text-align:center">Harga</th>
+
 
                 </tr>
                 @foreach (var item2 in Model)
@@ -59,11 +60,32 @@
                     <tr>
                         @if (item2.nama_produk == item.nama_produk)
                         {
-                            <td>@item2.nama_bahan</td>
-                            <td>@item2.nama_sablon</td>
-                            <td>@item2.harga</td>
-                            <td>@item2.nama_tambahan</td>
-                            <td>@item2.harga_tambahan</td>
+                            <td style="text-align:center">@item2.nama_bahan</td>
+                            <td style="text-align:center">@item2.nama_sablon</td>
+                            <td style="text-align:center">@item2.harga</td>
+
+                        }
+                    </tr>
+                }
+            </table>
+            <table class="table">
+
+                <tr  style="background-color:#ededed">
+                    <th style="text-align:center">Tambahan</th>
+
+                    <th style="text-align:center">Harga Tambahan</th>
+
+
+                </tr>
+                @foreach (var item3 in Model.GroupBy(x => x.nama_tambahan).Select(y => y.First()).ToList())
+                {
+                    <tr>
+                        @if (item3.nama_produk == item.nama_produk)
+                        {
+                            <td style="text-align:center">@item3.nama_tambahan</td>
+                            <td style="text-align:center">@item3.harga_tambahan</td>
+
+
                         }
                     </tr>
                 }

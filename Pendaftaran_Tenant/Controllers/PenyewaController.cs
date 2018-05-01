@@ -1040,7 +1040,7 @@ namespace Pendaftaran_Tenant.Controllers
 
 
                     TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
-                                          "success", "data produk " + namaproduk + " berhasil ditambah, ulasan singkat produk bisa dilihat di bawah halaman");
+                                          "success", "data produk " + namaproduk + " berhasil ditambah");
                 }
                 catch (Exception ex)
                 {
@@ -1050,7 +1050,7 @@ namespace Pendaftaran_Tenant.Controllers
 
                 conn.Close();
             }
-            return RedirectToAction("CreateViewHarga", "Penyewa");
+            return View();
         }
 
         public ActionResult IndexProduk()
@@ -2024,7 +2024,7 @@ namespace Pendaftaran_Tenant.Controllers
                     ",[nama_tambahan]" +
                     ",[Harga_tambahan]" +
                     ",[foto_produk]" +
-                    " FROM[MultiTenancy_Sablon].[dbo].[View_"+nama_perusahaan+"]";
+                    " FROM[MultiTenancy_Sablon].[dbo].[View_" + nama_perusahaan + "]";
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -2046,7 +2046,7 @@ namespace Pendaftaran_Tenant.Controllers
                             };
                             result.Add(item);
                         }
-                        
+
                     }
                 }
                 catch (Exception)
@@ -2189,15 +2189,17 @@ namespace Pendaftaran_Tenant.Controllers
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
-                string query = " CREATE VIEW [dbo].[View_" + nama_perusahaan + "]" +
+                string query = "CREATE VIEW [dbo].[View_" + nama_perusahaan + "]" +
                     " AS" +
-                    " SELECT        dbo.Bahan_" + nama_perusahaan + ".nama_bahan, dbo.JenisSablon_" + nama_perusahaan + ".nama_sablon, dbo.Produk_" + nama_perusahaan + ".nama_produk, dbo.Harga_" + nama_perusahaan + ".harga, dbo.Bahan_" + nama_perusahaan + ".id_bahan, dbo.JenisSablon_" + nama_perusahaan + ".id_jns_sablon, " +
-                    " dbo.Produk_" + nama_perusahaan + ".id_produk" +
-                    " FROM            dbo.Bahan_" + nama_perusahaan + " LEFT OUTER JOIN" +
-                    " dbo.Produk_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + ".id_produk = dbo.Produk_" + nama_perusahaan + ".id_produk LEFT OUTER JOIN" +
-                    " dbo.JenisSablon_" + nama_perusahaan + " ON dbo.Produk_" + nama_perusahaan + ".id_produk = dbo.JenisSablon_" + nama_perusahaan + ".id_produk LEFT OUTER JOIN" +
-                    " dbo.Harga_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + ".id_bahan = dbo.Harga_" + nama_perusahaan + ".id_bahan AND dbo.Produk_" + nama_perusahaan + ".id_produk = dbo.Harga_" + nama_perusahaan + ".id_produk AND" +
-                    " dbo.JenisSablon_" + nama_perusahaan + ".id_jns_sablon = dbo.Harga_" + nama_perusahaan + ".id_jns_sablon";
+                    " SELECT        dbo.Bahan_" + nama_perusahaan + ".nama_bahan, dbo.Harga_" + nama_perusahaan + ".harga, dbo.JenisSablon_" + nama_perusahaan + ".nama_sablon, dbo.Produk_" + nama_perusahaan + ".nama_produk, dbo.TabelTambahan_" + nama_perusahaan + ".nama_tambahan, " +
+                    "dbo.TabelTambahan_" + nama_perusahaan + ".harga AS Harga_tambahan, dbo.Produk_" + nama_perusahaan + ".foto_produk" +
+                    " FROM            dbo.Bahan_" + nama_perusahaan + " INNER JOIN" +
+                    " dbo.Harga_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + ".id_bahan = dbo.Harga_" + nama_perusahaan + ".id_bahan INNER JOIN" +
+                    " dbo.JenisSablon_" + nama_perusahaan + " ON dbo.Harga_" + nama_perusahaan + ".id_jns_sablon = dbo.JenisSablon_" + nama_perusahaan + ".id_jns_sablon INNER JOIN" +
+                    " dbo.Produk_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + ".id_produk = dbo.Produk_" + nama_perusahaan + ".id_produk AND dbo.Harga_" + nama_perusahaan + ".id_produk = dbo.Produk_" + nama_perusahaan + ".id_produk AND" +
+                    " dbo.JenisSablon_" + nama_perusahaan + ".id_produk = dbo.Produk_" + nama_perusahaan + ".id_produk INNER JOIN" +
+                    " dbo.TabelTambahan_" + nama_perusahaan + " ON dbo.Produk_" + nama_perusahaan + ".id_produk = dbo.TabelTambahan_" + nama_perusahaan + ".id_produk";
+
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
                 {
@@ -2207,16 +2209,17 @@ namespace Pendaftaran_Tenant.Controllers
                 }
                 catch (Exception)
                 {
-                    return RedirectToAction("IndexViewHarga", "Penyewa");
                     //TempData["Pesan"] = Helpers.Message.GetPesan("Error bikin view !",
                     //"danger", ex.Message);
+                    return RedirectToAction("IndexProdukLengkap", "Penyewa");
+                    
                     //return RedirectToAction("IndexViewHarga", "Penyewa");
                 }
 
 
                 conn.Close();
             }
-            return RedirectToAction("IndexViewHarga", "Penyewa");
+            return RedirectToAction("IndexProdukLengkap", "Penyewa");
 
         }
         public ActionResult AddHarga(int? idbahan, int idproduk, int? idsablon, int harga)
@@ -2657,13 +2660,13 @@ namespace Pendaftaran_Tenant.Controllers
                 try
                 {
                     sqlcom.ExecuteNonQuery();
-                    //TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
-                    //                      "success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "Tabel untuk perusahaan " + nama_perusahaan + " berhasil ditambah");
                 }
                 catch (Exception ex)
                 {
-                    //TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
-                    //                      "danger", ex.Message);
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
                 }
 
 

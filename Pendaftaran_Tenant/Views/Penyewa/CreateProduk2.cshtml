@@ -16,7 +16,7 @@
         <li><a style="color:#47a447">Data Karyawan</a></li>
         <li class="active"><a>Data Produk, bahan, sablon dan harga</a></li>
         <li><a style="color:#47a447">Ulasan Produk</a></li>
-        
+
 
     </ul>
 </div>
@@ -24,7 +24,7 @@
 <br />
 <div class="row">
     <h2 style="color:#47a447;display:inline;margin-left:36%">D A T A &nbsp;&nbsp; P R O D U K</h2>
-    @Html.ActionLink("Lanjut ke ulasan produk >>", "IndexProdukBig", "Penyewa", new { @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
+    @Html.ActionLink("Lanjut ke ulasan produk >>", "CreateViewHarga", "Penyewa", new { @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
 </div>
 <hr />
 @*<div class="row">*@
@@ -80,8 +80,33 @@
                             <th style="text-align:center"><label for="namaproduk">Harga 1</label></th>
                         </tr>*@
                     <tr>
-                        <td style="text-align:center;width:150px"><input type="text" class="form-control" id="bahan1" name="bahan1" style="max-width:150px" /></td>
-                        <td style="text-align:center;width:110px"><input type="text" class="form-control" id="sablon1" name="sablon1" style="max-width:150px" /></td>
+                        <td style="text-align:center;width:135px"><input type="text" class="form-control" id="bahan1" name="bahan1" style="max-width:130px" /></td>
+                        <td style="text-align:center;width:80px">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon1" id="btnsablon1" style="width:inherit">
+                                    Jenis Sablon
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddensablon1" name="sablon1" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon1">
+
+                                    <li><a href="#/">Rubber</a></li>
+                                    <li><a href="#/">Pigmen</a></li>
+                                    <li><a href="#/">Plastisol</a></li>
+                                    <li><a href="#/">Glow in the Dark</a></li>
+                                    <li><a href="#/">Flocking</a></li>
+                                    <li><a href="#/">Glitter</a></li>
+                                    <li><a href="#/">Foil</a></li>
+                                    <li><a href="#/">DTG</a></li>
+                                    <li><a href="#/">Polyfex</a></li>
+                                    <li><a href="#/">3D</a></li>
+                                    <li><a href="#/">Jahit</a></li>
+                                    <li><a href="#/">Cat non kain</a></li>
+
+
+                                </ul>
+                            </div>
+                        </td>
                         <td style="text-align:center"><input type="text" class="form-control" id="harga1" name="harga1" style="max-width:80px" /></td>
                     </tr>
                     @*<tr>
@@ -90,7 +115,32 @@
                         </tr>*@
                     <tr>
                         <td style="text-align:center"><input type="text" class="form-control" id="bahan2" name="bahan2" style="max-width:150px" /></td>
-                        <td style="text-align:center"><input type="text" class="form-control" id="sablon2" name="sablon2" style="max-width:150px" /></td>
+                        <td style="text-align:center">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon2" id="btnsablon2" style="width:inherit">
+                                    Jenis Sablon
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddensablon2" name="sablon2" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon2">
+
+                                    <li><a href="#/">Rubber</a></li>
+                                    <li><a href="#/">Pigmen</a></li>
+                                    <li><a href="#/">Plastisol</a></li>
+                                    <li><a href="#/">Glow in the Dark</a></li>
+                                    <li><a href="#/">Flocking</a></li>
+                                    <li><a href="#/">Glitter</a></li>
+                                    <li><a href="#/">Foil</a></li>
+                                    <li><a href="#/">DTG</a></li>
+                                    <li><a href="#/">Polyfex</a></li>
+                                    <li><a href="#/">3D</a></li>
+                                    <li><a href="#/">Jahit</a></li>
+                                    <li><a href="#/">Cat non kain</a></li>
+
+
+                                </ul>
+                            </div>
+                        </td>
                         <td style="text-align:center"><input type="text" class="form-control" id="harga2" name="harga2" style="max-width:80px" /></td>
                     </tr>
                     @*<tr>
@@ -99,7 +149,32 @@
                         </tr>*@
                     <tr>
                         <td style="text-align:center"><input type="text" class="form-control" id="bahan3" name="bahan3" style="max-width:150px" /></td>
-                        <td style="text-align:center"><input type="text" class="form-control" id="sablon3" name="sablon3" style="max-width:150px" /></td>
+                        <td style="text-align:center">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon3" id="btnsablon3" style="width:inherit">
+                                    Jenis Sablon
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddensablon3" name="sablon3" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon3">
+
+                                    <li><a href="#/">Rubber</a></li>
+                                    <li><a href="#/">Pigmen</a></li>
+                                    <li><a href="#/">Plastisol</a></li>
+                                    <li><a href="#/">Glow in the Dark</a></li>
+                                    <li><a href="#/">Flocking</a></li>
+                                    <li><a href="#/">Glitter</a></li>
+                                    <li><a href="#/">Foil</a></li>
+                                    <li><a href="#/">DTG</a></li>
+                                    <li><a href="#/">Polyfex</a></li>
+                                    <li><a href="#/">3D</a></li>
+                                    <li><a href="#/">Jahit</a></li>
+                                    <li><a href="#/">Cat non kain</a></li>
+
+
+                                </ul>
+                            </div>
+                        </td>
                         <td style="text-align:center"><input type="text" class="form-control" id="harga3" name="harga3" style="max-width:80px" /></td>
                     </tr>
                     @*<tr>
@@ -108,7 +183,32 @@
                         </tr>*@
                     <tr>
                         <td style="text-align:center"><input type="text" class="form-control" id="bahan4" name="bahan4" style="max-width:150px" /></td>
-                        <td style="text-align:center"><input type="text" class="form-control" id="sablon4" name="sablon4" style="max-width:150px" /></td>
+                        <td style="text-align:center">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon4" id="btnsablon4" style="width:inherit">
+                                    Jenis Sablon
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddensablon4" name="sablon4" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon4">
+
+                                    <li><a href="#/">Rubber</a></li>
+                                    <li><a href="#/">Pigmen</a></li>
+                                    <li><a href="#/">Plastisol</a></li>
+                                    <li><a href="#/">Glow in the Dark</a></li>
+                                    <li><a href="#/">Flocking</a></li>
+                                    <li><a href="#/">Glitter</a></li>
+                                    <li><a href="#/">Foil</a></li>
+                                    <li><a href="#/">DTG</a></li>
+                                    <li><a href="#/">Polyfex</a></li>
+                                    <li><a href="#/">3D</a></li>
+                                    <li><a href="#/">Jahit</a></li>
+                                    <li><a href="#/">Cat non kain</a></li>
+
+
+                                </ul>
+                            </div>
+                        </td>
                         <td style="text-align:center"><input type="text" class="form-control" id="harga4" name="harga4" style="max-width:80px" /></td>
                     </tr>
                     @*<tr>
@@ -117,7 +217,32 @@
                         </tr>*@
                     <tr>
                         <td style="text-align:center"><input type="text" class="form-control" id="bahan5" name="bahan5" style="max-width:150px" /></td>
-                        <td style="text-align:center"><input type="text" class="form-control" id="sablon5" name="sablon5" style="max-width:150px" /></td>
+                        <td style="text-align:center">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon5" id="btnsablon5" style="width:inherit">
+                                    Jenis Sablon
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddensablon5" name="sablon5" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon5">
+
+                                    <li><a href="#/">Rubber</a></li>
+                                    <li><a href="#/">Pigmen</a></li>
+                                    <li><a href="#/">Plastisol</a></li>
+                                    <li><a href="#/">Glow in the Dark</a></li>
+                                    <li><a href="#/">Flocking</a></li>
+                                    <li><a href="#/">Glitter</a></li>
+                                    <li><a href="#/">Foil</a></li>
+                                    <li><a href="#/">DTG</a></li>
+                                    <li><a href="#/">Polyfex</a></li>
+                                    <li><a href="#/">3D</a></li>
+                                    <li><a href="#/">Jahit</a></li>
+                                    <li><a href="#/">Cat non kain</a></li>
+                                   
+
+                                </ul>
+                            </div>
+                        </td>
                         <td style="text-align:center"><input type="text" class="form-control" id="harga5" name="harga5" style="max-width:80px" /></td>
                     </tr>
                 </table>
@@ -152,7 +277,7 @@
                                 </ul>
                             </div>
                         </td>
-                        <td><input type="text" class="form-control" id="hargatam1" name="hargatam1" style="max-width:80px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="hargatam1" name="hargatam1" style="max-width:80px;display:inline" /></td>
                     </tr>
                     <tr>
                         <td>
@@ -173,7 +298,7 @@
                                 </ul>
                             </div>
                         </td>
-                        <td><input type="text" class="form-control" id="hargatam2" name="hargatam2" style="max-width:80px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="hargatam2" name="hargatam2" style="max-width:80px;display:inline" /></td>
                     </tr>
                     <tr>
                         <td>
@@ -194,7 +319,7 @@
                                 </ul>
                             </div>
                         </td>
-                        <td><input type="text" class="form-control" id="hargatam3" name="hargatam3" style="max-width:80px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="hargatam3" name="hargatam3" style="max-width:80px;display:inline" /></td>
                     </tr>
                     <tr>
                         <td>
@@ -215,7 +340,7 @@
                                 </ul>
                             </div>
                         </td>
-                        <td><input type="text" class="form-control" id="hargatam4" name="hargatam4" style="max-width:80px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="hargatam4" name="hargatam4" style="max-width:80px;display:inline" /></td>
                     </tr>
                     <tr>
                         <td>
@@ -236,11 +361,11 @@
                                 </ul>
                             </div>
                         </td>
-                        <td><input type="text" class="form-control" id="hargatam5" name="hargatam5" style="max-width:80px" /></td>
+                        <td style="text-align:center"><input type="text" class="form-control" id="hargatam5" name="hargatam5" style="max-width:80px;display:inline" /></td>
                     </tr>
                 </table>
                 <p style="color:lightgrey;margin-left:10px"><h6><i style="color:darkgray;margin-left:10px">*Boleh dikosongkan bila tidak diperlukan</i></h6></p>
-<br />
+                <br />
                 <div class="text-center">
                     <input type="submit" value="Simpan" class="btn btn-success text-center" />
                 </div>
@@ -285,6 +410,36 @@
                 $("#btntam1").text($(this).text());
                 $("#btntam1").val($(this).text());
                 $("#hiddentam1").val($(this).text());
+
+            });
+            $("#dropdownsablon5").on('click', 'li a', function () {
+                $("#btnsablon5").text($(this).text());
+                $("#btnsablon5").val($(this).text());
+                $("#hiddensablon5").val($(this).text());
+
+            });
+            $("#dropdownsablon4").on('click', 'li a', function () {
+                $("#btnsablon4").text($(this).text());
+                $("#btnsablon4").val($(this).text());
+                $("#hiddensablon4").val($(this).text());
+
+            });
+            $("#dropdownsablon3").on('click', 'li a', function () {
+                $("#btnsablon3").text($(this).text());
+                $("#btnsablon3").val($(this).text());
+                $("#hiddensablon3").val($(this).text());
+
+            });
+            $("#dropdownsablon2").on('click', 'li a', function () {
+                $("#btnsablon2").text($(this).text());
+                $("#btnsablon2").val($(this).text());
+                $("#hiddensablon2").val($(this).text());
+
+            });
+            $("#dropdownsablon1").on('click', 'li a', function () {
+                $("#btnsablon1").text($(this).text());
+                $("#btnsablon1").val($(this).text());
+                $("#hiddensablon1").val($(this).text());
 
             });
         });
