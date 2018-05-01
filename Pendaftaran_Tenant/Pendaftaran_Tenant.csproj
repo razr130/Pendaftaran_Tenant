@@ -213,6 +213,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Harga.cs" />
     <Compile Include="Models\HargaViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JenisSablon.cs" />
@@ -340,6 +341,9 @@
     <Content Include="Views\Penyewa\Selesai.cshtml" />
     <Content Include="Views\Penyewa\IndexKaryawanBig.cshtml" />
     <Content Include="Views\Penyewa\IndexProdukLengkap.cshtml" />
+    <Content Include="Views\Penyewa\IndexViewHargaFix.cshtml" />
+    <Content Include="Views\Penyewa\EditHarga.cshtml" />
+    <Content Include="Views\Penyewa\EditKaryawan2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,7 +4,7 @@
     ViewBag.Title = "IndexProdukLengkap";
 }
 
-<h2>IndexProdukLengkap</h2>
+
 
 @section navwizard {
 
@@ -70,14 +70,14 @@
             </table>
             <table class="table">
 
-                <tr  style="background-color:#ededed">
+                <tr style="background-color:#ededed">
                     <th style="text-align:center">Tambahan</th>
 
                     <th style="text-align:center">Harga Tambahan</th>
 
 
                 </tr>
-                @foreach (var item3 in Model.GroupBy(x => x.nama_tambahan).Select(y => y.First()).ToList())
+                @foreach (var item3 in Model)
                 {
                     <tr>
                         @if (item3.nama_produk == item.nama_produk)
@@ -87,6 +87,7 @@
 
 
                         }
+                        
                     </tr>
                 }
             </table>

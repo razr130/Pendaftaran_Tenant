@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Pendaftaran_Tenant.Models.ProdukLengkapViewModel>
+
+@{
+    ViewBag.Title = "IndexViewHargaFix";
+}
+
+<div class="row" id="listdata">
+    <h2 class="text-center" style="color:#47a447">D A F T A R &nbsp;&nbsp; P R O D U K</h2>
+    <hr />
+    <table class="table">
+        <tr>
+            <th>
+                Nama Produk
+            </th>
+            <th>
+               Nama Bahan
+            </th>
+            <th>
+                Jenis Sablon
+            </th>
+            <th>
+               Harga
+            </th>
+            
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nama_produk)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nama_bahan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nama_sablon)
+            </td>
+
+          
+            <td>
+                @Html.DisplayFor(modelItem => item.harga)
+            </td>
+           
+            <td>
+                @Html.ActionLink("Edit", "EditHarga", new { id=item.id_harga }, new { @class = "btn btn-primary btn-sm" })
+               
+            </td>
+        </tr>
+        }
+
+    </table>
+</div>
