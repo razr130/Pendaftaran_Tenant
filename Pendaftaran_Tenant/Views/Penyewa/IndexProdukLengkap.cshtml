@@ -34,7 +34,7 @@
 @Html.Raw(TempData["Pesan"])
 <div class="row">
 
-    @*@{ var produk = "";};*@
+    @{ var tambahan = "";};
     @foreach (var item in Model.GroupBy(x => x.nama_produk).Select(y => y.First()).ToList())
     {
         //if (item.nama_produk != produk)
@@ -82,9 +82,13 @@
                     <tr>
                         @if (item3.nama_produk == item.nama_produk)
                         {
+                            if(tambahan != item3.nama_tambahan)
+                            { 
                             <td style="text-align:center">@item3.nama_tambahan</td>
                             <td style="text-align:center">@item3.harga_tambahan</td>
-
+                                tambahan = item3.nama_tambahan;
+                            }
+                            else { };
 
                         }
                         
