@@ -1,4 +1,5 @@
-﻿using System;
+﻿using E_Commerce_MultiTenant.Routing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,7 @@ namespace E_Commerce_MultiTenant
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+       
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

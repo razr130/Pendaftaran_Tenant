@@ -8,8 +8,12 @@ namespace E_Commerce_MultiTenant.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string subdomain)
         {
+            //var host = this.Request.Headers["Host"].Split('.');
+            //string nama_perusahaan = host[0];
+            Session["nama_perusahaan"] = subdomain;
+           
             return View();
         }
 
@@ -23,6 +27,14 @@ namespace E_Commerce_MultiTenant.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+        public ActionResult Indexku(string subdomain)
+        {
+            //var host = this.Request.Headers["Host"].Split('.');
+            //string nama_perusahaan = host[0];
+            Session["nama_perusahaan"] = subdomain;
 
             return View();
         }
