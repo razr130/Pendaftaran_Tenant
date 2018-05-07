@@ -6,10 +6,10 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:@(Session["warnanavbar"].ToString())">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,27 +17,56 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Indexku", "Home",new { area = "" }, new { @class = "navbar-brand" })
+                <table>
+                    <tr>
+                        <td>
+                            <a href='@Url.Action("Index","Home")'><img src="http://localhost:52494/Content/Images/@Session["logo"].ToString()" height="50" width="50" style="margin-top:20px" /></a>
+                        </td>
+                        <td>
+                            @Html.ActionLink(Session["nama_perusahaan"].ToString(), "Indexku", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "font-family:'Lemon/Milk';font-size:50px;color:#ffffff;margin-top:20px;margin-left:1px" })
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Indexku", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+            <div class="navbar-collapse collapse" style="margin-top:20px">
+
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" style="min-height:60px;margin-top:7%;background-color:white;border-color:none">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="navbar-collapse collapse text-center">
+                <ul class="nav navbar-nav text-center" style="margin-left:28%">
+                    <li style="color:darkslategrey;margin-left:35px;margin-right:35px">@Html.ActionLink("Produk", "Indexku", "Home")</li>
+                    <li style="margin-top:15px;color:darkgrey;">|</li>
+                    <li style="color:darkslategrey;margin-left:35px;margin-right:35px">@Html.ActionLink("Cara Pesan", "About", "Home")</li>
+                    <li style="margin-top:15px;color:darkgrey;">|</li>
+                    <li style="color:darkslategrey;margin-left:35px;margin-right:35px">@Html.ActionLink("Hubungi Kami", "Contact", "Home")</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    @RenderBody()
     <div class="container body-content">
-        @RenderBody()
         <hr />
-        <footer>
+        <footer class="text-center">
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+   
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

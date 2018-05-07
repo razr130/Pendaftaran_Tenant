@@ -199,11 +199,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Message.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DataCarausel.cs" />
     <Compile Include="Models\DataUI.cs" />
     <Compile Include="Models\ECommerce.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Karyawan.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Penyewa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -272,6 +275,10 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Indexku.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Shared\_LayoutNoBar.cshtml" />
+    <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\Home\Konfirmasi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -308,7 +315,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58131</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58131/</IISUrl>
+          <IISUrl>http://coba.multitenant.local:58131/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

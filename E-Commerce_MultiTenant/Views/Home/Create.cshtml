@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutNoBar.cshtml";
+}
+<div class="row">
+    <div class="col-md-12 col-xs-12" style="margin-left:30%">
+        <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+
+                <h3 style="color:#444444">I S I &nbsp; &nbsp; D A T A &nbsp;&nbsp; D I R I</h3>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <table style="border:0 solid;float:none;margin:0 auto">
+                    <tr><th style="text-align:center">Nama</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            <input type="text" class="form-control text-center" id="nama" name="nama" />
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">Email</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            <input type="text" class="form-control text-center" id="email" name="email" />
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">Password</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            <input type="password" class="form-control text-center" id="password" name="password" />
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">Tempat Lahir</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            <input type="text" class="form-control text-center" id="tempat" name="tempatlahir" />
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">Tanggal Lahir</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            <div class="dropdown" style="display:inherit;padding-right:10px">
+                                <button class="btn btn-default dropdown-toggle" style="width:60px" type="button" data-toggle="dropdown" name="tanggal" id="btntanggal">
+                                    Tgl
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddentanggal" name="tanggal" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntanggal">
+                                    @for (int tgl = 1; tgl <= 31; tgl++)
+                                    {
+                                        <li><a href="#/">@tgl.ToString()</a></li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="dropdown" style="display:inherit">
+                                <button class="btn btn-default dropdown-toggle" style="width:100px" type="button" data-toggle="dropdown" name="bulan" id="btnbulan">
+                                    Bulan
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddenbulan" name="bulan" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownbulan">
+
+                                    <li><a href="#/">Januari</a></li>
+                                    <li><a href="#/">Februari</a></li>
+                                    <li><a href="#/">Maret</a></li>
+                                    <li><a href="#/">April</a></li>
+                                    <li><a href="#/">Mei</a></li>
+                                    <li><a href="#/">Juni</a></li>
+                                    <li><a href="#/">Juli</a></li>
+                                    <li><a href="#/">Agustus</a></li>
+                                    <li><a href="#/">September</a></li>
+                                    <li><a href="#/">Oktober</a></li>
+                                    <li><a href="#/">November</a></li>
+                                    <li><a href="#/">Desember</a></li>
+
+                                </ul>
+                            </div>
+                            <div class="dropdown" style="display:inherit;padding-left:10px">
+                                <button class="btn btn-default dropdown-toggle" style="width:80px" type="button" data-toggle="dropdown" name="tahun" id="btntahun">
+                                    Tahun
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddentahun" name="tahun" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntahun">
+                                    @for (int tgl = 1960; tgl <= 2018; tgl++)
+                                    {
+                                        <li><a href="#/">@tgl.ToString()</a></li>
+                                    }
+                                </ul>
+                            </div>
+
+
+                        </td>
+                    </tr>
+
+                    <tr><th style="text-align:center">No Telepon</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            <input type="number" class="form-control text-center" id="telpon" name="notelp" />
+                        </td>
+                    </tr>
+
+                    <tr><th style="text-align:center">Alamat</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            <input type="text" class="form-control text-center" id="alamat" name="alamat" />
+                        </td>
+                    </tr>
+                    <tr><th style="text-align:center">Jenis Kelamin</th></tr>
+                    <tr>
+                        <td style="padding-bottom:10px">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="jns_kelamin" id="btnjk">
+                                    Jenis Kelamin
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddenjk" name="jns_kelamin" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownjk">
+
+                                    <li><a href="#/">L</a></li>
+                                    <li><a href="#/">P</a></li>
+
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <input type="submit" value="Create" class="btn btn-success" />
+                <br />
+                <br />
+                <script type="text/javascript">
+                    $(function () {
+
+                        $("#dropdowntanggal").on('click', 'li a', function () {
+                            $("#btntanggal").text($(this).text());
+                            $("#btntanggal").val($(this).text());
+                            $("#hiddentanggal").val($(this).text());
+
+                        });
+                        $("#dropdownbulan").on('click', 'li a', function () {
+                            $("#btnbulan").text($(this).text());
+                            $("#btnbulan").val($(this).text());
+                            $("#hiddenbulan").val($(this).text());
+
+                        });
+                        $("#dropdowntahun").on('click', 'li a', function () {
+                            $("#btntahun").text($(this).text());
+                            $("#btntahun").val($(this).text());
+                            $("#hiddentahun").val($(this).text());
+
+                        });
+                        $("#dropdownjk").on('click', 'li a', function () {
+                            $("#btnjk").text($(this).text());
+                            $("#btnjk").val($(this).text());
+                            $("#hiddenjk").val($(this).text());
+
+                        });
+                    });
+                </script>
+            }
+        </div>
+    </div>
+</div>
+

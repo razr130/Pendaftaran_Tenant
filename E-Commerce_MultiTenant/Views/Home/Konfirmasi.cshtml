@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Konfirmasi";
+}
+
+<br />
+<div class="col-md-12 col-xs-12">
+    <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%;margin-left:28%">
+        <h2 style="color:#47a447">Pendaftaran Selesai</h2>
+        <hr />
+        <p>Anda telah berhasil melakukan pendaftaran.</p>
+        
+        <p>Anda akan menuju ke halaman utama dalam 5 detik.</p>
+        <p>Bila anda tidak dipindahkan secara otomatis, klik <a onclick="location.href='@Url.Action("Indexku","Home")'">di sini</a></p>
+      
+       
+        <br />
+        <br />
+    </div>
+</div>
+<script>setTimeout(function () { window.location.href = '/Home/Indexku' }, 10000);</script>

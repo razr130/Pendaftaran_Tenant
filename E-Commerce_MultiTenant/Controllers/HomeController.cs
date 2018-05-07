@@ -7,18 +7,19 @@ using System.Web.Mvc;
 using E_Commerce_MultiTenant.DAL;
 using E_Commerce_MultiTenant.Models;
 
+
 namespace E_Commerce_MultiTenant.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(string subdomain)
+        public ActionResult Index()
         {
             //var host = this.Request.Headers["Host"].Split('.');
             //string nama_perusahaan = host[0];
-            Session["nama_perusahaan"] = subdomain;
+            //Session["nama_perusahaan"] = subdomain;
 
             //return RedirectToAction("Indexku","Home");
-            return View();
+            return RedirectToAction("Indexku","Home");
         }
 
         public ActionResult About()
@@ -34,19 +35,141 @@ namespace E_Commerce_MultiTenant.Controllers
 
             return View();
         }
+        public string getWarnaNavbar(string subdo)
+        {
+            using (PenyewaDAL penyewa = new PenyewaDAL())
+            {
+                int id_penyewa = penyewa.GetIDPenyewa(subdo);
+                int id_ui = penyewa.GetIDUI(id_penyewa);
+
+                string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["Ecommerce"].ConnectionString;
+                var result = "";
+
+                using (SqlConnection conn = new SqlConnection(connstring))
+                {
+                    conn.Open();
+                    string query = "SELECT [warna_navbar]" +
+
+                        "FROM[MultiTenancy_Sablon].[dbo].[Data_UI] WHERE id_ui=" + id_ui.ToString();
+
+                    SqlCommand sqlcom = new SqlCommand(query, conn);
+                    try
+                    {
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                                result = reader["warna_navbar"].ToString();
+                            }
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+                    conn.Close();
+                }
+                return result;
+            }
+        }
+        public string getWarnaBG(string subdo)
+        {
+            using (PenyewaDAL penyewa = new PenyewaDAL())
+            {
+                int id_penyewa = penyewa.GetIDPenyewa(subdo);
+                int id_ui = penyewa.GetIDUI(id_penyewa);
+
+                string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["Ecommerce"].ConnectionString;
+                var result = "";
+
+                using (SqlConnection conn = new SqlConnection(connstring))
+                {
+                    conn.Open();
+                    string query = "SELECT [warna_bg]" +
+
+                        "FROM[MultiTenancy_Sablon].[dbo].[Data_UI] WHERE id_ui=" + id_ui.ToString();
+
+                    SqlCommand sqlcom = new SqlCommand(query, conn);
+                    try
+                    {
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                                result = reader["warna_bg"].ToString();
+                            }
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+                    conn.Close();
+                }
+                return result;
+            }
+        }
+        public string getLogo(string subdo)
+        {
+            using (PenyewaDAL penyewa = new PenyewaDAL())
+            {
+                int id_penyewa = penyewa.GetIDPenyewa(subdo);
+                int id_ui = penyewa.GetIDUI(id_penyewa);
+
+                string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["Ecommerce"].ConnectionString;
+                var result = "";
+
+                using (SqlConnection conn = new SqlConnection(connstring))
+                {
+                    conn.Open();
+                    string query = "SELECT [logo]" +
+
+                        "FROM[MultiTenancy_Sablon].[dbo].[Data_UI] WHERE id_ui=" + id_ui.ToString();
+
+                    SqlCommand sqlcom = new SqlCommand(query, conn);
+                    try
+                    {
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                                result = reader["logo"].ToString();
+                            }
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+                    conn.Close();
+                }
+                return result;
+            }
+        }
+
         public ActionResult Indexku(string subdomain)
         {
             //var host = this.Request.Headers["Host"].Split('.');
             //string nama_perusahaan = host[0];
             Session["nama_perusahaan"] = subdomain;
 
+            Session["warnanavbar"] = getWarnaNavbar(subdomain);
+            Session["warnabg"] = getWarnaBG(subdomain);
+            Session["logo"] = getLogo(subdomain);
+
             using (PenyewaDAL penyewa = new PenyewaDAL())
             {
                 int id_penyewa = penyewa.GetIDPenyewa(subdomain);
                 int id_ui = penyewa.GetIDUI(id_penyewa);
-
-
-
                 string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["Ecommerce"].ConnectionString;
                 List<DataCarausel> result = new List<DataCarausel>();
 
@@ -56,8 +179,7 @@ namespace E_Commerce_MultiTenant.Controllers
                     string query = "SELECT [id_carausel]" +
                         ",[id_ui]" +
                         ",[gambar]" +
-                        "FROM[MultiTenancy_Sablon].[dbo].[Data_carausel] WHERE id_ui="+id_ui.ToString();
-
+                        "FROM[MultiTenancy_Sablon].[dbo].[Data_carausel] WHERE id_ui=" + id_ui.ToString();
                     SqlCommand sqlcom = new SqlCommand(query, conn);
                     try
                     {
@@ -70,24 +192,142 @@ namespace E_Commerce_MultiTenant.Controllers
                                     id_carausel = (int)reader["id_carausel"],
                                     id_ui = (int)reader["id_ui"],
                                     gambar = reader["gambar"].ToString(),
-                                   
                                 };
                                 result.Add(item);
                             }
                         }
-
                     }
                     catch (Exception)
                     {
 
                     }
-
                     conn.Close();
                 }
                 return View(result);
             }
+        }
 
-                
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(string email, string password, string subdomain)
+        {
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["Ecommerce"].ConnectionString;
+            var result = "";
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [nama_karyawan]" +
+
+                    "FROM[MultiTenancy_Sablon].[dbo].[Karyawan_" + subdomain + "] WHERE email_karyawan='" + email + "' AND password='" + password + "'";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+
+                            result = reader["nama_karyawan"].ToString();
+                            Session["user"] = result;
+                            Session["role"] = "karyawan";
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+                if (result != null)
+                {
+                    return RedirectToAction("Indexku", "Home");
+                }
+                else
+                {
+                    sqlcom.CommandText = "SELECT [nama_customer]" +
+
+                    "FROM[MultiTenancy_Sablon].[dbo].[Customer_" + subdomain + "] WHERE email_customer='" + email + "' AND password='" + password + "'";
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+
+                            result = reader["nama_customer"].ToString();
+                            Session["user"] = result;
+                            Session["role"] = "customer";
+                        }
+                    }
+                }
+                conn.Close();
+            }
+            return RedirectToAction("Indexku", "Home");
+        }
+
+        public ActionResult Logout()
+        {
+            Session["user"] = null;
+            Session["role"] = null;
+            return RedirectToAction("Indexku", "Home");
+        }
+
+        public ActionResult Create()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(string subdomain, string nama, string email, string password, string tempatlahir, string tanggal, string bulan, string tahun, string notelp, string alamat, string jns_kelamin)
+        {
+            string tgllahir = tanggal + "-" + bulan + "-" + tahun;
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "INSERT INTO[dbo].[Customer_" + subdomain + "]" +
+                    " ([nama_customer]" +
+                    ",[email_customer]" +
+                    ",[password]" +
+                    ",[tempat_lahir]" +
+                    ",[tgl_lahir]" +
+                    ",[no_telp]" +
+                    ",[alamat]" +
+                    ",[jns_kelamin])" +
+
+                    " VALUES" +
+                    "('" + nama + "' ,'" + email + "' ,'" + password + "' ,'" + tempatlahir + "' ,'" + tgllahir + "' ,'" + notelp + "' ,'" + alamat + "' ,'" + jns_kelamin + "')";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    Session["user"] = nama;
+                    Session["role"] = "Customer";
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "data karyawan ditambah, data karyawan dapat direview ulang melalui Beranda setelah menyelesaikan proses pendaftaran");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+
+            return RedirectToAction("Konfirmasi", "Home");
+        }
+
+        public ActionResult Konfirmasi()
+        {
+            return View();
         }
     }
 }
