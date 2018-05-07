@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Pendaftaran_Tenant.Helpers
+namespace E_Commerce_MultiTenant.Helpers
 {
     public static class Message
     {

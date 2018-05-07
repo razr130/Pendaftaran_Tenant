@@ -2545,7 +2545,7 @@ namespace Pendaftaran_Tenant.Controllers
 
                     "[tempat_lahir] [varchar] (15) NULL," +
 
-                    "[tgl_lahir] [date] NULL," +
+                    "[tgl_lahir] [varchar] (50) NULL," +
 
                     "[no_telp] [char](12) NULL," +
 

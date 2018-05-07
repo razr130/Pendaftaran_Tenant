@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using E_Commerce_MultiTenant.DAL;
 using E_Commerce_MultiTenant.Models;
+using System.IO;
 
 
 namespace E_Commerce_MultiTenant.Controllers
@@ -245,7 +246,7 @@ namespace E_Commerce_MultiTenant.Controllers
                 {
 
                 }
-                if (result != null)
+                if (result != "")
                 {
                     return RedirectToAction("Indexku", "Home");
                 }
