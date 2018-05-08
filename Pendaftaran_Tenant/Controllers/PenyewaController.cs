@@ -793,7 +793,7 @@ namespace Pendaftaran_Tenant.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateProduk2(string namaproduk, string deskripsi, HttpPostedFileBase fotoproduk,
+        public ActionResult CreateProduk2(string namaproduk, string deskripsi, string kategori, HttpPostedFileBase fotoproduk,
              string bahan1, string bahan2, string bahan3, string bahan4, string bahan5, string sablon1, string sablon2, string sablon3, string sablon4, string sablon5,
              int? harga1, int? harga2, int? harga3, int? harga4, int? harga5,
             string tambahan1, string tambahan2, string tambahan3, string tambahan4, string tambahan5,
@@ -866,9 +866,10 @@ namespace Pendaftaran_Tenant.Controllers
                     "INSERT INTO[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([nama_produk]" +
                     ",[deskripsi]" +
+                    ",[kategori])" +
                     ",[foto_produk])" +
                     "VALUES" +
-                    "('" + namaproduk + "' ,'" + deskripsi + "' ,'" + fileName + "')";
+                    "('" + namaproduk + "' ,'" + deskripsi + "' ,'" + kategori + "', '" + fileName + "')";
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -889,7 +890,7 @@ namespace Pendaftaran_Tenant.Controllers
                         }
                     }
 
-                    sqlcom.CommandText = 
+                    sqlcom.CommandText =
                    " INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
                    "([id_produk]," +
                    "[nama_tambahan],[harga])" +
@@ -902,7 +903,7 @@ namespace Pendaftaran_Tenant.Controllers
 
                     if (bahan1 != "" && sablon1 != "")
                     {
-                        
+
                         int idbahan;
                         int idsablon;
                         sqlcom.CommandText = "INSERT INTO [dbo].[Bahan_" + nama_perusahaan + "]" +
@@ -911,8 +912,8 @@ namespace Pendaftaran_Tenant.Controllers
                             " output INSERTED.id_bahan VALUES" +
                             " (" + Session["id_produk_gabung"].ToString() + ",'" + bahan1 + "')";
 
-                       idbahan = (int)sqlcom.ExecuteScalar();
-                       
+                        idbahan = (int)sqlcom.ExecuteScalar();
+
 
                         sqlcom.CommandText = " INSERT INTO [dbo].[JenisSablon_" + nama_perusahaan + "]" +
                             "([id_produk]" +
@@ -921,7 +922,7 @@ namespace Pendaftaran_Tenant.Controllers
                             " (" + Session["id_produk_gabung"].ToString() + ",'" + sablon1 + "')";
 
                         idsablon = (int)sqlcom.ExecuteScalar();
-                        
+
 
                         sqlcom.CommandText = "INSERT INTO [dbo].[Harga_" + nama_perusahaan + "]" +
                             " ([id_produk]" +
@@ -2579,6 +2580,7 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_produk][int] IDENTITY(1,1) NOT NULL," +
                     "[nama_produk] [varchar] (50) NULL," +
                     "[deskripsi] [varchar] (100) NULL," +
+                    "[kategori] [varchar] (20) NULL," +
                     "[foto_produk] [varchar] (100) NULL," +
                     "CONSTRAINT[PK_Produk_" + nama_perusahaan + "] PRIMARY KEY CLUSTERED" +
                     "(" +

@@ -27,11 +27,16 @@ namespace E_Commerce_MultiTenant
                url: "{controller}/{action}/{id}",
                defaults: new { controller = "Home", action = "Indexku", id = UrlParameter.Optional }
            );
-           // routes.MapRoute(
-           //    name: "Login",
-           //    url: "{controller}/{action}/{id}",
-           //    defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional }
-           //);
+            routes.MapRoute(
+               name: "Login",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional }
+           );
+            routes.MapRoute(
+              name: "Daftar",
+              url: "{controller}/{action}/{id}",
+              defaults: new { controller = "Home", action = "Create", id = UrlParameter.Optional }
+          );
 
         }
     }

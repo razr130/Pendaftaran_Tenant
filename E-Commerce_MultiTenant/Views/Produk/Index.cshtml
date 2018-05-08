@@ -1,0 +1,78 @@
+﻿@model IEnumerable<E_Commerce_MultiTenant.Models.Produk>
+
+@{
+    ViewBag.Title = "Produk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="margin-top:120px">
+    <h2 class="text-center" style="color:@(Session["warnanavbar"].ToString())">D A F T A R     &nbsp;&nbsp; P R O D U K</h2>
+    <hr />
+
+
+    <div class="row text-center">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+
+                <h3 style="text-align:center">@item.nama_produk</h3>
+                <div class="thumbnail">
+                    <img src="http://localhost:52494/Content/Images/@item.foto_produk" style="min-height:200px;height:200px;" />
+                </div>
+                <table style="width:100%;float:none" class="text-center">
+
+                    <tr>
+                        <td style="margin-top:10px"> @Html.DisplayFor(modelItem => item.deskripsi)</td>
+                    </tr>
+                </table>
+                <hr />
+                @if (Session["role"] == null)
+                {
+                    if (item.kategori == "pakaian")
+                    {
+                        <p>
+                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananPakaian", "Produk")?id='+@item.id_produk +'&nama=' + @item.nama_produk +'&foto='+ @item.foto_produk" class="btn btn-success" />
+                        </p>
+                    }
+                    else if (item.kategori != "pakaian")
+                    {
+                        <p>
+                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananNonPakaian", "Produk")?id=' + @item.id_produk" class="btn btn-success" />
+                        </p>
+                    }
+
+                }
+                else if (Session["role"].ToString() == "customer")
+                {
+                    if (item.kategori == "pakaian")
+                    {
+                        <p>
+                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananPakaian", "Produk")?id=' + @item.id_produk" class="btn btn-success" />
+                        </p>
+                    }
+                    else if (item.kategori != "pakaian")
+                    {
+                        <p>
+                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananNonPakaian", "Produk")?id=' + @item.id_produk" class="btn btn-success" />
+                        </p>
+                    }
+                }
+                else if (Session["role"].ToString() == "karyawan")
+                {
+                    <p>
+                        <input type="button" value="Ubah" onclick="location.href='@Url.Action("EditProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-primary btn-sm" />
+                        <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteProduk", "Penyewa")?id=' + @item.id_produk" class="btn btn-danger btn-sm" />
+                    </p>
+                    <p>
+                        <input type="button" value="Lihat Bahan" onclick="location.href='@Url.Action("IndexBahanBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
+                        <input type="button" value="Lihat Jenis Sablon" onclick="location.href='@Url.Action("IndexJenisSablonBig", "Penyewa")?id=' + @item.id_produk" class="btn btn-warning btn-sm" />
+
+                    </p>
+
+                }
+                <hr />
+
+
+            </div>
+        }
+    </div>
+</div>

@@ -52,6 +52,27 @@
                     <tr><td style="text-align:center"><input type="text" class="form-control" id="namaproduk" name="namaproduk" /></td></tr>
                     <tr><th style="text-align:center"><label for="deskripsi">Deskripsi</label></th></tr>
                     <tr><td style="text-align:center"><textarea rows="4" class="form-control" id="deskripsi" name="deskripsi"></textarea></td></tr>
+                    <tr><th style="text-align:center"><label for="kategori">Kategori</label></th></tr>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="kategori" id="btnkategori" style="width:inherit">
+                                    Kategori ..
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" id="hiddenkategori" name="kategori" />
+                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownkategori">
+
+                                    <li><a href="#/">Keramik</a></li>
+                                    <li><a href="#/">Pakaian</a></li>
+                                    <li><a href="#/">Sepatu</a></li>
+                                    <li><a href="#/">Tas</a></li>
+                                    <li><a href="#/">Lainnya</a></li>
+                                    
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
                     <tr><th style="text-align:center"><label style="color:black" for="fotoproduk">Gambar Produk</label></th></tr>
                     <tr><td style="text-align:center"><input name="fotoproduk" type="file" class="form-control" /></td></tr>
                 </table>
@@ -238,7 +259,7 @@
                                     <li><a href="#/">3D</a></li>
                                     <li><a href="#/">Jahit</a></li>
                                     <li><a href="#/">Cat non kain</a></li>
-                                   
+
 
                                 </ul>
                             </div>
@@ -381,6 +402,13 @@
     $(document).ready(function () {
 
         $(function () {
+
+            $("#dropdownkategori").on('click', 'li a', function () {
+                $("#btnkategori").text($(this).text());
+                $("#btnkategori").val($(this).text());
+                $("#hiddenkategori").val($(this).text());
+
+            });
 
             $("#dropdowntam5").on('click', 'li a', function () {
                 $("#btntam5").text($(this).text());

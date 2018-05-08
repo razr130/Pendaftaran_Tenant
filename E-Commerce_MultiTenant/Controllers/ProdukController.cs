@@ -1,5 +1,7 @@
-﻿using System;
+﻿using E_Commerce_MultiTenant.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -10,13 +12,113 @@ namespace E_Commerce_MultiTenant.Controllers
     public class ProdukController : Controller
     {
         // GET: Produk
-        public ActionResult Index()
+        public ActionResult Index(string subdomain)
         {
-            //var fullAddress = HttpContent.Request.Headers["Host"].Split('.');
-            var host = this.Request.Headers["Host"].Split('.');
-            string nama_perusahaan = host[0];
-            Session["nama_perusahaan"] = nama_perusahaan;
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            List<Produk> result = new List<Produk>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [id_produk]" +
+                    ",[nama_produk]" +
+                    ",[deskripsi]" +
+                    ",[kategori]" +
+                    ",[foto_produk]" +
+                    "FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "]";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Produk item = new Produk()
+                            {
+                                id_produk = (int)reader["id_produk"],
+                                nama_produk = reader["nama_produk"].ToString(),
+                                deskripsi = reader["deskripsi"].ToString(),
+                                kategori = reader["kategori"].ToString(),
+                                foto_produk = reader["foto_produk"].ToString()
+                            };
+                            result.Add(item);
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
+
+        public ActionResult CreatePesananPakaian(int id,string nama,string foto, string subdomain)
+        {
+            Session["namaproduk"] = nama;
+            Session["fotoproduk"] = foto;
+
+            var lstbahan = new List<SelectListItem>();
+            var lstsablon = new List<SelectListItem>();
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [id_bahan]" +
+                    ",[nama_bahan]" +
+                    "FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + subdomain + "] WHERE id_produk="+id.ToString();
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lstbahan.Add(new SelectListItem
+                            {
+                                Value = reader["id_bahan"].ToString(),
+                                Text = reader["nama_bahan"].ToString()
+                            });
+                        }
+                        ViewBag.Bahan = lstbahan;
+                    }
+
+                    sqlcom.CommandText = "SELECT [id_jns_sablon]" +
+                    ",[nama_sablon]" +
+                    "FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + subdomain + "] WHERE id_produk=" + id.ToString();
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lstsablon.Add(new SelectListItem
+                            {
+                                Value = reader["id_jns_sablon"].ToString(),
+                                Text = reader["nama_sablon"].ToString()
+                            });
+                        }
+                        ViewBag.Sablon = lstsablon;
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+
             return View();
+        }
+        [HttpPost]
+        public ActionResult CreatePesananPakaian()
+        {
+
+            return RedirectToAction("Index", "Produk");
         }
     }
 }

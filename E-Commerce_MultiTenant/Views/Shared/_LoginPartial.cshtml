@@ -9,16 +9,16 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello " + Session["user"].ToString() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink("Hello " + Session["user"].ToString() + "!", "Indexku", "Home", null, new { @style = "color:white;font-family:'Roboto'" })
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li><a style="color:white;font-family:'Roboto'" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Daftar", "Create", "Home", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Home")</li>
+        <li style="color:white">@Html.ActionLink("Daftar", "Create", "Home", null, new { @style = "color:white;font-family:'Roboto'" })</li>
+        <li style="color:white">@Html.ActionLink("Log in", "Login", "Home",null, new { @style = "color:white;font-family:'Roboto'" })</li>
     </ul>
 }
