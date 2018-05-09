@@ -204,10 +204,12 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DataCarausel.cs" />
     <Compile Include="Models\DataUI.cs" />
+    <Compile Include="Models\DetailOrder.cs" />
     <Compile Include="Models\ECommerce.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Karyawan.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Penyewa.cs" />
     <Compile Include="Models\Produk.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -282,6 +284,9 @@
     <Content Include="Views\Home\Konfirmasi.cshtml" />
     <Content Include="Views\Produk\Index.cshtml" />
     <Content Include="Views\Produk\CreatePesananPakaian.cshtml" />
+    <Content Include="Views\Produk\CreatePesananPakaian2.cshtml" />
+    <Content Include="Views\Produk\CreatePesananNonPakaian.cshtml" />
+    <Content Include="Views\Shared\_LayoutNoWhiteBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

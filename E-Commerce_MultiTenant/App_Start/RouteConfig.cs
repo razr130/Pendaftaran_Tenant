@@ -16,7 +16,11 @@ namespace E_Commerce_MultiTenant
 
             // This will add the parameter "subdomain" to the route parameters
             routes.Add(new SubdomainRoute());
-
+            routes.MapRoute(
+            name: "CreatePesananPakaian",
+            url: "{controller}/{action}/{id_produk}/{nama}/{foto}",
+            defaults: new { controller = "Produk", action = "CreatePesananPakaian", id_produk = "", nama = "", foto = "" }
+        );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
@@ -37,6 +41,7 @@ namespace E_Commerce_MultiTenant
               url: "{controller}/{action}/{id}",
               defaults: new { controller = "Home", action = "Create", id = UrlParameter.Optional }
           );
+           
 
         }
     }

@@ -25,13 +25,15 @@
                     </tr>
                 </table>
                 <hr />
+                @*<button class="btn btn-primary" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")'">Pesan</button>*@
                 @if (Session["role"] == null)
                 {
                     if (item.kategori == "pakaian")
                     {
                         <p>
-                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananPakaian", "Produk")?id='+@item.id_produk +'&nama=' + @item.nama_produk +'&foto='+ @item.foto_produk" class="btn btn-success" />
-                        </p>
+                                <button class="btn btn-primary" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")/?id_produk=@item.id_produk'">Pesan</button>
+                            </p>
+                        @*@Html.ActionLink("Beli", "CreatePesananPakaian", new { id_produk = item.id_produk }, null)*@
                     }
                     else if (item.kategori != "pakaian")
                     {
@@ -46,7 +48,7 @@
                     if (item.kategori == "pakaian")
                     {
                         <p>
-                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananPakaian", "Produk")?id=' + @item.id_produk" class="btn btn-success" />
+                            <button class="btn btn-primary" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")/?id_produk=@item.id_produk'">Pesan</button>
                         </p>
                     }
                     else if (item.kategori != "pakaian")

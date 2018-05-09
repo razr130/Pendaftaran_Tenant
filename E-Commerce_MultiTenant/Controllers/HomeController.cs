@@ -237,6 +237,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                             result = reader["nama_karyawan"].ToString();
                             Session["user"] = result;
+                            Session["email"] = email;
                             Session["role"] = "karyawan";
                         }
                     }
@@ -262,6 +263,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                             result = reader["nama_customer"].ToString();
                             Session["user"] = result;
+                            Session["email"] = email;
                             Session["role"] = "customer";
                         }
                     }

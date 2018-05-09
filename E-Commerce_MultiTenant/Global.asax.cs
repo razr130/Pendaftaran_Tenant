@@ -20,11 +20,11 @@ namespace E_Commerce_MultiTenant
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        void Application_BeginRequest(Object sender, EventArgs e)
-        {
-            string originalPath = HttpContext.Current.Request.Path.ToLower();
-            if (originalPath == "/") //Or whatever is equal to the blank path
-                Context.RewritePath("/Home/Index");
-        }
+        //void Application_BeginRequest(Object sender, EventArgs e)
+        //{
+        //    string originalPath = HttpContext.Current.Request.Path.ToLower();
+        //    if (originalPath == "/") //Or whatever is equal to the blank path
+        //        Context.RewritePath("/Home/Index");
+        //}
     }
 }

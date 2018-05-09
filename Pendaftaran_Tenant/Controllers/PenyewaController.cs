@@ -2705,6 +2705,8 @@ namespace Pendaftaran_Tenant.Controllers
                     "[no_order][int] IDENTITY(1,1) NOT NULL," +
                     "[id_customer] [int] NULL," +
                     "[tgl_order] [date] NULL," +
+                     "[status_bayar] [char](5) NULL," +
+                      "[tgl_order] [date] NULL," +
                     "[total_harga] [int] NULL," +
                     "CONSTRAINT[PK_Order_" + nama_perusahaan + "] PRIMARY KEY CLUSTERED" +
                     "(" +
@@ -2732,8 +2734,9 @@ namespace Pendaftaran_Tenant.Controllers
                     "[id_produk] [int] NULL," +
                     "[id_bahan] [int] NULL," +
                     "[id_jns_sablon] [int] NULL," +
-                    "[desain] [image] NULL," +
+                    "[desain] [varchar](100) NULL," +
                     "[jumlah] [int] NULL," +
+                    "[subtotal] [int] NULL," +
                     "CONSTRAINT[PK_DetailOrder_" + nama_perusahaan + "] PRIMARY KEY CLUSTERED" +
                     "(" +
                     "[no_detail] ASC" +

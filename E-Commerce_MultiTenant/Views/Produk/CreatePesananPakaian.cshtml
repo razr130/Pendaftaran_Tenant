@@ -3,5 +3,102 @@
     ViewBag.Title = "CreatePesananPakaian";
 }
 
-<h2>CreatePesananPakaian</h2>
+@{
+    Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
+}
 
+<div class="container">
+    <div class="row" style="margin-top:70px">
+        <h6 style="float:left;margin-left:20px"><a href='@Url.Action("Indexku","Home")'>Beranda</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href='@Url.Action("Index","Produk")'>Produk</a>&nbsp;&nbsp;>&nbsp;&nbsp;Pemesanan</h6>
+        <br />
+        <hr />
+        @using (Html.BeginForm("CreatePesananPakaian", "Produk", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            <div class="col-md-4 col-xs-4">
+                <div class="thumbnail clearfix text-center" style="max-width:350px;width:100%">
+
+
+                    @Html.AntiForgeryToken()
+                    <h3 style="color:@(Session["warnanavbar"].ToString())">@Session["namaproduk"].ToString()</h3>
+                    <hr />
+                    <table style="border:0 solid;float:none;margin:0 auto">
+
+                        <tr><td style="text-align:center"><img src="http://localhost:52494/Content/Images/@Session["fotoproduk"].ToString()" style="min-height:200px;height:200px;" /></td></tr>
+
+                    </table>
+
+                    <br />
+
+                    <br />
+
+
+                </div>
+
+            </div>
+
+            <div class="col-md-8 col-xs-8">
+                <div class="thumbnail clearfix text-center" style="max-width:700px;width:100%">
+
+                    <h3 style="color:@(Session["warnanavbar"].ToString())">Detail Pesanan</h3>
+                    <hr />
+                    <div class="row">
+                        <table style="border:0 solid;float:none;margin-left:210px">
+                            <tr>
+                                <th style="text-align:center">
+                                    Bahan
+                                </th>
+                                <th style="text-align:center">
+                                    Jenis Sablon
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="padding-right:20px">
+                                    @Html.DropDownList("lstbahan", (IEnumerable<SelectListItem>)ViewBag.Bahan, new { id = "dropdownbahan", name = "bahan", @class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.DropDownList("lstsablon", (IEnumerable<SelectListItem>)ViewBag.Sablon, new { id = "dropdownsablon", name = "sablon", @class = "form-control" })
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="max-width:670px" />
+                    </div>
+                    
+                    <div class="row" style="margin-left:15px">
+                        <h5 style="text-align:center;margin-right:50px"><b>Jumlah per Ukuran</b></h5>
+                        
+                        
+                        <table style="border:0 solid;float:none;margin:0">
+                            <tr>
+                                <td style="padding-right:10px">Anak</td>
+                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="anak" name="anak" /></td>
+                                <td style="padding-right:10px">XS</td>
+                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="xs" name="xs" /></td>
+                                <td style="padding-right:10px">S</td>
+                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="s" name="s" /></td>
+                                <td style="padding-right:10px">M</td>
+                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="m" name="m" /></td>
+                                <td style="padding-right:10px">L</td>
+                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="l" name="l" /></td>
+                            </tr>
+                            <tr>
+                                <td>XL</td>
+                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="xl" name="xl" /></td>
+                                <td>XXL</td>
+                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="xxl" name="xxl" /></td>
+                                <td>XXXL</td>
+                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="xxxl" name="xxxl" /></td>
+                                <td>4XL</td>
+                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="4xl" name="4xl" /></td>
+                                <td>5XL</td>
+                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="5xl" name="5xl" /></td>
+                            </tr>
+                        </table>
+                        <hr style="max-width:670px" />
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        }
+    </div>
+</div>
