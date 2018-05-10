@@ -2360,7 +2360,7 @@ namespace Pendaftaran_Tenant.Controllers
                 string query = "CREATE VIEW [dbo].[View_" + nama_perusahaan + "]" +
                     " AS" +
                     " SELECT        dbo.Bahan_" + nama_perusahaan + ".nama_bahan, dbo.Harga_" + nama_perusahaan + ".harga, dbo.JenisSablon_" + nama_perusahaan + ".nama_sablon, dbo.Produk_" + nama_perusahaan + ".nama_produk, dbo.TabelTambahan_" + nama_perusahaan + ".nama_tambahan, " +
-                    "dbo.TabelTambahan_" + nama_perusahaan + ".harga AS Harga_tambahan, dbo.Produk_" + nama_perusahaan + ".foto_produk, dbo.Harga_" + nama_perusahaan + ".id_harga" +
+                    "dbo.TabelTambahan_" + nama_perusahaan + ".harga AS Harga_tambahan, dbo.Produk_" + nama_perusahaan + ".foto_produk, dbo.Harga_" + nama_perusahaan + ".id_harga, dbo.Bahan_" + nama_perusahaan + ".id_bahan, dbo.JenisSablon_" + nama_perusahaan + ".id_jns_sablon, dbo.Produk_" + nama_perusahaan + ".id_produk" +
                     " FROM            dbo.Bahan_" + nama_perusahaan + " INNER JOIN" +
                     " dbo.Harga_" + nama_perusahaan + " ON dbo.Bahan_" + nama_perusahaan + ".id_bahan = dbo.Harga_" + nama_perusahaan + ".id_bahan INNER JOIN" +
                     " dbo.JenisSablon_" + nama_perusahaan + " ON dbo.Harga_" + nama_perusahaan + ".id_jns_sablon = dbo.JenisSablon_" + nama_perusahaan + ".id_jns_sablon INNER JOIN" +
@@ -2737,6 +2737,7 @@ namespace Pendaftaran_Tenant.Controllers
                     "[desain] [varchar](100) NULL," +
                     "[jumlah] [int] NULL," +
                     "[subtotal] [int] NULL," +
+                    "[catatan] [varchar](200) NULL," +
                     "CONSTRAINT[PK_DetailOrder_" + nama_perusahaan + "] PRIMARY KEY CLUSTERED" +
                     "(" +
                     "[no_detail] ASC" +

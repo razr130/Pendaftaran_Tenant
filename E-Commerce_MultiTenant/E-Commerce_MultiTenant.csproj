@@ -212,6 +212,8 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Penyewa.cs" />
     <Compile Include="Models\Produk.cs" />
+    <Compile Include="Models\ViewHarga.cs" />
+    <Compile Include="Models\ViewHargaViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\SubDomainRoute.cs" />
     <Compile Include="Startup.cs" />

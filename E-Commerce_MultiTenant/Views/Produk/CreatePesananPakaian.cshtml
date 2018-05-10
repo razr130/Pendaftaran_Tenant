@@ -6,9 +6,11 @@
 @{
     Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
 }
-
+@{
+    int jumlah1 = 0;
+}}
 <div class="container">
-    <div class="row" style="margin-top:70px">
+    <div class="row" style="margin-top:40px">
         <h6 style="float:left;margin-left:20px"><a href='@Url.Action("Indexku","Home")'>Beranda</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href='@Url.Action("Index","Produk")'>Produk</a>&nbsp;&nbsp;>&nbsp;&nbsp;Pemesanan</h6>
         <br />
         <hr />
@@ -33,6 +35,7 @@
 
 
                 </div>
+                <br />
 
             </div>
 
@@ -42,13 +45,13 @@
                     <h3 style="color:@(Session["warnanavbar"].ToString())">Detail Pesanan</h3>
                     <hr />
                     <div class="row">
-                        <table style="border:0 solid;float:none;margin-left:210px">
+                        <table style="border:0 solid;float:none;margin-left:70px">
                             <tr>
                                 <th style="text-align:center">
-                                    Bahan
+                                    Bahan dan jenis sablon
                                 </th>
                                 <th style="text-align:center">
-                                    Jenis Sablon
+                                    Desain
                                 </th>
                             </tr>
                             <tr>
@@ -56,21 +59,21 @@
                                     @Html.DropDownList("lstbahan", (IEnumerable<SelectListItem>)ViewBag.Bahan, new { id = "dropdownbahan", name = "bahan", @class = "form-control" })
                                 </td>
                                 <td>
-                                    @Html.DropDownList("lstsablon", (IEnumerable<SelectListItem>)ViewBag.Sablon, new { id = "dropdownsablon", name = "sablon", @class = "form-control" })
+                                    <input name="desain" type="file" class="form-control" />
                                 </td>
                             </tr>
                         </table>
                         <hr style="max-width:670px" />
                     </div>
-                    
-                    <div class="row" style="margin-left:15px">
+
+                    <div class="row" style="margin-left:55px">
                         <h5 style="text-align:center;margin-right:50px"><b>Jumlah per Ukuran</b></h5>
-                        
-                        
+
+
                         <table style="border:0 solid;float:none;margin:0">
                             <tr>
                                 <td style="padding-right:10px">Anak</td>
-                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="anak" name="anak" /></td>
+                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" onblur="jumlah()" id="anak" name="anak" /></td>
                                 <td style="padding-right:10px">XS</td>
                                 <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="xs" name="xs" /></td>
                                 <td style="padding-right:10px">S</td>
@@ -88,16 +91,65 @@
                                 <td>XXXL</td>
                                 <td><input type="number" class="form-control text-center" style="max-width:70px" id="xxxl" name="xxxl" /></td>
                                 <td>4XL</td>
-                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="4xl" name="4xl" /></td>
+                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="4xl" name="empatxl" /></td>
                                 <td>5XL</td>
-                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="5xl" name="5xl" /></td>
+                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="5xl" name="limaxl" /></td>
                             </tr>
                         </table>
+                        <script>
+
+                        </script>
                         <hr style="max-width:670px" />
+                        <h5 style="text-align:center;margin-right:50px"><b>Tambahan</b></h5>
+                        <table style="border:0 solid;float:none;margin:0">
+                            <tr>
+                                <td style="padding-right:10px">Tambahan</td>
+                                <td style="margin-right:30px">
+                                    @Html.DropDownList("lsttambahan", (IEnumerable<SelectListItem>)ViewBag.Tambahan, new { id = "dropdowntambahan1", name = "tambahan1", @class = "form-control" })
+                                </td>
+                                <td style="padding-left:30px">di ukuran </td>
+                                <td>
+                                    @Html.DropDownList("lstukuran", (IEnumerable<SelectListItem>)ViewBag.Ukuran, new { id = "dropdownukuran1", name = "ukuran1", @class = "form-control" })
+                                </td>
+                                <td style="padding-left:30px;padding-right:20px">Jumlah </td>
+                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="jmlhtambahan1" name="jmlhtambahan1" /></td>
+                            </tr>
+                            <tr>
+                                <td>Tambahan</td>
+                                <td>
+                                    @Html.DropDownList("lsttambahan", (IEnumerable<SelectListItem>)ViewBag.Tambahan, new { id = "dropdowntambahan2", name = "tambahan2", @class = "form-control" })
+                                </td>
+                                <td style="padding-left:30px">di ukuran </td>
+                                <td>
+                                    @Html.DropDownList("lstukuran", (IEnumerable<SelectListItem>)ViewBag.Ukuran, new { id = "dropdownukuran2", name = "ukuran2", @class = "form-control" })
+                                </td>
+                                <td style="padding-left:30px;padding-right:20px">Jumlah </td>
+                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="jmlhtambahan2" name="jmlhtambahan2" /></td>
+                            </tr>
+                            <tr>
+                                <td>Tambahan</td>
+                                <td>
+                                    @Html.DropDownList("lsttambahan", (IEnumerable<SelectListItem>)ViewBag.Tambahan, new { id = "dropdowntambahan3", name = "tambahan3", @class = "form-control" })
+                                </td>
+                                <td style="padding-left:30px">di ukuran </td>
+                                <td>
+                                    @Html.DropDownList("lstukuran", (IEnumerable<SelectListItem>)ViewBag.Ukuran, new { id = "dropdownukuran3", name = "ukuran3", @class = "form-control" })
+                                </td>
+                                <td style="padding-left:30px;padding-right:20px">Jumlah </td>
+                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="jmlhtambahan3" name="jmlhtambahan3" /></td>
+                            </tr>
+                        </table>
                     </div>
                     <br />
                     <br />
+                    <div class="text-center">
+                        <input type="submit" value="Hitung Biaya" style="color:white;background-color:@(Session["warnanavbar"].ToString())" class="btn text-center" />
+                    </div>
+
+                    <br />
+
                 </div>
+
             </div>
         }
     </div>
