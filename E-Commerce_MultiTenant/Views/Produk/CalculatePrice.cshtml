@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "CalculatePrice";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
+}
+<div class="container">
+   
+    <div class="col-md-12 col-xs-12" style="margin-top:5%">
+        <div class="thumbnail clearfix text-center" style="max-width:700px;width:100%;margin-left:20%">
+            <br />
+            <table style="border:0 solid;float:none;margin:0 auto">
+                <tr>
+                    <td>
+                        <b>Bahan :</b>
+                    </td>
+                    <td>
+                        @Session["namabahan"].ToString()
+                    </td>
+                    <td>
+                        <b> Sablon :</b>
+                    </td>
+                    <td>
+                        @Session["namasablon"].ToString()
+                    </td>
+                    <td>
+                        <b>Harga Satuan :</b>
+                    </td>
+                    <td>
+                        @Session["hargasatuan"].ToString()
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <table style="border:0 solid;float:none;margin:0 auto">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Jumlah Harga</th>
+                </tr>
+                <tr>
+                    <td>
+                        Jumlah Pesanan :
+                    </td>
+                    <td>
+                        @ViewBag.Jumlahtotal &nbsp; <button class="btn btn-primary btn-xs" onclick="history.go(-1);">Ubah</button>
+                    </td>
+                    <td>@ViewBag.totalharga</td>
+                </tr>
+                <tr>
+                    <td>Jumlah XXL : </td>
+                    <td>
+                        @ViewBag.xxl
+                    </td>
+                    <td>@ViewBag.hargaxxl</td>
+                </tr>
+                <tr>
+                    <td>Lebih dari XXL : </td>
+                    <td>
+                        @ViewBag.lebihxxl
+                    </td>
+                    <td>@ViewBag.hargalebihxxl</td>
+                </tr>
+                @if (Session["tambahan1"].ToString() != "")
+                {
+                    <tr>
+                        <td>@Session["tambahan1"].ToString() : </td>
+                        <td>
+                            @Session["jmlhtambahan1"].ToString()
+                        </td>
+                        <td>@ViewBag.tothar1</td>
+                    </tr>
+                }
+                @if (Session["tambahan2"].ToString() != "")
+                {
+                    <tr>
+                        <td>@Session["tambahan2"].ToString() : </td>
+                        <td>
+                            @Session["jmlhtambahan2"].ToString()
+                        </td>
+                        <td>@ViewBag.tothar2</td>
+                    </tr>
+                }
+                @if (Session["tambahan3"].ToString() != "")
+                {
+                    <tr>
+                        <td>@Session["tambahan3"].ToString() : </td>
+                        <td>
+                            @Session["jmlhtambahan3"].ToString()
+                        </td>
+                        <td>@ViewBag.tothar3</td>
+                    </tr>
+                }
+            </table>
+            <hr />
+            <table style="border:0 solid;float:none;margin:0 auto">
+                <tr>
+                    <td>Total : </td>
+                    <td></td>
+                    <td>@ViewBag.Totalhargaall</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

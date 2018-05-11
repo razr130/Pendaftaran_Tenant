@@ -6,9 +6,7 @@
 @{
     Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
 }
-@{
-    int jumlah1 = 0;
-}}
+
 <div class="container">
     <div class="row" style="margin-top:40px">
         <h6 style="float:left;margin-left:20px"><a href='@Url.Action("Indexku","Home")'>Beranda</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href='@Url.Action("Index","Produk")'>Produk</a>&nbsp;&nbsp;>&nbsp;&nbsp;Pemesanan</h6>
@@ -105,11 +103,11 @@
                             <tr>
                                 <td style="padding-right:10px">Tambahan</td>
                                 <td style="margin-right:30px">
-                                    @Html.DropDownList("lsttambahan", (IEnumerable<SelectListItem>)ViewBag.Tambahan, new { id = "dropdowntambahan1", name = "tambahan1", @class = "form-control" })
+                                    @Html.DropDownList("tambahan1", (IEnumerable<SelectListItem>)ViewBag.Tambahan, string.Empty, new { id = "dropdowntambahan1", name = "tambahan1", @class = "form-control" })
                                 </td>
                                 <td style="padding-left:30px">di ukuran </td>
                                 <td>
-                                    @Html.DropDownList("lstukuran", (IEnumerable<SelectListItem>)ViewBag.Ukuran, new { id = "dropdownukuran1", name = "ukuran1", @class = "form-control" })
+                                    @Html.DropDownList("ukuran1", (IEnumerable<SelectListItem>)ViewBag.Ukuran, string.Empty, new { id = "dropdownukuran1", name = "ukuran1", @class = "form-control" })
                                 </td>
                                 <td style="padding-left:30px;padding-right:20px">Jumlah </td>
                                 <td><input type="number" class="form-control text-center" style="max-width:70px" id="jmlhtambahan1" name="jmlhtambahan1" /></td>
@@ -117,11 +115,11 @@
                             <tr>
                                 <td>Tambahan</td>
                                 <td>
-                                    @Html.DropDownList("lsttambahan", (IEnumerable<SelectListItem>)ViewBag.Tambahan, new { id = "dropdowntambahan2", name = "tambahan2", @class = "form-control" })
+                                    @Html.DropDownList("tambahan2", (IEnumerable<SelectListItem>)ViewBag.Tambahan, string.Empty, new { id = "dropdowntambahan2", name = "tambahan2", @class = "form-control" })
                                 </td>
                                 <td style="padding-left:30px">di ukuran </td>
                                 <td>
-                                    @Html.DropDownList("lstukuran", (IEnumerable<SelectListItem>)ViewBag.Ukuran, new { id = "dropdownukuran2", name = "ukuran2", @class = "form-control" })
+                                    @Html.DropDownList("ukuran2", (IEnumerable<SelectListItem>)ViewBag.Ukuran, string.Empty, new { id = "dropdownukuran2", name = "ukuran2", @class = "form-control" })
                                 </td>
                                 <td style="padding-left:30px;padding-right:20px">Jumlah </td>
                                 <td><input type="number" class="form-control text-center" style="max-width:70px" id="jmlhtambahan2" name="jmlhtambahan2" /></td>
@@ -129,11 +127,11 @@
                             <tr>
                                 <td>Tambahan</td>
                                 <td>
-                                    @Html.DropDownList("lsttambahan", (IEnumerable<SelectListItem>)ViewBag.Tambahan, new { id = "dropdowntambahan3", name = "tambahan3", @class = "form-control" })
+                                    @Html.DropDownList("tambahan3", (IEnumerable<SelectListItem>)ViewBag.Tambahan, string.Empty, new { id = "dropdowntambahan3", name = "tambahan3", @class = "form-control" })
                                 </td>
                                 <td style="padding-left:30px">di ukuran </td>
                                 <td>
-                                    @Html.DropDownList("lstukuran", (IEnumerable<SelectListItem>)ViewBag.Ukuran, new { id = "dropdownukuran3", name = "ukuran3", @class = "form-control" })
+                                    @Html.DropDownList("ukuran3", (IEnumerable<SelectListItem>)ViewBag.Ukuran, string.Empty, new { id = "dropdownukuran3", name = "ukuran3", @class = "form-control" })
                                 </td>
                                 <td style="padding-left:30px;padding-right:20px">Jumlah </td>
                                 <td><input type="number" class="form-control text-center" style="max-width:70px" id="jmlhtambahan3" name="jmlhtambahan3" /></td>
@@ -142,6 +140,10 @@
                     </div>
                     <br />
                     <br />
+                    <div class="text-center">
+                        <h5><b>Catatan</b></h5>
+                        <textarea rows="4" class="form-control" id="deskripsi" name="catatan"></textarea>
+                    </div>
                     <div class="text-center">
                         <input type="submit" value="Hitung Biaya" style="color:white;background-color:@(Session["warnanavbar"].ToString())" class="btn text-center" />
                     </div>

@@ -54,7 +54,7 @@
                     else if (item.kategori != "pakaian")
                     {
                         <p>
-                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananNonPakaian", "Produk")?id=' + @item.id_produk" class="btn btn-success" />
+                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananNonPakaian", "Produk")/?id_produk=' + @item.id_produk" class="btn btn-success" />
                         </p>
                     }
                 }

@@ -195,6 +195,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProdukController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="DAL\PenyewaDAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -289,9 +290,13 @@
     <Content Include="Views\Produk\CreatePesananPakaian2.cshtml" />
     <Content Include="Views\Produk\CreatePesananNonPakaian.cshtml" />
     <Content Include="Views\Shared\_LayoutNoWhiteBar.cshtml" />
+    <Content Include="Views\Produk\CalculatePrice.cshtml" />
+    <Content Include="Views\Produk\CalculatePriceNonPakaian.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\" />
+    <Folder Include="Views\ShoppingCart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

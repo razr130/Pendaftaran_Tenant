@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "CalculatePriceNonPakaian";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
+}
+<div class="container">
+
+    <div class="col-md-12 col-xs-12" style="margin-top:5%">
+        <div class="thumbnail clearfix text-center" style="max-width:700px;width:100%;margin-left:20%">
+            <br />
+            <table style="border:0 solid;float:none;margin:0 auto">
+                <tr>
+                    <td>
+                        <b>Bahan :</b>
+                    </td>
+                    <td>
+                        @Session["namabahan"].ToString()
+                    </td>
+                    <td>
+                        <b> Sablon :</b>
+                    </td>
+                    <td>
+                        @Session["namasablon"].ToString()
+                    </td>
+                    <td>
+                        <b>Harga Satuan :</b>
+                    </td>
+                    <td>
+                        @ViewBag.hargasatuan
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <table style="border:0 solid;float:none;margin:0 auto">
+                <tr>
+                    <td>Jumlah : </td>
+                    <td>@ViewBag.jumlah</td>
+                </tr>
+                </table>
+            <hr />
+            <div class="text-center">
+                <table>
+                    <tr>
+                        <th>Total : </th>
+                        <td>@ViewBag.hargatotal</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+

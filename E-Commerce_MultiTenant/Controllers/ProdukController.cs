@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -66,7 +67,7 @@ namespace E_Commerce_MultiTenant.Controllers
             }
             else
             {
-
+                Session["id_produk"] = id_produk.ToString();
                 var lstbahan = new List<SelectListItem>();
                 var lstsablon = new List<SelectListItem>();
                 var lsttambahan = new List<SelectListItem>();
@@ -80,10 +81,10 @@ namespace E_Commerce_MultiTenant.Controllers
                         ",[nama_bahan]" +
                         ",[nama_sablon]" +
                         ",[harga]" +
-                        ",count(*)" +
+
                         " FROM[MultiTenancy_Sablon].[dbo].[View_" + subdomain + "] WHERE id_produk=" + id_produk.ToString() +
-                        " group by nama_bahan, nama_sablon,harga,id_bahan,id_jns_sablon" +
-                        " having  COUNT(*) > 1 ";
+                        " group by nama_bahan, nama_sablon,harga,id_bahan,id_jns_sablon";
+                        
 
                     SqlCommand sqlcom = new SqlCommand(query, conn);
                     try
@@ -128,7 +129,7 @@ namespace E_Commerce_MultiTenant.Controllers
                                     lsttambahan.Add(new SelectListItem
                                     {
 
-                                        Value = reader["id_tambahan"].ToString(),
+                                        Value = reader["nama_tambahan"].ToString(),
                                         Text = reader["nama_tambahan"].ToString()
                                     });
                                 }
@@ -178,26 +179,457 @@ namespace E_Commerce_MultiTenant.Controllers
         }
         [HttpPost]
         public ActionResult CreatePesananPakaian(string subdomain, string lstbahan, HttpPostedFileBase desain, int? anak, int? xs, int? s
-            , int? m, int? l, int? xl, int? xxl, int? xxxl, int? empatxl, int? limaxl, 
+            , int? m, int? l, int? xl, int? xxl, int? xxxl, int? empatxl, int? limaxl,
             string tambahan1, string ukuran1, int? jmlhtambahan1, string tambahan2, string ukuran2,
-            int? jmlhtambahan2, string tambahan3, string ukuran3, int? jmlhtambahan3)
+            int? jmlhtambahan2, string tambahan3, string ukuran3, int? jmlhtambahan3, string catatan)
         {
-            Session["coba"] = lstbahan;
-            Session["aaa"] = "a";
-            return RedirectToAction("Index", "Produk");
+            Session["catatan"] = catatan;
+            var idbahan = lstbahan.Split('&')[0];
+            Session["idbahan"] = idbahan;
+            var idsablon = lstbahan.Split('&')[1];
+            Session["idsablon"] = idsablon;
+
+            string filePath = "";
+            string fileName = Guid.NewGuid().ToString() + "_" + desain.FileName;
+            if (desain.ContentLength > 0)
+            {
+
+                filePath = Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), fileName);
+                desain.SaveAs(filePath);
+
+            }
+            Session["desain"] = fileName;
+            if (anak != null)
+            {
+                Session["anak"] = anak.ToString();
+            }
+            if (xs != null)
+            {
+                Session["xs"] = xs.ToString();
+            }
+            if (s != null)
+            {
+                Session["s"] = s.ToString();
+            }
+            if (m != null)
+            {
+                Session["m"] = m.ToString();
+            }
+            if (l != null)
+            {
+                Session["l"] = l.ToString();
+            }
+            if (xl != null)
+            {
+                Session["xl"] = xl.ToString();
+            }
+            if (xxl != null)
+            {
+                Session["xxl"] = xxl.ToString();
+            }
+            if (xxxl != null)
+            {
+                Session["xxxl"] = xxxl.ToString();
+            }
+            if (empatxl != null)
+            {
+                Session["4xl"] = empatxl.ToString();
+            }
+            if (limaxl != null)
+            {
+                Session["5xl"] = limaxl.ToString();
+            }
+
+            Session["tambahan1"] = tambahan1;
+            Session["tambahan2"] = tambahan2;
+            Session["tambahan3"] = tambahan3;
+            Session["jmlhtambahan1"] = jmlhtambahan1.ToString();
+            Session["jmlhtambahan2"] = jmlhtambahan2.ToString();
+            Session["jmlhtambahan3"] = jmlhtambahan3.ToString();
+            Session["ukuran1"] = ukuran1;
+            Session["ukuran2"] = ukuran2;
+            Session["ukuran3"] = ukuran3;
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [harga]" +
+
+                    " FROM[MultiTenancy_Sablon].[dbo].[TabelTambahan_" + subdomain + "] WHERE id_produk=" + Session["id_produk"].ToString() + " AND nama_tambahan='XXL'";
+
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Session["hargatambahanxxl"] = reader["harga"].ToString();
+                        }
+                    }
+                    sqlcom.CommandText = "SELECT [harga]" +
+
+                 " FROM[MultiTenancy_Sablon].[dbo].[Harga_" + subdomain + "] WHERE id_jns_sablon=" + Session["idsablon"].ToString() + " AND id_bahan=" + Session["idbahan"].ToString() +
+                 " AND id_produk=" + Session["id_produk"].ToString();
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Session["hargasatuan"] = reader["harga"].ToString();
+                        }
+                    }
+                    sqlcom.CommandText = "SELECT [harga]" +
+
+                    " FROM[MultiTenancy_Sablon].[dbo].[TabelTambahan_" + subdomain + "] WHERE id_produk=" + Session["id_produk"].ToString() + " AND nama_tambahan='Lebih dari XXL'";
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Session["hargatambahanlebihdarixxl"] = reader["harga"].ToString();
+                        }
+                    }
+                    sqlcom.CommandText = "SELECT [nama_bahan]" +
+
+                    " FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + subdomain + "] WHERE id_bahan=" + Session["idbahan"].ToString();
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Session["namabahan"] = reader["nama_bahan"].ToString();
+                        }
+                    }
+                    sqlcom.CommandText = "SELECT [nama_sablon]" +
+
+                   " FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + subdomain + "] WHERE id_jns_sablon=" + Session["idsablon"].ToString();
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Session["namasablon"] = reader["nama_sablon"].ToString();
+                        }
+                    }
+
+                }
+
+                catch (Exception)
+                {
+
+                }
+            }
+
+
+            return RedirectToAction("CalculatePrice", "Produk");
         }
 
 
-        public ActionResult CreatePesananNonPakaian(string subdomain, int id)
+        public ActionResult CreatePesananNonPakaian(string subdomain, int id_produk)
         {
 
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                Session["id_produk"] = id_produk.ToString();
+                var lstbahan = new List<SelectListItem>();
+                string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connstring))
+                {
+                    conn.Open();
+                    string query = "SELECT [id_bahan]" +
+                        ",[id_jns_sablon]" +
+                        ",[nama_bahan]" +
+                        ",[nama_sablon]" +
+                        ",[harga]" +
+
+                        " FROM[MultiTenancy_Sablon].[dbo].[View_" + subdomain + "] WHERE id_produk=" + id_produk.ToString() +
+                        " group by nama_bahan, nama_sablon,harga,id_bahan,id_jns_sablon";
+                       
+
+                    SqlCommand sqlcom = new SqlCommand(query, conn);
+                    try
+                    {
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                lstbahan.Add(new SelectListItem
+                                {
+                                    Value = reader["id_bahan"].ToString() + "&" + reader["id_jns_sablon"].ToString(),
+                                    Text = "Bahan " + reader["nama_bahan"].ToString() + " dengan sablon " + reader["nama_sablon"].ToString()
+                                });
+                            }
+                            ViewBag.Bahan = lstbahan;
+                        }
+                        sqlcom.CommandText = "SELECT [nama_produk]" +
+                       ",[foto_produk]" +
+                       "FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "] WHERE id_produk=" + id_produk.ToString();
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+
+                            if (reader.Read())
+                            {
+                                Session["namaproduk"] = reader["nama_produk"].ToString();
+                                Session["fotoproduk"] = reader["foto_produk"].ToString();
+                            }
+
+
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    conn.Close();
+                }
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CreatePesananNonPakaian(string subdomain, string lstbahan, HttpPostedFileBase desain, int? jumlah, string catatan)
+        {
+            
+            Session["catatan"] = catatan;
+            var idbahan = lstbahan.Split('&')[0];
+            Session["idbahan"] = idbahan;
+            var idsablon = lstbahan.Split('&')[1];
+            Session["idsablon"] = idsablon;
+
+            string filePath = "";
+            string fileName = Guid.NewGuid().ToString() + "_" + desain.FileName;
+            if (desain.ContentLength > 0)
+            {
+
+                filePath = Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), fileName);
+                desain.SaveAs(filePath);
+
+            }
+            Session["desain"] = fileName;
+            Session["jumlah"] = jumlah;
+            string query = "SELECT [harga]" +
+                 " FROM[MultiTenancy_Sablon].[dbo].[Harga_" + subdomain + "] WHERE id_jns_sablon=" + idsablon.ToString() + " AND id_bahan=" + idbahan.ToString() +
+                 " AND id_produk=" + Session["id_produk"].ToString();
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Session["hargasatuan"] = (int)reader["harga"];
+                        }
+                    }
+                    sqlcom.CommandText = "SELECT [nama_bahan]" +
+
+                   " FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + subdomain + "] WHERE id_bahan=" + Session["idbahan"].ToString();
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Session["namabahan"] = reader["nama_bahan"].ToString();
+                        }
+                    }
+                    sqlcom.CommandText = "SELECT [nama_sablon]" +
+
+                   " FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + subdomain + "] WHERE id_jns_sablon=" + Session["idsablon"].ToString();
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Session["namasablon"] = reader["nama_sablon"].ToString();
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+
+
+            return RedirectToAction("CalculatePriceNonPakaian");
+        }
+
+        public ActionResult CalculatePrice(string subdomain)
+        {
+            int hargasatuan = Convert.ToInt32(Session["hargasatuan"]);
+            int anak, xs, s, m, l, xl = 0;
+            int xxl = 0;
+            int xxxl = 0;
+            int empatxl = 0;
+            int limaxl = 0;
+            int jumlahlebihxxl = 0;
+            int jumlah = 0;
+            int hargatambahan1 = 0;
+            int hargatambahan2 = 0;
+            int hargatambahan3 = 0;
+            int jmlhtambahan1 = 0;
+            int jmlhtambahan2 = 0;
+            int jmlhtambahan3 = 0;
+            int hargaxxl = 0;
+            int hargalebihxxl = 0;
+            int totalharga = 0;
+            int totalhargatambahan = 0;
+            int totalhargaall = 0;
+            if (Session["jmlhtambahan1"].ToString() != "")
+            {
+                jmlhtambahan1 = Convert.ToInt32(Session["jmlhtambahan1"]);
+            }
+
+            if (Session["jmlhtambahan2"].ToString() != "")
+            {
+                jmlhtambahan2 = Convert.ToInt32(Session["jmlhtambahan2"]);
+            }
+            if (Session["jmlhtambahan3"].ToString() != "")
+            {
+                jmlhtambahan3 = Convert.ToInt32(Session["jmlhtambahan3"]);
+            }
+
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [harga]" +
+
+                    " FROM[MultiTenancy_Sablon].[dbo].[TabelTambahan_" + subdomain + "] WHERE id_produk=" + Session["id_produk"].ToString() + " AND nama_tambahan='" + Session["tambahan1"].ToString() + "'";
+
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            hargatambahan1 = (int)reader["harga"];
+                        }
+                    }
+
+                    sqlcom.CommandText = "SELECT [harga]" +
+
+                    " FROM[MultiTenancy_Sablon].[dbo].[TabelTambahan_" + subdomain + "] WHERE id_produk=" + Session["id_produk"].ToString() + " AND nama_tambahan='" + Session["tambahan2"].ToString() + "'";
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            hargatambahan2 = (int)reader["harga"];
+                        }
+                    }
+                    sqlcom.CommandText = "SELECT [harga]" +
+
+                    " FROM[MultiTenancy_Sablon].[dbo].[TabelTambahan_" + subdomain + "] WHERE id_produk=" + Session["id_produk"].ToString() + " AND nama_tambahan='" + Session["tambahan3"].ToString() + "'";
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            hargatambahan3 = (int)reader["harga"];
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            if (Session["anak"] != null)
+            {
+                anak = Convert.ToInt32(Session["anak"]);
+                jumlah += anak;
+            }
+            if (Session["xs"] != null)
+            {
+                xs = Convert.ToInt32(Session["xs"]);
+                jumlah += xs;
+            }
+            if (Session["s"] != null)
+            {
+                s = Convert.ToInt32(Session["s"]);
+                jumlah += s;
+            }
+            if (Session["m"] != null)
+            {
+                m = Convert.ToInt32(Session["m"]);
+                jumlah += m;
+            }
+            if (Session["l"] != null)
+            {
+                l = Convert.ToInt32(Session["l"]);
+                jumlah += l;
+            }
+            if (Session["xl"] != null)
+            {
+                xl = Convert.ToInt32(Session["xl"]);
+                jumlah += xl;
+            }
+            if (Session["xxl"] != null)
+            {
+                xxl = Convert.ToInt32(Session["xxl"]);
+                jumlah += xxl;
+                hargaxxl = xxl * Convert.ToInt32(Session["hargatambahanxxl"]);
+            }
+            if (Session["xxxl"] != null)
+            {
+                xxxl = Convert.ToInt32(Session["xxxl"]);
+                jumlah += xxxl;
+                hargalebihxxl += xxxl * Convert.ToInt32(Session["hargatambahanlebihdarixxl"]);
+            }
+            if (Session["4xl"] != null)
+            {
+                empatxl = Convert.ToInt32(Session["4xl"]);
+                jumlah += empatxl;
+                hargalebihxxl += empatxl * Convert.ToInt32(Session["hargatambahanlebihdarixxl"]);
+            }
+            if (Session["5xl"] != null)
+            {
+                limaxl = Convert.ToInt32(Session["5xl"]);
+                jumlah += limaxl;
+                hargalebihxxl += limaxl * Convert.ToInt32(Session["hargatambahanlebihdarixxl"]);
+            }
+
+            ViewBag.xxl = xxl.ToString();
+            jumlahlebihxxl = empatxl + limaxl;
+            ViewBag.lebihxxl = jumlahlebihxxl.ToString();
+            ViewBag.Jumlahtotal = jumlah.ToString();
+            ViewBag.hargaxxl = hargaxxl.ToString();
+            ViewBag.hargalebihxxl = hargalebihxxl.ToString();
+            totalharga = hargasatuan * jumlah;
+            ViewBag.totalharga = totalharga.ToString();
+
+            int tothar1 = hargatambahan1 * jmlhtambahan1;
+            ViewBag.tothar1 = tothar1.ToString();
+            int tothar2 = hargatambahan2 * jmlhtambahan2;
+            ViewBag.tothar2 = tothar2.ToString();
+            int tothar3 = hargatambahan3 * jmlhtambahan3;
+            ViewBag.tothar3 = tothar3.ToString();
+            totalhargatambahan = (hargatambahan1 * jmlhtambahan1) + (hargatambahan2 * jmlhtambahan2) + (hargatambahan3 + jmlhtambahan3);
+            totalhargaall = totalharga + totalhargatambahan;
+            ViewBag.Totalhargaall = totalhargaall.ToString();
 
             return View();
-
         }
-        [HttpPost]
-        public ActionResult CreatePesananNonPakaian()
+        public ActionResult CalculatePriceNonPakaian(string subdomain)
         {
+            int hargasatuan = Convert.ToInt32(Session["hargasatuan"]);
+            int jumlah = Convert.ToInt32(Session["jumlah"]);
+            int hargatotal = hargasatuan * jumlah;
+            ViewBag.hargasatuan = hargasatuan.ToString();
+            ViewBag.jumlah = jumlah.ToString();
+            ViewBag.hargatotal = hargatotal.ToString();
 
             return View();
         }

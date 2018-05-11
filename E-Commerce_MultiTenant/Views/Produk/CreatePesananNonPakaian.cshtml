@@ -2,6 +2,81 @@
 @{
     ViewBag.Title = "CreatePesananNonPakaian";
 }
+@{
+    Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
+}
+<div class="container">
+    <div class="row" style="margin-top:40px">
+        <h6 style="float:left;margin-left:20px"><a href='@Url.Action("Indexku","Home")'>Beranda</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href='@Url.Action("Index","Produk")'>Produk</a>&nbsp;&nbsp;>&nbsp;&nbsp;Pemesanan</h6>
+        <br />
+        <hr />
+        @using (Html.BeginForm("CreatePesananNonPakaian", "Produk", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            <div class="col-md-4 col-xs-4">
+                <div class="thumbnail clearfix text-center" style="max-width:350px;width:100%">
 
-<h2>CreatePesananNonPakaian</h2>
 
+                    @Html.AntiForgeryToken()
+                    <h3 style="color:@(Session["warnanavbar"].ToString())">@Session["namaproduk"].ToString()</h3>
+                    <hr />
+                    <table style="border:0 solid;float:none;margin:0 auto">
+
+                        <tr><td style="text-align:center"><img src="http://localhost:52494/Content/Images/@Session["fotoproduk"].ToString()" style="min-height:200px;height:200px;" /></td></tr>
+
+                    </table>
+
+                    <br />
+
+                    <br />
+
+
+                </div>
+                <br />
+
+            </div>
+
+            <div class="col-md-8 col-xs-8">
+                <div class="thumbnail clearfix text-center" style="max-width:700px;width:100%">
+
+                    <h3 style="color:@(Session["warnanavbar"].ToString())">Detail Pesanan</h3>
+                    <hr />
+                    <div class="row">
+                        <table style="border:0 solid;float:none;margin-left:70px">
+                            <tr>
+                                <th style="text-align:center">
+                                    Bahan dan jenis sablon
+                                </th>
+                                <th style="text-align:center">
+                                    Desain
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="padding-right:20px">
+                                    @Html.DropDownList("lstbahan", (IEnumerable<SelectListItem>)ViewBag.Bahan, new { id = "dropdownbahan", name = "bahan", @class = "form-control" })
+                                </td>
+                                <td>
+                                    <input name="desain" type="file" class="form-control" />
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="max-width:670px" />
+                    </div>
+
+                    <div class="row" style="margin-left:55px">
+                        <h5 style="text-align:center;margin-right:50px"><b>Jumlah per Ukuran</b></h5>
+                        <div class="text-center"><input type="text" name="jumlah" class="form-control" /></div>
+                    </div>
+                    <div class="row">
+                        <h5 style="text-align:center;margin-right:50px"><b>Catatan</b></h5>
+                        <textarea rows="4" class="form-control" id="deskripsi" name="catatan"></textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <input type="submit" value="Hitung Biaya" style="color:white;background-color:@(Session["warnanavbar"].ToString())" class="btn text-center" />
+                    </div>
+                    <br />
+                </div>
+            </div>
+        }
+    </div>
+</div>

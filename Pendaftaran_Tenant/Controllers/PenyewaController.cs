@@ -2708,15 +2708,16 @@ namespace Pendaftaran_Tenant.Controllers
                      "[status_bayar] [char](5) NULL," +
                       "[tgl_order] [date] NULL," +
                     "[total_harga] [int] NULL," +
-                    "CONSTRAINT[PK_Order_" + nama_perusahaan + "] PRIMARY KEY CLUSTERED" +
-                    "(" +
-                    "[no_order] ASC" +
+                    "[dikirim] [char](5) NULL," +
+                    " CONSTRAINT[PK_Order_" + nama_perusahaan + "] PRIMARY KEY CLUSTERED" +
+                    " (" +
+                    " [no_order] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
                     ") ON[PRIMARY]" +
 
                     " ALTER TABLE[dbo].[Order_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_Order_" + nama_perusahaan + "_Customer_" + nama_perusahaan + "] FOREIGN KEY([id_customer])" +
                     " REFERENCES[dbo].[Customer_" + nama_perusahaan + "]" +
-                    "([id_cutomer])" +
+                    " ([id_cutomer])" +
 
                     " ALTER TABLE[dbo].[Order_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_Order_" + nama_perusahaan + "_Customer_" + nama_perusahaan + "]" +
