@@ -67,6 +67,7 @@ namespace E_Commerce_MultiTenant.Controllers
             }
             else
             {
+                Session["kategori"] = "pakaian";
                 Session["id_produk"] = id_produk.ToString();
                 var lstbahan = new List<SelectListItem>();
                 var lstsablon = new List<SelectListItem>();
@@ -84,7 +85,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                         " FROM[MultiTenancy_Sablon].[dbo].[View_" + subdomain + "] WHERE id_produk=" + id_produk.ToString() +
                         " group by nama_bahan, nama_sablon,harga,id_bahan,id_jns_sablon";
-                        
+
 
                     SqlCommand sqlcom = new SqlCommand(query, conn);
                     try
@@ -183,7 +184,21 @@ namespace E_Commerce_MultiTenant.Controllers
             string tambahan1, string ukuran1, int? jmlhtambahan1, string tambahan2, string ukuran2,
             int? jmlhtambahan2, string tambahan3, string ukuran3, int? jmlhtambahan3, string catatan)
         {
-            Session["catatan"] = catatan;
+            var catatanfull = "";
+            if (tambahan1 != "")
+            {
+                catatanfull += "Tambahan " + tambahan1 + " di ukuran " + ukuran1 + " " + jmlhtambahan1 + " pcs.";
+            }
+            if (tambahan2 != "")
+            {
+                catatanfull += "Tambahan " + tambahan2 + " di ukuran " + ukuran2 + " " + jmlhtambahan2 + " pcs.";
+            }
+            if (tambahan3 != "")
+            {
+                catatanfull += "Tambahan " + tambahan3 + " di ukuran " + ukuran3 + " " + jmlhtambahan3 + " pcs.";
+            }
+            catatanfull += " " + catatan;
+            Session["catatan"] = catatanfull;
             var idbahan = lstbahan.Split('&')[0];
             Session["idbahan"] = idbahan;
             var idsablon = lstbahan.Split('&')[1];
@@ -333,6 +348,7 @@ namespace E_Commerce_MultiTenant.Controllers
             }
             else
             {
+                Session["kategori"] = "nonpakaian";
                 Session["id_produk"] = id_produk.ToString();
                 var lstbahan = new List<SelectListItem>();
                 string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
@@ -347,7 +363,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                         " FROM[MultiTenancy_Sablon].[dbo].[View_" + subdomain + "] WHERE id_produk=" + id_produk.ToString() +
                         " group by nama_bahan, nama_sablon,harga,id_bahan,id_jns_sablon";
-                       
+
 
                     SqlCommand sqlcom = new SqlCommand(query, conn);
                     try
@@ -392,7 +408,7 @@ namespace E_Commerce_MultiTenant.Controllers
         [HttpPost]
         public ActionResult CreatePesananNonPakaian(string subdomain, string lstbahan, HttpPostedFileBase desain, int? jumlah, string catatan)
         {
-            
+
             Session["catatan"] = catatan;
             var idbahan = lstbahan.Split('&')[0];
             Session["idbahan"] = idbahan;
@@ -602,12 +618,14 @@ namespace E_Commerce_MultiTenant.Controllers
             }
 
             ViewBag.xxl = xxl.ToString();
-            jumlahlebihxxl = empatxl + limaxl;
+            jumlahlebihxxl = xxxl + empatxl + limaxl;
             ViewBag.lebihxxl = jumlahlebihxxl.ToString();
             ViewBag.Jumlahtotal = jumlah.ToString();
             ViewBag.hargaxxl = hargaxxl.ToString();
             ViewBag.hargalebihxxl = hargalebihxxl.ToString();
             totalharga = hargasatuan * jumlah;
+
+            Session["jumlahorder"] = jumlah.ToString();
             ViewBag.totalharga = totalharga.ToString();
 
             int tothar1 = hargatambahan1 * jmlhtambahan1;
@@ -616,10 +634,10 @@ namespace E_Commerce_MultiTenant.Controllers
             ViewBag.tothar2 = tothar2.ToString();
             int tothar3 = hargatambahan3 * jmlhtambahan3;
             ViewBag.tothar3 = tothar3.ToString();
-            totalhargatambahan = (hargatambahan1 * jmlhtambahan1) + (hargatambahan2 * jmlhtambahan2) + (hargatambahan3 + jmlhtambahan3);
+            totalhargatambahan = hargaxxl + hargalebihxxl + (hargatambahan1 * jmlhtambahan1) + (hargatambahan2 * jmlhtambahan2) + (hargatambahan3 + jmlhtambahan3);
             totalhargaall = totalharga + totalhargatambahan;
             ViewBag.Totalhargaall = totalhargaall.ToString();
-
+            Session["totalhargaall"] = totalhargaall.ToString();
             return View();
         }
         public ActionResult CalculatePriceNonPakaian(string subdomain)
@@ -629,8 +647,9 @@ namespace E_Commerce_MultiTenant.Controllers
             int hargatotal = hargasatuan * jumlah;
             ViewBag.hargasatuan = hargasatuan.ToString();
             ViewBag.jumlah = jumlah.ToString();
+            Session["jumlahorder"] = jumlah.ToString();
             ViewBag.hargatotal = hargatotal.ToString();
-
+            Session["totalhargaall"] = hargatotal.ToString();
             return View();
         }
     }

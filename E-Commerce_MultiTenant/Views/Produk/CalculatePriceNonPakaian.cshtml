@@ -38,7 +38,7 @@
                     <td>Jumlah : </td>
                     <td>@ViewBag.jumlah</td>
                 </tr>
-                </table>
+            </table>
             <hr />
             <div class="text-center">
                 <table>
@@ -47,6 +47,10 @@
                         <td>@ViewBag.hargatotal</td>
                     </tr>
                 </table>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-success" onclick="location.href='@Url.Action("AddtoCart","ShoppingCart")'">Masukkan ke keranjang</button>
+
             </div>
         </div>
         </div>
