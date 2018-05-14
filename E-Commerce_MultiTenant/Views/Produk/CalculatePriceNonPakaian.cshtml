@@ -5,8 +5,11 @@
 @{
     Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
 }
-<div class="container">
-
+<div class="container" style="margin-top:4%">
+    <div class="text-center">
+        <h2>Perhitungan Biaya</h2>
+        <hr />
+    </div>
     <div class="col-md-12 col-xs-12" style="margin-top:5%">
         <div class="thumbnail clearfix text-center" style="max-width:700px;width:100%;margin-left:20%">
             <br />
@@ -15,44 +18,44 @@
                     <td>
                         <b>Bahan :</b>
                     </td>
-                    <td>
+                    <td style="padding-right:2%">
                         @Session["namabahan"].ToString()
                     </td>
-                    <td>
+                    <td style="padding-left:15px">
                         <b> Sablon :</b>
                     </td>
                     <td>
                         @Session["namasablon"].ToString()
                     </td>
-                    <td>
+                    <td style="padding-left:15px">
                         <b>Harga Satuan :</b>
                     </td>
                     <td>
-                        @ViewBag.hargasatuan
+                        Rp @Session["hargasatuan"].ToString()
                     </td>
                 </tr>
             </table>
             <hr />
             <table style="border:0 solid;float:none;margin:0 auto">
                 <tr>
-                    <td>Jumlah : </td>
-                    <td>@ViewBag.jumlah</td>
+                    <td align="right"  style="padding-right:40px"><b>Jumlah : </b></td>
+                    <td align="right">@ViewBag.jumlah</td>
+
+
+                </tr>
+                <tr>
+                    <td align="right" style="padding-right:40px"><b>Total : </b></td>
+                    <td align="right">Rp @ViewBag.hargatotal</td>
                 </tr>
             </table>
             <hr />
+            
             <div class="text-center">
-                <table>
-                    <tr>
-                        <th>Total : </th>
-                        <td>@ViewBag.hargatotal</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="text-center">
+                <button class="btn btn-primary" onclick="history.go(-1);">Ubah Data Pesanan</button>
                 <button class="btn btn-success" onclick="location.href='@Url.Action("AddtoCart","ShoppingCart")'">Masukkan ke keranjang</button>
-
             </div>
-        </div>
+            <br />
         </div>
     </div>
+</div>
 
