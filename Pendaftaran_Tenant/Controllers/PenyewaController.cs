@@ -2793,7 +2793,7 @@ namespace Pendaftaran_Tenant.Controllers
 
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_DetailOrder_" + nama_perusahaan + "] FOREIGN KEY([no_detail])" +
                     " REFERENCES[dbo].[DetailOrder_" + nama_perusahaan + "]" +
-                    "([no_detail])" +
+                    "([no_detail]) ON DELETE CASCADE" +
 
                     " ALTER TABLE[dbo].[UkuranOrder_" + nama_perusahaan + "]" +
                     " CHECK CONSTRAINT[FK_UkuranOrder_" + nama_perusahaan + "_DetailOrder_" + nama_perusahaan + "]" +

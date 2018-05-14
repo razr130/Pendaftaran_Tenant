@@ -292,11 +292,12 @@
     <Content Include="Views\Shared\_LayoutNoWhiteBar.cshtml" />
     <Content Include="Views\Produk\CalculatePrice.cshtml" />
     <Content Include="Views\Produk\CalculatePriceNonPakaian.cshtml" />
+    <Content Include="Views\ShoppingCart\ShowCart.cshtml" />
+    <Content Include="Views\ShoppingCart\CartKosong.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Views\ShoppingCart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

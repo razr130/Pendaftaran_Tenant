@@ -1,0 +1,74 @@
+﻿@model IEnumerable<E_Commerce_MultiTenant.Models.DetailOrder>
+
+@{
+    ViewBag.Title = "ShowCart";
+}
+
+<div class="container" style="margin-top:10%">
+    
+
+    
+    <table class="table">
+        <tr>
+            <th>
+                Desain
+            </th>
+            <th>
+                Nomor Detail
+            </th>
+            <th>
+                Nama Produk
+            </th>
+            <th>
+                Nama Bahan
+            </th>
+            <th>
+                Nama Sablon
+            </th>
+
+
+            <th>
+                Jumlah
+            </th>
+            <th>
+                Subtotal
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/Content/Images/@item.desain" class="img-responsive" style="max-height:50px;max-width:50px" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.no_detail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.namaproduk)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.namabahan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.namasablon)
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.jumlah)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.subtotal)
+                </td>
+
+                <td>
+                    
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

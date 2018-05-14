@@ -9,6 +9,9 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
+                <a href="~/ShoppingCart/ShowCart" style="color:white"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+            </li>
+            <li>
                 @Html.ActionLink("Hello " + Session["user"].ToString() + "!", "Indexku", "Home", null, new { @style = "color:white;font-family:'Roboto'" })
             </li>
             <li><a style="color:white;font-family:'Roboto'" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>

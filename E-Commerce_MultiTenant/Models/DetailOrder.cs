@@ -15,5 +15,8 @@ namespace E_Commerce_MultiTenant.Models
         public string desain { get; set; }
         public int jumlah { get; set; }
         public int subtotal { get; set; }
+        public string namaproduk { get; set; }
+        public string namabahan { get; set; }
+        public string namasablon { get; set; }
     }
 }

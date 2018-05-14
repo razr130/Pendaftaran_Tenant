@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using E_Commerce_MultiTenant.Models;
 
 namespace E_Commerce_MultiTenant.Controllers
 {
@@ -15,6 +16,78 @@ namespace E_Commerce_MultiTenant.Controllers
             return View();
         }
 
+        public ActionResult ShowCart(string subdomain)
+        {
+            if (Session["noorder"] != null)
+            {
+
+
+                string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+                List<DetailOrder> result = new List<DetailOrder>();
+
+                using (SqlConnection conn = new SqlConnection(connstring))
+                {
+                    conn.Open();
+                    string query = "SELECT d.[no_detail]" +
+                        ", d.[no_order]" +
+                        ",d.[id_produk]" +
+                        ",d.[id_bahan]" +
+                        ",d.[id_jns_sablon]" +
+                        ",d.[desain]" +
+                        ",d.[jumlah]" +
+                        ",d.[subtotal]" +
+                        ",d.[catatan]," +
+                        "p.nama_produk," +
+                        "b.nama_bahan," +
+                        "j.nama_sablon" +
+                        " FROM DetailOrder_" + subdomain + " d inner join Produk_" + subdomain + " p on d.id_produk = p.id_produk inner join Bahan_" + subdomain + " b on d.id_bahan = b.id_bahan" +
+                        " inner join JenisSablon_" + subdomain + " j on d.id_jns_sablon = j.id_jns_sablon WHERE d.no_order =" + Session["noorder"].ToString();
+
+                    SqlCommand sqlcom = new SqlCommand(query, conn);
+                    try
+                    {
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                DetailOrder item = new DetailOrder()
+                                {
+                                    no_detail = (int)reader["no_detail"],
+                                    no_order = (int)reader["no_order"],
+                                    id_produk = (int)reader["id_produk"],
+                                    id_bahan = (int)reader["id_bahan"],
+                                    id_jns_sablon = (int)reader["id_jns_sablon"],
+                                    desain = reader["desain"].ToString(),
+                                    jumlah = (int)reader["jumlah"],
+                                    subtotal = (int)reader["subtotal"],
+                                    namaproduk = reader["nama_produk"].ToString(),
+                                    namabahan = reader["nama_bahan"].ToString(),
+                                    namasablon = reader["nama_sablon"].ToString()
+
+                                };
+                                result.Add(item);
+                            }
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+                    conn.Close();
+                }
+                return View(result);
+            }
+            else
+            {
+                return RedirectToAction("CartKosong");
+            }
+        }
+        public ActionResult CartKosong()
+        {
+            return View();
+        }
         public ActionResult AddtoCart(string subdomain)
         {
             int id_customer = 0;
