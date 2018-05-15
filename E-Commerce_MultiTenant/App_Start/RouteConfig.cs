@@ -22,6 +22,11 @@ namespace E_Commerce_MultiTenant
             defaults: new { controller = "Produk", action = "CreatePesananPakaian", id_produk = "", nama = "", foto = "" }
         );
             routes.MapRoute(
+            name: "CreatePesananNonPakaian",
+            url: "{controller}/{action}/{id_produk}/{nama}/{foto}",
+            defaults: new { controller = "Produk", action = "CreatePesananNonPakaian", id_produk = "", nama = "", foto = "" }
+        );
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

@@ -863,13 +863,13 @@ namespace Pendaftaran_Tenant.Controllers
             {
                 conn.Open();
                 string query = "USE [MultiTenancy_Sablon]" +
-                    "INSERT INTO[dbo].[Produk_" + nama_perusahaan + "]" +
+                    " INSERT INTO[dbo].[Produk_" + nama_perusahaan + "]" +
                     "([nama_produk]" +
                     ",[deskripsi]" +
-                    ",[kategori])" +
+                    ",[kategori]" +
                     ",[foto_produk])" +
                     "VALUES" +
-                    "('" + namaproduk + "' ,'" + deskripsi + "' ,'" + kategori + "', '" + fileName + "')";
+                    "('" + namaproduk + "','" + deskripsi + "','" + kategori + "','" + fileName + "')";
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -2704,7 +2704,7 @@ namespace Pendaftaran_Tenant.Controllers
                     "(" +
                     "[no_order][int] IDENTITY(1,1) NOT NULL," +
                     "[id_customer] [int] NULL," +
-                    "[tgl_order] [date] NULL," +
+                    
                      "[status_bayar] [char](5) NULL," +
                       "[tgl_order] [date] NULL," +
                     "[total_harga] [int] NULL," +
@@ -2743,7 +2743,7 @@ namespace Pendaftaran_Tenant.Controllers
                     "(" +
                     "[no_detail] ASC" +
                     ")WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]" +
-                    ") ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]" +
+                    ") ON[PRIMARY]" +
 
                     " ALTER TABLE[dbo].[DetailOrder_" + nama_perusahaan + "] WITH CHECK ADD CONSTRAINT[FK_DetailOrder_" + nama_perusahaan + "_Bahan_" + nama_perusahaan + "] FOREIGN KEY([id_bahan])" +
                     " REFERENCES[dbo].[Bahan_" + nama_perusahaan + "]" +

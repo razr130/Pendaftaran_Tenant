@@ -28,33 +28,33 @@
                 @*<button class="btn btn-primary" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")'">Pesan</button>*@
                 @if (Session["role"] == null)
                 {
-                    if (item.kategori == "pakaian")
+                    if (item.kategori == "Pakaian")
                     {
                         <p>
-                                <button class="btn btn-primary" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")/?id_produk=@item.id_produk'">Pesan</button>
+                                <button class="btn btn-success" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")/?id_produk=@item.id_produk'">Pesan</button>
                             </p>
                         @*@Html.ActionLink("Beli", "CreatePesananPakaian", new { id_produk = item.id_produk }, null)*@
                     }
-                    else if (item.kategori != "pakaian")
+                    else if (item.kategori != "Pakaian")
                     {
                         <p>
-                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananNonPakaian", "Produk")?id=' + @item.id_produk" class="btn btn-success" />
+                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananNonPakaian", "Produk")/?id_produk=@item.id_produk'" class="btn btn-success" />
                         </p>
                     }
 
                 }
                 else if (Session["role"].ToString() == "customer")
                 {
-                    if (item.kategori == "pakaian")
+                    if (item.kategori == "Pakaian")
                     {
                         <p>
                             <button class="btn btn-success hvr-grow" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")/?id_produk=@item.id_produk'">Pesan</button>
                         </p>
                     }
-                    else if (item.kategori != "pakaian")
+                    else if (item.kategori != "Pakaian")
                     {
                         <p>
-                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananNonPakaian", "Produk")/?id_produk=' + @item.id_produk" class="btn btn-success hvr-grow" />
+                            <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananNonPakaian", "Produk")/?id_produk=@item.id_produk'" class="btn btn-success hvr-grow" />
                         </p>
                     }
                 }

@@ -326,7 +326,7 @@ namespace E_Commerce_MultiTenant.Controllers
                     "FROM[MultiTenancy_Sablon].[dbo].[Customer_" + subdomain + "] WHERE email_customer='" + email + "' AND password='" + password + "'";
                     using (SqlDataReader reader = sqlcom.ExecuteReader())
                     {
-                        while (reader.Read())
+                        if (reader.Read())
                         {
 
                             result = reader["nama_customer"].ToString();
@@ -380,7 +380,8 @@ namespace E_Commerce_MultiTenant.Controllers
                 {
                     sqlcom.ExecuteNonQuery();
                     Session["user"] = nama;
-                    Session["role"] = "Customer";
+                    Session["role"] = "customer";
+                    Session["email"] = email;
                     TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
                                           "success", "data karyawan ditambah, data karyawan dapat direview ulang melalui Beranda setelah menyelesaikan proses pendaftaran");
                 }
