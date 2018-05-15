@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    <link href="~/Content/hover.css" rel="stylesheet" media="all">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:@(Session["warnanavbar"].ToString())">
@@ -36,7 +37,7 @@
     </div>
 
     <div class="navbar navbar-inverse navbar-fixed-top" id="navbarbelow" style="min-height:60px;margin-top:7%;background-color:white;border-color:none">
-        <div class="container">
+        
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -47,15 +48,15 @@
             </div>
             <div class="navbar-collapse collapse text-center">
                 <ul class="nav navbar-nav text-center" style="margin-left:28%">
-                    <li style="color:darkslategrey;margin-left:35px;margin-right:35px">@Html.ActionLink("Produk", "Index", "Produk")</li>
-                    <li style="margin-top:15px;color:darkgrey;">|</li>
-                    <li style="color:darkslategrey;margin-left:35px;margin-right:35px">@Html.ActionLink("Cara Pesan", "About", "Home")</li>
-                    <li style="margin-top:15px;color:darkgrey;">|</li>
-                    <li style="color:darkslategrey;margin-left:35px;margin-right:35px">@Html.ActionLink("Hubungi Kami", "Contact", "Home")</li>
+                    <li style="color:@(Session["warnanavbar"].ToString());width:200px;height:59px" class="hvr-grow">@Html.ActionLink("Produk", "Index", "Produk", null, new { @style = "font-family:'Roboto'" })</li>
+                   
+                    <li style="color:@(Session["warnanavbar"].ToString());width:200px;height:59px" class="hvr-grow">@Html.ActionLink("Cara Pesan", "About", "Home", null, new { @style = "font-family:'Roboto'" })</li>
+                   
+                    <li style="color:@(Session["warnanavbar"].ToString());width:200px;height:59px" class="hvr-grow">@Html.ActionLink("Hubungi Kami", "Contact", "Home", null, new { @style = "font-family:'Roboto'" })</li>
                 </ul>
 
             </div>
-        </div>
+       
     </div>
 
     @RenderBody()

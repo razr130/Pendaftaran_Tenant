@@ -3880,9 +3880,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #555555;
+  
   cursor: default;
-  background-color: #ffffff;
+  
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
 }
@@ -3931,7 +3931,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
-  color: #ffffff;
+ 
   background-color: #428bca;
 }
 
@@ -4531,7 +4531,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
-  color: #ffffff;
+ 
   background-color: transparent;
 }
 

@@ -197,6 +197,74 @@ namespace E_Commerce_MultiTenant.Controllers
                                 result.Add(item);
                             }
                         }
+
+                        sqlcom.CommandText = "SELECT TOP (1) [nama_produk],[foto_produk]" +
+                            " FROM[MultiTenancy_Sablon].[dbo].[Produk_"+subdomain+"]" +
+                            " ORDER BY NEWID()";
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                ViewBag.namaproduk1 = reader["nama_produk"].ToString();
+                                ViewBag.fotoproduk1 = reader["foto_produk"].ToString();
+                            }
+                        }
+
+                        sqlcom.CommandText = "SELECT TOP (1) [nama_produk],[foto_produk]" +
+                          " FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "]" +
+                          " ORDER BY NEWID()";
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                ViewBag.namaproduk2 = reader["nama_produk"].ToString();
+                                ViewBag.fotoproduk2 = reader["foto_produk"].ToString();
+                            }
+                        }
+                        sqlcom.CommandText = "SELECT TOP (1) [nama_produk],[foto_produk]" +
+                          " FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "]" +
+                          " ORDER BY NEWID()";
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                ViewBag.namaproduk3 = reader["nama_produk"].ToString();
+                                ViewBag.fotoproduk3 = reader["foto_produk"].ToString();
+                            }
+                        }
+                        sqlcom.CommandText = "SELECT TOP (1) [nama_produk],[foto_produk]" +
+                          " FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "]" +
+                          " ORDER BY NEWID()";
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                ViewBag.namaproduk4 = reader["nama_produk"].ToString();
+                                ViewBag.fotoproduk4 = reader["foto_produk"].ToString();
+                            }
+                        }
+                        sqlcom.CommandText = "SELECT TOP (1) [nama_produk],[foto_produk]" +
+                          " FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "]" +
+                          " ORDER BY NEWID()";
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                ViewBag.namaproduk5 = reader["nama_produk"].ToString();
+                                ViewBag.fotoproduk5 = reader["foto_produk"].ToString();
+                            }
+                        }
+                        sqlcom.CommandText = "SELECT TOP (1) [nama_produk],[foto_produk]" +
+                          " FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "]" +
+                          " ORDER BY NEWID()";
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                ViewBag.namaproduk6 = reader["nama_produk"].ToString();
+                                ViewBag.fotoproduk6 = reader["foto_produk"].ToString();
+                            }
+                        }
                     }
                     catch (Exception)
                     {

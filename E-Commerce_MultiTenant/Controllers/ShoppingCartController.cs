@@ -88,6 +88,98 @@ namespace E_Commerce_MultiTenant.Controllers
         {
             return View();
         }
+
+        public ActionResult Invoice(string subdomain)
+        {
+            int totalharga = 0;
+            ViewBag.noorder = Session["noorder"].ToString();
+            List<DetailOrder> result = new List<DetailOrder>();
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "select sum(subtotal) from DetailOrder_" + subdomain + " where no_order =" + Session["noorder"].ToString();
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    totalharga = (int)sqlcom.ExecuteScalar();
+
+                    sqlcom.CommandText = "UPDATE [dbo].[Order_" + subdomain + "] SET [total_harga]=" + totalharga + " WHERE no_order=" + Session["noorder"].ToString();
+                    sqlcom.ExecuteNonQuery();
+
+
+                    sqlcom.CommandText = "SELECT [nama_customer],[no_telp],[alamat]" +
+               " FROM[MultiTenancy_Sablon].[dbo].[Customer_" + subdomain + "] WHERE email_customer='" + Session["email"].ToString() + "'";
+
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            ViewBag.namacustomer = reader["nama_customer"].ToString();
+                            ViewBag.notelp = reader["no_telp"].ToString();
+                            ViewBag.alamat = reader["alamat"].ToString();
+                        }
+                    }
+                    sqlcom.CommandText = "SELECT [tgl_order],[dikirim],[total_harga]" +
+               " FROM[MultiTenancy_Sablon].[dbo].[Order_" + subdomain + "] WHERE no_order=" + Session["noorder"].ToString();
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            ViewBag.tglorder = reader["tgl_order"].ToString();
+                            ViewBag.dikirim = reader["dikirim"].ToString();
+
+                            ViewBag.totalharga = reader["total_harga"].ToString();
+                        }
+                    }
+
+                    sqlcom.CommandText = "SELECT d.[no_detail]" +
+                        ", d.[no_order]" +
+                        ",d.[id_produk]" +
+                        ",d.[id_bahan]" +
+                        ",d.[id_jns_sablon]" +
+                        ",d.[desain]" +
+                        ",d.[jumlah]" +
+                        ",d.[subtotal]" +
+                        ",d.[catatan]," +
+                        "p.nama_produk," +
+                        "b.nama_bahan," +
+                        "j.nama_sablon" +
+                        " FROM DetailOrder_" + subdomain + " d inner join Produk_" + subdomain + " p on d.id_produk = p.id_produk inner join Bahan_" + subdomain + " b on d.id_bahan = b.id_bahan" +
+                        " inner join JenisSablon_" + subdomain + " j on d.id_jns_sablon = j.id_jns_sablon WHERE d.no_order =" + Session["noorder"].ToString();
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DetailOrder item = new DetailOrder()
+                            {
+                                no_detail = (int)reader["no_detail"],
+                                no_order = (int)reader["no_order"],
+                                id_produk = (int)reader["id_produk"],
+                                id_bahan = (int)reader["id_bahan"],
+                                id_jns_sablon = (int)reader["id_jns_sablon"],
+                                desain = reader["desain"].ToString(),
+                                jumlah = (int)reader["jumlah"],
+                                subtotal = (int)reader["subtotal"],
+                                namaproduk = reader["nama_produk"].ToString(),
+                                namabahan = reader["nama_bahan"].ToString(),
+                                namasablon = reader["nama_sablon"].ToString()
+
+                            };
+                            result.Add(item);
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+                conn.Close();
+            }
+            Session["noorder"] = null;
+            return View(result);
+        }
         public ActionResult AddtoCart(string subdomain)
         {
             int id_customer = 0;

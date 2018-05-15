@@ -3,11 +3,14 @@
 @{
     ViewBag.Title = "ShowCart";
 }
+@{
+    Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
+}
+<div class="container" style="margin-top:5%">
 
-<div class="container" style="margin-top:10%">
-    
-
-    
+    <h3 class="text-center">Keranjang Belanja</h3>
+    <hr />
+    <br />
     <table class="table">
         <tr>
             <th>
@@ -55,7 +58,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.namasablon)
                 </td>
-               
+
                 <td>
                     @Html.DisplayFor(modelItem => item.jumlah)
                 </td>
@@ -64,11 +67,15 @@
                 </td>
 
                 <td>
-                    
+
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>
         }
 
     </table>
+    <div class="text-center">
+        @Html.ActionLink("Cetak Invoice", "Invoice", "ShoppingCart", null, new { onclick = "return confirm('Anda yakin sudah selesai melakukan pemesanan? Data keranjang belanja akan kosong setelah invoice dicetak')", @class = "btn btn-primary hvr-grow" })
+
+    </div>
 </div>

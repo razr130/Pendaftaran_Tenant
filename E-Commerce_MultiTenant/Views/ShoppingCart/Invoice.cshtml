@@ -1,0 +1,137 @@
+﻿@model IEnumerable<E_Commerce_MultiTenant.Models.DetailOrder>
+
+@{
+    ViewBag.Title = "Invoice";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
+}
+<div class="container" style="margin-top:5%">
+    <h2 class="text-center">I N V O I C E</h2>
+    <hr />
+    <div class="row" style="margin-left:50px">
+        <table style="float:left">
+            <tr>
+                <td>
+                    <a href="#"><img src="http://localhost:52494/Content/Images/@Session["logo"].ToString()" height="50" width="50" style="margin-top:20px" /></a>
+                </td>
+                <td>
+                    <h2 style="font-family:Lemon/Milk;color:#444444">@Session["nama_perusahaan"].ToString()</h2>
+                </td>
+            </tr>
+        </table>
+        <h5 style="float:right;padding-top:50px;padding-right:30px">No. Order : @ViewBag.noorder </h5>
+    </div>
+    <hr />
+    <br />
+    <div class="row">
+        <table style="float:left;margin-left:40px">
+            <tr>
+                <td align="right">
+                    Nama Customer :
+                </td>
+                <td> @ViewBag.namacustomer</td>
+            </tr>
+            <tr>
+                <td align="right">
+                    Alamat :
+                </td>
+                <td>
+                    @ViewBag.alamat
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    No. Telp :
+                </td>
+                <td>
+                    @ViewBag.notelp
+                </td>
+            </tr>
+        </table>
+
+        <table style="float:right">
+            <tr>
+                <td align="right">
+                    Tanggal Pesan :
+                </td>
+                <td>
+                    @ViewBag.tglorder
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    Dikirim :
+                </td>
+                <td align="right">
+                    @ViewBag.dikirim
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <table class="table table-striped">
+        <tr style="background-color:#e5e5e5">
+            <th>
+                Nama Produk
+            </th>
+            <th>
+                Nama Bahan
+            </th>
+            <th>
+                Nama Sablon
+            </th>
+            <th>
+                Jumlah
+            </th>
+            <th>
+                Subtotal
+            </th>
+
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.namaproduk)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.namabahan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.namasablon)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.jumlah)
+                </td>
+                <td>
+                    Rp @Html.DisplayFor(modelItem => item.subtotal)
+                </td>
+
+
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td align="right">
+                Total :
+            </td>
+            <td>
+                Rp @ViewBag.totalharga
+            </td>
+        </tr>
+    </table>
+    <div class="row">
+        <p style="font-size:11px">Pembayaran dapat dilakukan langsung di toko dengan membawa cetak invoice atau melalui Rekening yang disediakan</p>
+        <p style="font-size:11px">Pemabayaran dilakukan maksimal 1x24 jam setelah pesanan dibuat, bila lebih dari batas waktu yang ditentukan, pesanan dinyatakan hangus</p>
+        <p style="font-size:11px">Info lebih lanjut dapat mengubungi Contact Person</p>
+    </div>
+    <br />
+    <div class="text-center">
+        <button class="btn btn-primary" onclick="javascript:window.print()">Cetak</button>
+    </div>
+</div>
