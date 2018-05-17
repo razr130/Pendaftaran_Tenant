@@ -2400,6 +2400,14 @@ input[type="button"].btn-block {
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 
+.divider {
+    position: absolute;
+    left: 36%;
+    top: 16%;
+    bottom: 10%;
+    border-left: 1px solid lightgrey;
+}
+
 .glyphicon {
   position: relative;
   top: 1px;

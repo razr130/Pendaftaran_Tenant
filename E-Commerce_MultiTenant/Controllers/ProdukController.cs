@@ -97,7 +97,7 @@ namespace E_Commerce_MultiTenant.Controllers
                                 lstbahan.Add(new SelectListItem
                                 {
                                     Value = reader["id_bahan"].ToString() + "&" + reader["id_jns_sablon"].ToString(),
-                                    Text = "Bahan " + reader["nama_bahan"].ToString() + " dengan sablon " + reader["nama_sablon"].ToString()
+                                    Text = reader["nama_bahan"].ToString() + " dengan sablon " + reader["nama_sablon"].ToString()
                                 });
                             }
                             ViewBag.Bahan = lstbahan;
@@ -153,8 +153,8 @@ namespace E_Commerce_MultiTenant.Controllers
                             ViewBag.Ukuran = lstukuran;
                         }
                         sqlcom.CommandText = "SELECT [nama_produk]" +
-                        ",[foto_produk]" +
-                        "FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "] WHERE id_produk=" + id_produk.ToString();
+                        ",[foto_produk],[deskripsi]" +
+                        " FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "] WHERE id_produk=" + id_produk.ToString();
                         using (SqlDataReader reader = sqlcom.ExecuteReader())
                         {
 
@@ -162,6 +162,7 @@ namespace E_Commerce_MultiTenant.Controllers
                             {
                                 Session["namaproduk"] = reader["nama_produk"].ToString();
                                 Session["fotoproduk"] = reader["foto_produk"].ToString();
+                                Session["deskripsi"] = reader["deskripsi"].ToString();
                             }
 
 
@@ -375,7 +376,7 @@ namespace E_Commerce_MultiTenant.Controllers
                                 lstbahan.Add(new SelectListItem
                                 {
                                     Value = reader["id_bahan"].ToString() + "&" + reader["id_jns_sablon"].ToString(),
-                                    Text = "Bahan " + reader["nama_bahan"].ToString() + " dengan sablon " + reader["nama_sablon"].ToString()
+                                    Text = reader["nama_bahan"].ToString() + " dengan sablon " + reader["nama_sablon"].ToString()
                                 });
                             }
                             ViewBag.Bahan = lstbahan;

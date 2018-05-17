@@ -14,91 +14,107 @@
         <hr />
         @using (Html.BeginForm("CreatePesananPakaian", "Produk", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
         {
-            <div class="col-md-4 col-xs-4">
-                <div class="thumbnail clearfix text-center" style="max-width:350px;width:100%">
+            <div class="col-md-12 col-xs-12">
+                <div class="thumbnail clearfix text-center" style="max-width:1550px;width:100%">
 
 
                     @Html.AntiForgeryToken()
-                    <h3 style="color:@(Session["warnanavbar"].ToString())">@Session["namaproduk"].ToString()</h3>
-                    <hr />
-                    <table style="border:0 solid;float:none;margin:0 auto">
-
-                        <tr><td style="text-align:center"><img src="http://localhost:52494/Content/Images/@Session["fotoproduk"].ToString()" style="min-height:200px;height:200px;" /></td></tr>
-
+                    <table>
+                        <tr>
+                            <td style="padding-right:500px"> <h3 style="color:@(Session["warnanavbar"].ToString())">@Session["namaproduk"].ToString()</h3></td>
+                            <td><h3 style="color:@(Session["warnanavbar"].ToString())">Detail Pesanan</h3></td>
+                        </tr>
                     </table>
+                   
+                    <hr />
+                    <table>
+                        <tr>
+                            <td>
+                                <table style="border:0 solid;float:none;margin:0 auto">
+
+                                    <tr><td style="text-align:center"><img src="http://localhost:52494/Content/Images/@Session["fotoproduk"].ToString()" style="min-height:200px;height:200px;" /></td></tr>
+                                    <tr><td></td></tr>
+                                    <tr><td><p>@Session["deskripsi"].ToString()</p></td></tr>
+                                </table>
+                            </td>
+                            <td rowspan="2"><div class="divider"></div></td>
+                            <td style="padding-bottom:150px">
+                                <table style="border:0 solid;float:none;margin-left:70px">
+                                    <tr>
+                                        <th style="text-align:center">
+                                            Bahan dan jenis sablon
+                                        </th>
+                                        <th style="text-align:center">
+                                            Desain
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right:20px">
+                                            @Html.DropDownList("lstbahan", (IEnumerable<SelectListItem>)ViewBag.Bahan, new { id = "dropdownbahan", name = "bahan", @class = "form-control" })
+                                        </td>
+                                        <td>
+                                            <input name="desain" type="file" class="form-control" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td style="padding-left:80px;bottom:20%">
+                                <h5 style="margin-right:520px"><b>Jumlah per Ukuran</b></h5>
+                                <table style="border:0 solid;float:none;margin:0">
+                                    <tr>
+                                        <td style="padding-right:10px">Anak</td>
+                                        <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" onblur="jumlah()" id="anak" name="anak" /></td>
+                                        <td style="padding-right:10px">XS</td>
+                                        <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="xs" name="xs" /></td>
+                                        <td style="padding-right:10px">S</td>
+                                        <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="s" name="s" /></td>
+                                        <td style="padding-right:10px">M</td>
+                                        <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="m" name="m" /></td>
+                                        <td style="padding-right:10px">L</td>
+                                        <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="l" name="l" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>XL</td>
+                                        <td><input type="number" class="form-control text-center" style="max-width:70px" id="xl" name="xl" /></td>
+                                        <td>XXL</td>
+                                        <td><input type="number" class="form-control text-center" style="max-width:70px" id="xxl" name="xxl" /></td>
+                                        <td>XXXL</td>
+                                        <td><input type="number" class="form-control text-center" style="max-width:70px" id="xxxl" name="xxxl" /></td>
+                                        <td>4XL</td>
+                                        <td><input type="number" class="form-control text-center" style="max-width:70px" id="4xl" name="empatxl" /></td>
+                                        <td>5XL</td>
+                                        <td><input type="number" class="form-control text-center" style="max-width:70px" id="5xl" name="limaxl" /></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                   
 
                     <br />
 
                     <br />
 
+                    
+                  
+                 
+                    </div>
+                    <br />
 
                 </div>
-                <br />
 
-            </div>
-
-            <div class="col-md-8 col-xs-8">
+            <div class="col-md-12 col-xs-12">
                 <div class="thumbnail clearfix text-center" style="max-width:700px;width:100%">
 
-                    <h3 style="color:@(Session["warnanavbar"].ToString())">Detail Pesanan</h3>
-                    <hr />
-                    <div class="row">
-                        <table style="border:0 solid;float:none;margin-left:70px">
-                            <tr>
-                                <th style="text-align:center">
-                                    Bahan dan jenis sablon
-                                </th>
-                                <th style="text-align:center">
-                                    Desain
-                                </th>
-                            </tr>
-                            <tr>
-                                <td style="padding-right:20px">
-                                    @Html.DropDownList("lstbahan", (IEnumerable<SelectListItem>)ViewBag.Bahan, new { id = "dropdownbahan", name = "bahan", @class = "form-control" })
-                                </td>
-                                <td>
-                                    <input name="desain" type="file" class="form-control" />
-                                </td>
-                            </tr>
-                        </table>
+                    
                         <hr style="max-width:670px" />
-                    </div>
-
-                    <div class="row" style="margin-left:55px">
-                        <h5 style="text-align:center;margin-right:50px"><b>Jumlah per Ukuran</b></h5>
-
-
-                        <table style="border:0 solid;float:none;margin:0">
-                            <tr>
-                                <td style="padding-right:10px">Anak</td>
-                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" onblur="jumlah()" id="anak" name="anak" /></td>
-                                <td style="padding-right:10px">XS</td>
-                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="xs" name="xs" /></td>
-                                <td style="padding-right:10px">S</td>
-                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="s" name="s" /></td>
-                                <td style="padding-right:10px">M</td>
-                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="m" name="m" /></td>
-                                <td style="padding-right:10px">L</td>
-                                <td style="padding-right:20px"><input type="number" class="form-control text-center" style="max-width:70px" id="l" name="l" /></td>
-                            </tr>
-                            <tr>
-                                <td>XL</td>
-                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="xl" name="xl" /></td>
-                                <td>XXL</td>
-                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="xxl" name="xxl" /></td>
-                                <td>XXXL</td>
-                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="xxxl" name="xxxl" /></td>
-                                <td>4XL</td>
-                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="4xl" name="empatxl" /></td>
-                                <td>5XL</td>
-                                <td><input type="number" class="form-control text-center" style="max-width:70px" id="5xl" name="limaxl" /></td>
-                            </tr>
-                        </table>
-                        <script>
-
-                        </script>
-                        <hr style="max-width:670px" />
-                        <h5 style="text-align:center;margin-right:50px"><b>Tambahan</b></h5>
+                        <h5  style="margin-right:570px"><b>Tambahan</b></h5>
+                        <br />
                         <table style="border:0 solid;float:none;margin:0">
                             <tr>
                                 <td style="padding-right:10px">Tambahan</td>
@@ -153,7 +169,7 @@
 
                 </div>
 
-            </div>
+           
         }
     </div>
 </div>
