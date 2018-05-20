@@ -321,15 +321,16 @@ namespace E_Commerce_MultiTenant.Controllers
                 }
                 else
                 {
-                    sqlcom.CommandText = "SELECT [nama_customer]" +
+                    sqlcom.CommandText = "SELECT [nama_customer],[alamat]" +
 
-                    "FROM[MultiTenancy_Sablon].[dbo].[Customer_" + subdomain + "] WHERE email_customer='" + email + "' AND password='" + password + "'";
+                    " FROM[MultiTenancy_Sablon].[dbo].[Customer_" + subdomain + "] WHERE email_customer='" + email + "' AND password='" + password + "'";
                     using (SqlDataReader reader = sqlcom.ExecuteReader())
                     {
                         if (reader.Read())
                         {
 
                             result = reader["nama_customer"].ToString();
+                            Session["alamat"] = reader["alamat"].ToString();
                             Session["user"] = result;
                             Session["email"] = email;
                             Session["role"] = "customer";

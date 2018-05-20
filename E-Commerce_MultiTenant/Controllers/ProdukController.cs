@@ -357,14 +357,11 @@ namespace E_Commerce_MultiTenant.Controllers
                 using (SqlConnection conn = new SqlConnection(connstring))
                 {
                     conn.Open();
-                    string query = "SELECT [id_bahan]" +
-                        ",[id_jns_sablon]" +
-                        ",[nama_bahan]" +
-                        ",[nama_sablon]" +
-                        ",[harga]" +
+                    string query = "select p.id_produk, p.nama_produk,b.id_bahan, b.nama_bahan,j.id_jns_sablon, j.nama_sablon from Produk_" + subdomain + " p inner join Bahan_" + subdomain + " b on p.id_produk = b.id_produk" +
+                        " inner join JenisSablon_" + subdomain + " j on p.id_produk = j.id_produk where p.id_produk=" + id_produk.ToString() +
+                        " group by p.id_produk, p.nama_produk,b.id_bahan, b.nama_bahan,j.id_jns_sablon, j.nama_sablon";
 
-                        " FROM[MultiTenancy_Sablon].[dbo].[View_" + subdomain + "] WHERE id_produk=" + id_produk.ToString() +
-                        " group by nama_bahan, nama_sablon,harga,id_bahan,id_jns_sablon";
+
 
 
                     SqlCommand sqlcom = new SqlCommand(query, conn);

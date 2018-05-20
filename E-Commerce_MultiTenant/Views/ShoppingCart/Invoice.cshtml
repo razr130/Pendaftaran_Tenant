@@ -52,20 +52,33 @@
 
         <table style="float:right">
             <tr>
-                <td align="right">
+                <td align="right" style="padding-left:30px">
                     Tanggal Pesan :
                 </td>
-                <td>
+                <td align="center">
                     @ViewBag.tglorder
                 </td>
             </tr>
             <tr>
-                <td align="right">
-                    Dikirim :
-                </td>
-                <td align="right">
-                    @ViewBag.dikirim
-                </td>
+                @if (Session["dikirim"].ToString() == "ya   ")
+                {
+                    <td align="right">
+                        Pesanan
+                    </td>
+                    <td align="left">
+                        dikirim ke alamat pembeli
+                    </td>
+                }
+                else
+                {
+                    <td align="right">
+                        Pesanan
+                    </td>
+                    <td align="left">
+                        diambil di toko 
+                    </td>
+                }
+
             </tr>
         </table>
     </div>

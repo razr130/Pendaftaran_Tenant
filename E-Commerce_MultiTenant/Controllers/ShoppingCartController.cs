@@ -89,7 +89,7 @@ namespace E_Commerce_MultiTenant.Controllers
             return View();
         }
 
-        public ActionResult Invoice(string subdomain)
+        public ActionResult Invoice(string subdomain, string kirim)
         {
             int totalharga = 0;
             ViewBag.noorder = Session["noorder"].ToString();
@@ -104,9 +104,9 @@ namespace E_Commerce_MultiTenant.Controllers
                 {
                     totalharga = (int)sqlcom.ExecuteScalar();
 
-                    sqlcom.CommandText = "UPDATE [dbo].[Order_" + subdomain + "] SET [total_harga]=" + totalharga + " WHERE no_order=" + Session["noorder"].ToString();
+                    sqlcom.CommandText = "UPDATE [dbo].[Order_" + subdomain + "] SET [total_harga]=" + totalharga + ", [dikirim]='"+kirim+"' WHERE no_order=" + Session["noorder"].ToString();
                     sqlcom.ExecuteNonQuery();
-
+                    
 
                     sqlcom.CommandText = "SELECT [nama_customer],[no_telp],[alamat]" +
                " FROM[MultiTenancy_Sablon].[dbo].[Customer_" + subdomain + "] WHERE email_customer='" + Session["email"].ToString() + "'";
@@ -126,8 +126,8 @@ namespace E_Commerce_MultiTenant.Controllers
                     {
                         if (reader.Read())
                         {
-                            ViewBag.tglorder = reader["tgl_order"].ToString();
-                            ViewBag.dikirim = reader["dikirim"].ToString();
+                            ViewBag.tglorder = Convert.ToDateTime(reader["tgl_order"]).ToString("yyyy-MM-dd");
+                            Session["dikirim"]= reader["dikirim"].ToString();
 
                             ViewBag.totalharga = reader["total_harga"].ToString();
                         }
@@ -179,6 +179,10 @@ namespace E_Commerce_MultiTenant.Controllers
             }
             Session["noorder"] = null;
             return View(result);
+        }
+        public ActionResult KonfirmasiKirim()
+        {
+            return View();
         }
         public ActionResult AddtoCart(string subdomain)
         {
@@ -543,6 +547,22 @@ namespace E_Commerce_MultiTenant.Controllers
 
                 }
             }
+            Session["totalhargaall"] = null;
+            Session["desain"] = null;
+            Session["jumlahorder"] = null;
+            Session["catatan"] = null;
+            Session["anak"] = null;
+            Session["xs"] = null;
+            Session["s"] = null;
+            Session["m"] = null;
+            Session["l"] = null;
+            Session["xl"] = null;
+            Session["xxl"] = null;
+            Session["xxxl"] = null;
+            Session["4xl"] = null;
+            Session["5xl"] = null;
+
+
             return RedirectToAction("Index", "Produk");
         }
     }

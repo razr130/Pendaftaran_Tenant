@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "KonfirmasiKirim";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
+}
+<div class="container" style="margin-top:5%">
+    <div class="col-md-12 col-xs-12">
+        <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%;margin-left:28%">
+            <br />
+            <br />
+            <p>Apakah pesanan akan dikirim ke alamat @Session["alamat"].ToString() ? </p>
+            <div class="text-center">
+                <button class="btn btn-success hvr-grow" onclick="location.href='@Url.Action("Invoice","ShoppingCart")/?kirim=ya'">YA</button>
+                <button class="btn btn-danger hvr-grow" onclick="location.href='@Url.Action("Invoice","ShoppingCart")/?kirim=tidak'">TIDAK</button>
+
+            </div>
+            <br />
+            <br />
+        </div>
+    </div>
+</div>

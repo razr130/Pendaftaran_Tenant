@@ -298,6 +298,7 @@
     <Content Include="Views\ShoppingCart\ShowCart.cshtml" />
     <Content Include="Views\ShoppingCart\CartKosong.cshtml" />
     <Content Include="Views\ShoppingCart\Invoice.cshtml" />
+    <Content Include="Views\ShoppingCart\KonfirmasiKirim.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
