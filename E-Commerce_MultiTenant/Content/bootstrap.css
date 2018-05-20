@@ -2403,8 +2403,15 @@ input[type="button"].btn-block {
 .divider {
     position: absolute;
     left: 36%;
-    top: 16%;
+    top: 23%;
     bottom: 10%;
+    border-left: 1px solid lightgrey;
+}
+.divider2 {
+    position: absolute;
+    left: 36%;
+    top: 26%;
+    bottom: 20%;
     border-left: 1px solid lightgrey;
 }
 

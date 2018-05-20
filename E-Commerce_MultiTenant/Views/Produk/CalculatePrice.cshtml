@@ -6,32 +6,32 @@
     Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
 }
 <div class="container" style="margin-top:4%">
-   <div class="text-center">
-       <h2>Perhitungan Biaya</h2>
-       <hr />
-   </div>
+    <div class="text-center">
+        <h2>Perhitungan Biaya</h2>
+        <hr />
+    </div>
     <div class="col-md-12 col-xs-12" style="margin-top:2%">
         <div class="thumbnail clearfix text-center" style="max-width:700px;width:100%;margin-left:20%">
             <br />
-            <table style="border:0 solid;float:none;margin:0 auto">
+            <table style="border:0 solid;float:none;margin-left:80px">
                 <tr>
                     <td>
                         <b>Bahan :</b>
                     </td>
-                    <td style="padding-right:2%">
+                    <td style="padding-right:2%;width:150px">
                         @Session["namabahan"].ToString()
                     </td>
                     <td style="padding-left:15px">
                         <b> Sablon :</b>
                     </td>
-                    <td>
+                    <td style="width:100px">
                         @Session["namasablon"].ToString()
                     </td>
-                    <td  style="padding-left:15px">
+                    <td style="padding-left:15px">
                         <b>Harga Satuan :</b>
                     </td>
                     <td>
-                        @Session["hargasatuan"].ToString()
+                        Rp @string.Format("{0:n0}", Double.Parse(@Session["hargasatuan"].ToString()))
                     </td>
                 </tr>
             </table>
@@ -39,76 +39,243 @@
             <table style="border:0 solid;float:none;margin:0 auto">
                 <tr>
                     <th></th>
-                    <th></th>
+                    <th>Jumlah</th>
                     <th>Jumlah Harga</th>
                 </tr>
+
+                @if (ViewBag.anak != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Ukuran anak :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.anak &nbsp;
+                        </td>
+                        <td align="right">Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.hargaanak)) </td>
+                    </tr>
+                }
+                @if (ViewBag.xs != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Ukuran xs :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.xs &nbsp;
+                        </td>
+                        <td align="right">Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.hargaxs)) </td>
+                    </tr>
+                }
+                @if (ViewBag.s != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Ukuran s :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.s &nbsp;
+                        </td>
+                        <td align="right">Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.hargas)) </td>
+                    </tr>
+                }
+                @if (ViewBag.m != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Ukuran m :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.m &nbsp;
+                        </td>
+                        <td align="right">Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.hargam)) </td>
+                    </tr>
+                }
+                @if (ViewBag.l != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Ukuran l :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.l &nbsp;
+                        </td>
+                        <td align="right">Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.hargal)) </td>
+                    </tr>
+                }
+                @if (ViewBag.xl != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Ukuran xl :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.xl &nbsp;
+                        </td>
+                        <td align="right">Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.hargaxl)) </td>
+                    </tr>
+                }
+                @if (ViewBag.xxl != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Ukuran xxl :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.xxl &nbsp;
+                        </td>
+                        <td align="right">Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.hargaxxlsatuan)) </td>
+                    </tr>
+                }
+                @if (ViewBag.xxxl != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Ukuran xxxl :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.xxxl &nbsp;
+                        </td>
+                        <td align="right">Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.hargaxxxlsatuan)) </td>
+                    </tr>
+                }
+                @if (ViewBag.empatxl != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Ukuran 4xl :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.empatxl &nbsp;
+                        </td>
+                        <td align="right">Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.harga4xl)) </td>
+                    </tr>
+                }
+                @if (ViewBag.limexl != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Ukuran 5xl :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.limexl &nbsp;
+                        </td>
+                        <td align="right">Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.harga5xl)) </td>
+                    </tr>
+                }
                 <tr>
-                    <td align="right" style="padding-right:40px">
-                        Jumlah Pesanan :
-                    </td>
-                    <td  style="padding-right:40px">
-                        @ViewBag.Jumlahtotal &nbsp; 
-                    </td>
-                    <td align="right">Rp @String.Format("{0:C}", @ViewBag.totalharga) </td>
+                    <td style="padding-top:10px"><b>Pesanan dengan permintaan</b></td>
                 </tr>
-                <tr>
-                    <td align="right" style="padding-right:40px">Jumlah XXL : </td>
-                    <td style="padding-right:40px">
-                        @ViewBag.xxl
-                    </td>
-                    <td align="right">Rp @String.Format("{0:C}", @ViewBag.hargaxxl) </td>
-                </tr>
-                <tr>
-                    <td align="right" style="padding-right:40px">Lebih dari XXL : </td>
-                    <td style="padding-right:40px">
-                        @ViewBag.lebihxxl
-                    </td>
-                    <td align="right">Rp @String.Format("{0:C}", @ViewBag.hargalebihxxl) </td>
-                </tr>
+                
                 @if (Session["tambahan1"].ToString() != "")
                 {
                     <tr>
-                        <td align="right" style="padding-right:40px">@Session["tambahan1"].ToString() : </td>
+                        <td align="right" style="padding-right:40px">@Session["tambahan1"].ToString() ukuran @Session["ukuran1"].ToString() : </td>
                         <td style="padding-right:40px">
                             @Session["jmlhtambahan1"].ToString()
                         </td>
-                        <td align="right">Rp @String.Format("{0:C}", @ViewBag.tothar1)</td>
+                        <td align="right">Rp @String.Format("{0:n0}", Decimal.Parse(@ViewBag.tothar1))</td>
                     </tr>
                 }
                 @if (Session["tambahan2"].ToString() != "")
                 {
                     <tr>
-                        <td align="right" style="padding-right:40px">@Session["tambahan2"].ToString() : </td>
+                        <td align="right" style="padding-right:40px">@Session["tambahan2"].ToString() ukuran @Session["ukuran2"].ToString() : </td>
                         <td style="padding-right:40px">
                             @Session["jmlhtambahan2"].ToString()
                         </td>
-                        <td align="right">Rp @String.Format("{0:C}", @ViewBag.tothar2)</td>
+                        <td align="right">Rp @String.Format("{0:n0}", Decimal.Parse(@ViewBag.tothar2))</td>
                     </tr>
                 }
                 @if (Session["tambahan3"].ToString() != "")
                 {
                     <tr>
-                        <td align="right" style="padding-right:40px">@Session["tambahan3"].ToString() : </td>
+                        <td align="right" style="padding-right:40px">@Session["tambahan3"].ToString() ukuran @Session["ukuran3"].ToString() : </td>
                         <td style="padding-right:40px">
                             @Session["jmlhtambahan3"].ToString()
                         </td>
-                        <td align="right">Rp @String.Format("{0:C}", @ViewBag.tothar3)</td>
+                        <td>Rp @String.Format("{0:n0}", Decimal.Parse(@ViewBag.tothar3))</td>
                     </tr>
                 }
+                <tr>
+                    <td colspan="3"><hr style="max-width:300px;margin-left:250px" /></td>
+                </tr>
+                <tr>
+                    <td align="right" style="padding-right:40px;padding-top:10px">
+                        <b>Jumlah Pesanan :</b>
+                    </td>
+                    <td style="padding-right:40px">
+                        <b> @ViewBag.Jumlahtotal &nbsp;</b>
+                    </td>
+                    <td align="right"><b>Rp @String.Format("{0:n0}", Double.Parse(@ViewBag.totalharganotambahan)) </b></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><hr style="border-color:darkgray" /></td>
+                </tr>
+                <tr>
+                    <td align="right" style="padding-right:50px"><b>Tambahan</b></td>
+                    <td>
+
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td align="right" style="padding-right:40px">Harga tambahan XXL : </td>
+                    <td style="padding-right:40px">
+                        Rp @String.Format("{0:n0}", Double.Parse(@Session["hargatambahanxxl"].ToString()))
+                    </td>
+                    <td align="right"></td>
+                </tr>
+                <tr>
+                    <td align="right" style="padding-right:40px">Harga tambahan lebih dari XXL : </td>
+                    <td style="padding-right:40px">
+                        Rp @String.Format("{0:n0}", Double.Parse(@Session["hargatambahanlebihdarixxl"].ToString()))
+                    </td>
+                    <td align="right"></td>
+                </tr>
+                @if (ViewBag.xxl != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Jumlah XXL :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.xxl
+                        </td>
+                        <td>
+                            Rp @String.Format("{0:n0}", Double.Parse(ViewBag.hargaxxl))
+                        </td>
+                    </tr>
+                }
+                @if (ViewBag.lebihxxl != null)
+                {
+                    <tr>
+                        <td align="right" style="padding-right:40px">
+                            Jumlah lebih dari XXL :
+                        </td>
+                        <td style="padding-right:40px">
+                            @ViewBag.lebihxxl
+                        </td>
+                        <td>
+                            Rp @String.Format("{0:n0}", Double.Parse(ViewBag.hargalebihxxl))
+                        </td>
+                    </tr>
+                }
+
             </table>
-            <hr />
+            <hr style="border-color:darkgray" />
             <table style="border:0 solid;float:none;margin-left:50%">
                 <tr>
                     <th style="padding-right:40px">Total : </th>
-                    <td></td>
-                    <th>Rp @String.Format("{0:C}", @ViewBag.Totalhargaall)</th>
+                    <td style="padding-right:50px"></td>
+                    <th align="right">Rp @String.Format("{0:n0}", Decimal.Parse(@ViewBag.Totalhargaall))</th>
                 </tr>
             </table>
             <br />
             <div class="text-center">
                 <button class="btn btn-primary" onclick="history.go(-1);">Ubah Data Pesanan</button>
                 <button class="btn btn-success" onclick="location.href='@Url.Action("AddtoCart","ShoppingCart")'">Masukkan ke keranjang</button>
-
+                <p> <a style="font-size:12px" onclick="location.href='@Url.Action("Index","Produk")'">Kembali ke daftar produk...</a></p>
             </div>
             <br />
         </div>

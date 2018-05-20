@@ -146,7 +146,7 @@ namespace E_Commerce_MultiTenant.Controllers
                             {
                                 lstukuran.Add(new SelectListItem
                                 {
-                                    Value = reader["id_ukuran"].ToString(),
+                                    Value = reader["ukuran"].ToString(),
                                     Text = reader["ukuran"].ToString()
                                 });
                             }
@@ -185,6 +185,7 @@ namespace E_Commerce_MultiTenant.Controllers
             string tambahan1, string ukuran1, int? jmlhtambahan1, string tambahan2, string ukuran2,
             int? jmlhtambahan2, string tambahan3, string ukuran3, int? jmlhtambahan3, string catatan)
         {
+            
             var catatanfull = "";
             if (tambahan1 != "")
             {
@@ -490,6 +491,7 @@ namespace E_Commerce_MultiTenant.Controllers
             int limaxl = 0;
             int jumlahlebihxxl = 0;
             int jumlah = 0;
+            int jumlahend = 0;
             int hargatambahan1 = 0;
             int hargatambahan2 = 0;
             int hargatambahan3 = 0;
@@ -501,6 +503,7 @@ namespace E_Commerce_MultiTenant.Controllers
             int totalharga = 0;
             int totalhargatambahan = 0;
             int totalhargaall = 0;
+           
             if (Session["jmlhtambahan1"].ToString() != "")
             {
                 jmlhtambahan1 = Convert.ToInt32(Session["jmlhtambahan1"]);
@@ -567,76 +570,112 @@ namespace E_Commerce_MultiTenant.Controllers
             {
                 anak = Convert.ToInt32(Session["anak"]);
                 jumlah += anak;
+                ViewBag.anak = anak.ToString();
+                int hargaanak = anak * hargasatuan;
+                ViewBag.hargaanak = hargaanak.ToString();
             }
             if (Session["xs"] != null)
             {
                 xs = Convert.ToInt32(Session["xs"]);
                 jumlah += xs;
+                ViewBag.xs = xs.ToString();
+                int hargaxs = xs * hargasatuan;
+                ViewBag.hargaxs = hargaxs.ToString();
             }
             if (Session["s"] != null)
             {
                 s = Convert.ToInt32(Session["s"]);
                 jumlah += s;
+                ViewBag.s = s.ToString();
+                int hargas = s * hargasatuan;
+                ViewBag.hargas = hargas.ToString();
             }
             if (Session["m"] != null)
             {
                 m = Convert.ToInt32(Session["m"]);
                 jumlah += m;
+                ViewBag.m = m.ToString();
+                int hargam = m * hargasatuan;
+                ViewBag.hargam = hargam.ToString();
             }
             if (Session["l"] != null)
             {
                 l = Convert.ToInt32(Session["l"]);
                 jumlah += l;
+                ViewBag.l = l.ToString();
+                int hargal = l * hargasatuan;
+                ViewBag.hargal = hargal.ToString();
             }
             if (Session["xl"] != null)
             {
                 xl = Convert.ToInt32(Session["xl"]);
                 jumlah += xl;
+                ViewBag.xl = xl.ToString();
+                int hargaxl = xl * hargasatuan;
+                ViewBag.hargaxl = hargaxl.ToString();
             }
             if (Session["xxl"] != null)
             {
                 xxl = Convert.ToInt32(Session["xxl"]);
                 jumlah += xxl;
                 hargaxxl = xxl * Convert.ToInt32(Session["hargatambahanxxl"]);
+                ViewBag.xxl = xxl.ToString();
+                int hargaxxlsatuan = xxl * hargasatuan;
+                ViewBag.hargaxxlsatuan = hargaxxlsatuan.ToString();
             }
             if (Session["xxxl"] != null)
             {
                 xxxl = Convert.ToInt32(Session["xxxl"]);
                 jumlah += xxxl;
                 hargalebihxxl += xxxl * Convert.ToInt32(Session["hargatambahanlebihdarixxl"]);
+                ViewBag.xxxl = xxxl.ToString();
+                int hargaxxxlsatuan = xxxl * hargasatuan;
+                ViewBag.hargaxxxlsatuan = hargaxxxlsatuan.ToString();
             }
             if (Session["4xl"] != null)
             {
                 empatxl = Convert.ToInt32(Session["4xl"]);
                 jumlah += empatxl;
                 hargalebihxxl += empatxl * Convert.ToInt32(Session["hargatambahanlebihdarixxl"]);
+                ViewBag.empatxl = empatxl.ToString();
+                int harga4xl = empatxl * hargasatuan;
+                ViewBag.harga4xl = harga4xl.ToString();
             }
             if (Session["5xl"] != null)
             {
                 limaxl = Convert.ToInt32(Session["5xl"]);
                 jumlah += limaxl;
                 hargalebihxxl += limaxl * Convert.ToInt32(Session["hargatambahanlebihdarixxl"]);
+                ViewBag.limexl = limaxl.ToString();
+                int harga5xl = limaxl * hargasatuan;
+                ViewBag.harga5xl = harga5xl.ToString();
             }
 
-            ViewBag.xxl = xxl.ToString();
+            jumlahend = jumlah + jmlhtambahan1 + jmlhtambahan2 + jmlhtambahan3;
+            ViewBag.Jumlahtotal = jumlahend.ToString();
+
             jumlahlebihxxl = xxxl + empatxl + limaxl;
-            ViewBag.lebihxxl = jumlahlebihxxl.ToString();
-            ViewBag.Jumlahtotal = jumlah.ToString();
+            ViewBag.lebihxxl = jumlahlebihxxl.ToString();          
             ViewBag.hargaxxl = hargaxxl.ToString();
             ViewBag.hargalebihxxl = hargalebihxxl.ToString();
+
             totalharga = hargasatuan * jumlah;
 
-            Session["jumlahorder"] = jumlah.ToString();
+            Session["jumlahorder"] = jumlahend.ToString();
             ViewBag.totalharga = totalharga.ToString();
 
-            int tothar1 = hargatambahan1 * jmlhtambahan1;
+            int tothar1 = (hargasatuan + hargatambahan1) * jmlhtambahan1;
             ViewBag.tothar1 = tothar1.ToString();
-            int tothar2 = hargatambahan2 * jmlhtambahan2;
+            int tothar2 = (hargasatuan + hargatambahan2) * jmlhtambahan2;
             ViewBag.tothar2 = tothar2.ToString();
-            int tothar3 = hargatambahan3 * jmlhtambahan3;
+            int tothar3 = (hargasatuan+hargatambahan3) * jmlhtambahan3;
             ViewBag.tothar3 = tothar3.ToString();
-            totalhargatambahan = hargaxxl + hargalebihxxl + (hargatambahan1 * jmlhtambahan1) + (hargatambahan2 * jmlhtambahan2) + (hargatambahan3 + jmlhtambahan3);
-            totalhargaall = totalharga + totalhargatambahan;
+
+            int totalharganotambahan = totalharga + tothar1 + tothar2 + tothar3;
+            ViewBag.totalharganotambahan = totalharganotambahan.ToString();
+
+            totalhargatambahan = hargaxxl + hargalebihxxl;
+            totalhargaall = totalharganotambahan + totalhargatambahan;
             ViewBag.Totalhargaall = totalhargaall.ToString();
             Session["totalhargaall"] = totalhargaall.ToString();
             return View();

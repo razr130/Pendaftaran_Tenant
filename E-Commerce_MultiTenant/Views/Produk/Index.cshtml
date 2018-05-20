@@ -18,12 +18,7 @@
                 <div class="thumbnail">
                     <img src="http://localhost:52494/Content/Images/@item.foto_produk" style="min-height:200px;height:200px;" />
                 </div>
-                <table style="width:100%;float:none" class="text-center">
-
-                    <tr>
-                        <td style="margin-top:10px"> @Html.DisplayFor(modelItem => item.deskripsi)</td>
-                    </tr>
-                </table>
+               
                 <hr />
                 @*<button class="btn btn-primary" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")'">Pesan</button>*@
                 @if (Session["role"] == null)
