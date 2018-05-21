@@ -119,10 +119,11 @@
                 <br />
 
             </div>
+            if (ViewBag.Tambahan.Count != 0)
+            {
+                <div class="col-md-12 col-xs-12">
+                    <div class="thumbnail clearfix text-center" style="max-width:1200px;width:100%">
 
-            <div class="col-md-12 col-xs-12">
-                <div class="thumbnail clearfix text-center" style="max-width:1200px;width:100%">
-                    
 
 
                         <h3 class="text-center" style="color:@(Session["warnanavbar"].ToString())">Pesanan dengan Permintaan Khusus</h3>
@@ -132,7 +133,11 @@
                         <table>
                             <tr>
                                 <td style="padding-left:20px">
+
                                     <table style="border:0 solid;float:none;margin:0">
+
+
+
                                         <tr>
                                             <td style="padding-right:10px">Permintaan</td>
                                             <td style="margin-right:30px;padding-bottom:10px;width:152px">
@@ -170,6 +175,7 @@
                                             <td><input type="number" class="form-control text-center" min="0" oninput="this.value = Math.abs(this.value)" style="max-width:70px" id="jmlhtambahan3" name="jmlhtambahan3" /></td>
                                         </tr>
                                     </table>
+
                                 </td>
                                 <td><div class="divider2" style="margin-left:220px"></div></td>
                                 <td style="padding-left:50px;width:480px">
@@ -183,19 +189,46 @@
                                 </td>
                             </tr>
                         </table>
-                   
 
-                    
+
+
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <input type="submit" value="Hitung Biaya" style="color:white;background-color:@(Session["warnanavbar"].ToString())" class="btn text-center" />
+                    </div>
+
+
                 </div>
-                <br />
-                <div class="text-center">
-                    <input type="submit" value="Hitung Biaya" style="color:white;background-color:@(Session["warnanavbar"].ToString())" class="btn text-center" />
+
+            }
+            else
+            {
+                <div class="col-md-12 col-xs-12">
+
+
+
+
+                    <h3 class="text-center" style="color:@(Session["warnanavbar"].ToString());margin-top:0px">Catatan tambahan</h3>
+
+
+                    <br />
+                    <table>
+                        <tr>
+                            <td style="padding-left:230px;width:880px">
+                                <textarea rows="4" class="form-control" id="deskripsi" name="catatan" style="max-width:850px"></textarea>
+
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <div class="text-center">
+                        <input type="submit" value="Hitung Biaya" style="color:white;background-color:@(Session["warnanavbar"].ToString())" class="btn text-center" />
+                    </div>
+
                 </div>
 
-
-            </div>
-
-
+            }
         }
     </div>
 </div>

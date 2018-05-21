@@ -278,6 +278,8 @@ namespace E_Commerce_MultiTenant.Controllers
 
         public ActionResult Login()
         {
+          
+            
             return View();
         }
         [HttpPost]
@@ -336,10 +338,37 @@ namespace E_Commerce_MultiTenant.Controllers
                             Session["role"] = "customer";
                         }
                     }
+                    conn.Close();
+                    if (result != "")
+                    {
+                        if(Session["idproduklogin"] != null)
+                        {
+                            if(Session["pakaianlogin"].ToString() == "ya")
+                            { 
+                            return Redirect("Produk/CreatePesananPakaian/?id_produk=" + (int)Session["idproduklogin"]);
+                            }
+                            else
+                            {
+                                return Redirect("Produk/CreatePesananNonPakaian/?id_produk=" + (int)Session["idproduklogin"]);
+                            }
+                        }
+                        else
+                        {
+                            return RedirectToAction("Indexku", "Home");
+                        }
+                        
+                    }
+                    else
+                    {
+                        TempData["Pesan"] = Helpers.Message.GetPesanLogin("Login gagal !",
+                                              "danger", "Email atau password salah.");
+                        return View();
+                    }
+                    
                 }
-                conn.Close();
+               
             }
-            return RedirectToAction("Indexku", "Home");
+            
         }
 
         public ActionResult Logout()

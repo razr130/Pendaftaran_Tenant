@@ -8,8 +8,9 @@
 <h2 style="color:#47a447" class="text-center">@ViewBag.Title</h2>
 <hr />
 
-@Html.Raw(TempData["Pesan"])
+
 <div class="col-md-12 col-xs-12" style="margin-left:38%">
+    @Html.Raw(TempData["Pesan"])
     <div class="thumbnail clearfix text-center" style="max-width:300px;width:100%">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -20,12 +21,12 @@
                 <table style="border:0 solid;float:none;margin:0 auto">
                     <tr>
                         <th style="text-align:center">
-                           Email
+                            Email
                         </th>
                     </tr>
                     <tr>
                         <td style="text-align:center">
-                           <input type="text" name="email" class="form-control" id="email" />
+                            <input type="text" name="email" class="form-control" id="email" />
                         </td>
                     </tr>
                     <tr>
@@ -33,12 +34,12 @@
                     </tr>
                     <tr>
                         <th style="text-align:center">
-                           Password
+                            Password
                         </th>
                     </tr>
                     <tr>
                         <td style="text-align:center">
-                            <input type="text" name="password" class="form-control" id="password" />
+                            <input type="password" name="password" class="form-control" id="password" />
                         </td>
                     </tr>
                 </table>

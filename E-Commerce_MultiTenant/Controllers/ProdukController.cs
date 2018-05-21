@@ -63,6 +63,8 @@ namespace E_Commerce_MultiTenant.Controllers
         {
             if (Session["user"] == null)
             {
+                Session["idproduklogin"] = id_produk;
+                Session["pakaianlogin"] = "ya";
                 return RedirectToAction("Login", "Home");
             }
             else
@@ -125,17 +127,22 @@ namespace E_Commerce_MultiTenant.Controllers
                         {
                             while (reader.Read())
                             {
-                                if (reader["nama_tambahan"].ToString() != "XXL" && reader["nama_tambahan"].ToString() != "Lebih dari XXL")
-                                {
-                                    lsttambahan.Add(new SelectListItem
+                               
+                                    if (reader["nama_tambahan"].ToString() != "XXL" && reader["nama_tambahan"].ToString() != "Lebih dari XXL")
                                     {
+                                        lsttambahan.Add(new SelectListItem
+                                        {
 
-                                        Value = reader["nama_tambahan"].ToString(),
-                                        Text = reader["nama_tambahan"].ToString()
-                                    });
-                                }
+                                            Value = reader["nama_tambahan"].ToString(),
+                                            Text = reader["nama_tambahan"].ToString()
+                                        });
+                                    }
+                                    
+                                    ViewBag.Tambahan = lsttambahan;
+                                
+                               
                             }
-                            ViewBag.Tambahan = lsttambahan;
+                            
                         }
                         sqlcom.CommandText = "SELECT [id_ukuran]" +
                         ",[ukuran]" +
@@ -346,7 +353,9 @@ namespace E_Commerce_MultiTenant.Controllers
 
             if (Session["user"] == null)
             {
-                return RedirectToAction("Login", "Home");
+                Session["idproduklogin"] = id_produk;
+                Session["pakaianlogin"] = "tidak";
+                return RedirectToAction("Login", "Home", new { idproduk = id_produk, pakaian = "tidak" });
             }
             else
             {
