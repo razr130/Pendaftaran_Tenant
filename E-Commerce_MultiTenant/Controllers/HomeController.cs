@@ -345,11 +345,11 @@ namespace E_Commerce_MultiTenant.Controllers
                         {
                             if(Session["pakaianlogin"].ToString() == "ya")
                             { 
-                            return Redirect("Produk/CreatePesananPakaian/?id_produk=" + (int)Session["idproduklogin"]);
+                            return Redirect("http://"+ subdomain +".multitenant.local:58131/Produk/CreatePesananPakaian/?id_produk=" + (int)Session["idproduklogin"]);
                             }
                             else
                             {
-                                return Redirect("Produk/CreatePesananNonPakaian/?id_produk=" + (int)Session["idproduklogin"]);
+                                return Redirect("http://" + subdomain + ".multitenant.local:58131/Produk/CreatePesananNonPakaian/?id_produk=" + (int)Session["idproduklogin"]);
                             }
                         }
                         else
@@ -412,6 +412,7 @@ namespace E_Commerce_MultiTenant.Controllers
                     Session["user"] = nama;
                     Session["role"] = "customer";
                     Session["email"] = email;
+                    Session["alamat"] = alamat;
                     TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
                                           "success", "data karyawan ditambah, data karyawan dapat direview ulang melalui Beranda setelah menyelesaikan proses pendaftaran");
                 }
@@ -423,8 +424,23 @@ namespace E_Commerce_MultiTenant.Controllers
 
                 conn.Close();
             }
-
-            return RedirectToAction("Konfirmasi", "Home");
+            if (Session["idproduklogin"] != null)
+            {
+                if (Session["pakaianlogin"].ToString() == "ya")
+                {
+                    return Redirect("http://" + subdomain + ".multitenant.local:58131/Produk/CreatePesananPakaian/?id_produk=" + (int)Session["idproduklogin"]);
+                    
+                }
+                else
+                {
+                    return Redirect("http://" + subdomain + ".multitenant.local:58131/Produk/CreatePesananNonPakaian/?id_produk=" + (int)Session["idproduklogin"]);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Konfirmasi", "Home");
+            }
+            
         }
 
         public ActionResult Konfirmasi()

@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using E_Commerce_MultiTenant.Models;
@@ -180,6 +184,63 @@ namespace E_Commerce_MultiTenant.Controllers
             Session["noorder"] = null;
             return View(result);
         }
+
+        public JsonResult SendMailToUser(string table)
+        {
+           
+            bool result = false;
+
+            result = SendEmail(Session["email"].ToString(), "Konfirmasi pemesanan dan informasi pembayaran",
+                "<p>Pemesanan anda telah berhasil,<br />" +
+               
+                "Pesanan yang telah dilakukan berupa : <br />"+
+                table +
+                "<br />" +
+                "Dengan total biaya sebesar : "+ ViewBag.totalharga +
+                "Biaya pemesanan dapat dibayarkan melalui rekening : <br />" +
+                "BNI : 344449404940 <br />" +
+                "BCA : 28102819111829 <br />" +
+                "Mandiri : 73289372321 <br />" +
+                "<br />" +
+                "Pembayaran dilakukan maksimal 1x24 jam, bila pembayaran tidak dilakukan dalam jangka waktu tersebut, <br />" +
+                "maka pendaftaran dinyatakan hangus.</p>");
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public bool SendEmail(string toEmail, string subject, string emailBody)
+        {
+
+            try
+            {
+                string senderEmail = System.Configuration.ConfigurationManager.AppSettings["SenderEmail"].ToString();
+                string senderPassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
+
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.Timeout = 100000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential(senderEmail, senderPassword);
+
+                MailMessage mailMessage = new MailMessage(senderEmail, toEmail, subject, emailBody);
+                mailMessage.IsBodyHtml = true;
+                mailMessage.BodyEncoding = UTF8Encoding.UTF8;
+                client.Send(mailMessage);
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+
+            }
+
+        }
+
+
         public ActionResult KonfirmasiKirim()
         {
             return View();

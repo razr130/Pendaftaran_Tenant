@@ -9,6 +9,9 @@ using System.Data.SqlClient;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
 using System.IO;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 
 namespace Pendaftaran_Tenant.Controllers
 {
@@ -125,6 +128,9 @@ namespace Pendaftaran_Tenant.Controllers
                 {
                     svPny.Add(penyewa);
                     Session["email"] = penyewa.email;
+                    Session["namaperusahaanemail"] = penyewa.nama_perusahaan;
+                    Session["alamatemail"] = penyewa.alamat;
+                    Session["notelpemail"] = penyewa.no_telp;
                     //TempData["Pesan"] = Helpers.Message.GetPesan("Sukses !",
                     //  "success", "Data Barang " + barang.nama_barang + " berhasil ditambah");
                 }
@@ -137,8 +143,68 @@ namespace Pendaftaran_Tenant.Controllers
             return RedirectToAction("KonfirmasiDaftar", "Penyewa");
         }
 
+        public JsonResult SendMailToUser()
+        {
+
+            bool result = false;
+
+            result = SendEmail(Session["email"].ToString(), "Konfirmasi pendaftaran dan informasi pembayaran",
+                "<p>Pendaftaran anda telah berhasil,<br />" +
+                "Nama Perusahaan : "+ Session["namaperusahaanemail"].ToString() +"<br />" +
+                "Alamat : "+ Session["alamatemail"].ToString() + "<br />" +
+                "No Telp : " + Session["notelpemail"].ToString() +"<br />" +
+                "<br/>" +
+                "Biaya pendaftaran sebesar : Rp 99999999 <br />" +
+                "Biaya tersebut sudah termasuk biaya pengadaan website, serta maintenance bulanan <br />" +
+                "<br />" +
+                "Biaya pendaftaran dapat dibayarkan melalui rekening : <br />" +
+                "BNI : 344449404940 <br />" +
+                "BCA : 28102819111829 <br />" +
+                "Mandiri : 73289372321 <br />" +
+                "<br />" +
+                "Pembayaran dilakukan maksimal 1x24 jam, bila pembayaran tidak dilakukan dalam jangka waktu tersebut, <br />" +
+                "maka pendaftaran dinyatakan hangus.</p>");
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public bool SendEmail(string toEmail, string subject, string emailBody)
+        {
+
+            try
+            {
+                string senderEmail = System.Configuration.ConfigurationManager.AppSettings["SenderEmail"].ToString();
+                string senderPassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
+
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.Timeout = 100000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential(senderEmail, senderPassword);
+
+                MailMessage mailMessage = new MailMessage(senderEmail, toEmail, subject, emailBody);
+                mailMessage.IsBodyHtml = true;
+                mailMessage.BodyEncoding = UTF8Encoding.UTF8;
+                client.Send(mailMessage);
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+
+            }
+
+        }
+
+
+
         public ActionResult KonfirmasiDaftar()
         {
+            SendMailToUser();
             using (PenyewaDAL tenan = new PenyewaDAL())
             {
                 int id = tenan.getId(Session["email"].ToString());

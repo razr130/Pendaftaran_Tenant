@@ -69,6 +69,8 @@ namespace E_Commerce_MultiTenant.Controllers
             }
             else
             {
+                Session["idproduklogin"] = null;
+                Session["pakaianlogin"] = null;
                 Session["kategori"] = "pakaian";
                 Session["id_produk"] = id_produk.ToString();
                 var lstbahan = new List<SelectListItem>();
@@ -359,6 +361,8 @@ namespace E_Commerce_MultiTenant.Controllers
             }
             else
             {
+                Session["idproduklogin"] = null;
+                Session["pakaianlogin"] = null;
                 Session["kategori"] = "nonpakaian";
                 Session["id_produk"] = id_produk.ToString();
                 var lstbahan = new List<SelectListItem>();
