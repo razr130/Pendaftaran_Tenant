@@ -151,7 +151,7 @@
 <script type="text/javascript">
         $(function () {
             //send email button click event
-            $("#buttonsend").click(function () {
+            $(document).ready(function () {
                 //get the table content
                 var tablevalue = "<table>" + $("#tablepesanan").html() + "</table>";
                 //using Ajax to call the action method
@@ -169,6 +169,7 @@
                     }
                 });
                 return false;
+                
             });
         });
 </script>
