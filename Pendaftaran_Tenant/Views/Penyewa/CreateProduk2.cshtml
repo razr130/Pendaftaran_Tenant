@@ -67,8 +67,8 @@
                                     <li><a href="#/">Pakaian</a></li>
                                     <li><a href="#/">Sepatu</a></li>
                                     <li><a href="#/">Tas</a></li>
-                                    <li><a href="#/">Lainnya</a></li>
-                                    
+                                   
+
                                 </ul>
                             </div>
                         </td>
@@ -85,417 +85,682 @@
             </div>
 
         </div>
-        <div class="col-md-4 col-xs-4">
-            <div class="thumbnail clearfix" style="max-width:460px;width:100%">
+        <div class="col-md-8 col-xs-8">
+            <div class="thumbnail clearfix" style="max-width:960px;width:100%">
 
+                <h3 style="color:#47a447" class="text-center">D A T A &nbsp; H A R G A</h3>
+                <hr />
+                <div id="pakaiandata" style="margin-left:30px">
+                    <h4 style="float:left;margin-left:8px">Bahan</h4>
 
-                <table style="border:0 solid;float:none;margin:0 auto" class="table">
-                    <tr>
-                        <th style="text-align:center"> <h4 style="color:#47a447">Bahan</h4></th>
-                        <th style="text-align:center"><h4 style="color:#47a447">Jenis Sablon</h4></th>
-                        <th style="text-align:center"><h4 style="color:#47a447">Harga</h4></th>
-                    </tr>
-                    @*<tr>
-                            <th style="text-align:center"><label for="namaproduk">Bahan 1</label></th>
-                            <th style="text-align:center"><label for="namaproduk">Jenis Sablon 1</label></th>
-                            <th style="text-align:center"><label for="namaproduk">Harga 1</label></th>
-                        </tr>*@
-                    <tr>
-                        <td style="text-align:center;width:115px"><input type="text" class="form-control" id="bahan1" name="bahan1" style="max-width:130px" /></td>
-                        <td style="text-align:center;width:80px">
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon1" id="btnsablon1" style="width:inherit">
-                                    Jenis Sablon
-                                    <span class="caret"></span>
-                                </button>
-                                <input type="hidden" id="hiddensablon1" name="sablon1" />
-                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon1">
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <th align="left" colspan="6">Cotton Combed</th>
 
-                                    <li><a href="#/">Rubber</a></li>
-                                    <li><a href="#/">Pigmen</a></li>
-                                    <li><a href="#/">Plastisol</a></li>
-                                    <li><a href="#/">Glow in the Dark</a></li>
-                                    <li><a href="#/">Flocking</a></li>
-                                    <li><a href="#/">Glitter</a></li>
-                                    <li><a href="#/">Foil</a></li>
-                                    <li><a href="#/">DTG</a></li>
-                                    <li><a href="#/">Polyfex</a></li>
-                                    <li><a href="#/">3D</a></li>
-                                    <li><a href="#/">Jahit</a></li>
-                                    <li><a href="#/">Cat non kain</a></li>
+                        </tr>
+                        <tr>
+                            <td>30s</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="co30s" name="co30s" style="max-width:100px;display:inline" /></td>
+                            <td>24s</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="co24s" name="co24s" style="max-width:100px;display:inline" /></td>
+                            <td>20s</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="co20s" name="co20s" style="max-width:80px;display:inline" /></td>
 
+                        </tr>
+                        <tr>
+                            <th align="left" colspan="6">Cardet</th>
 
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="text-align:center"><input type="number" class="form-control" id="harga1" name="harga1" style="max-width:80px" /></td>
-                    </tr>
-                    @*<tr>
-                            <th style="text-align:center"><label for="namaproduk">Bahan 2</label></th>
-                            <th style="text-align:center"><label for="namaproduk">Jenis Sablon 2</label></th>
-                        </tr>*@
-                    <tr>
-                        <td style="text-align:center"><input type="text" class="form-control" id="bahan2" name="bahan2" style="max-width:150px" /></td>
-                        <td style="text-align:center">
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon2" id="btnsablon2" style="width:inherit">
-                                    Jenis Sablon
-                                    <span class="caret"></span>
-                                </button>
-                                <input type="hidden" id="hiddensablon2" name="sablon2" />
-                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon2">
+                        </tr>
+                        <tr>
+                            <td>30s</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="ca30s" name="ca30s" style="max-width:100px;display:inline" /></td>
+                            <td>20s</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="ca24s" name="ca24s" style="max-width:100px;display:inline" /></td>
 
-                                    <li><a href="#/">Rubber</a></li>
-                                    <li><a href="#/">Pigmen</a></li>
-                                    <li><a href="#/">Plastisol</a></li>
-                                    <li><a href="#/">Glow in the Dark</a></li>
-                                    <li><a href="#/">Flocking</a></li>
-                                    <li><a href="#/">Glitter</a></li>
-                                    <li><a href="#/">Foil</a></li>
-                                    <li><a href="#/">DTG</a></li>
-                                    <li><a href="#/">Polyfex</a></li>
-                                    <li><a href="#/">3D</a></li>
-                                    <li><a href="#/">Jahit</a></li>
-                                    <li><a href="#/">Cat non kain</a></li>
+                        </tr>
+                        <tr>
+                            <td>Polyester</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="polyester" name="polyester" style="max-width:100px;display:inline" /></td>
+                            <td>Tetteron Cotton</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="tc" name="tc" style="max-width:100px;display:inline" /></td>
+                            <td>Viscose</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="viscose" name="viscose" style="max-width:100px;display:inline" /></td>
 
+                        </tr>
+                        <tr>
+                            <td>Cotton Viscose</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="cvc" name="cvc" style="max-width:100px;display:inline" /></td>
+                            <td>Hyget</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="hyget" name="hyget" style="max-width:100px;display:inline" /></td>
 
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="text-align:center"><input type="number" class="form-control" id="harga2" name="harga2" style="max-width:80px" /></td>
-                    </tr>
-                    @*<tr>
-                            <th style="text-align:center"><label for="namaproduk">Bahan 3</label></th>
-                            <th style="text-align:center"><label for="namaproduk">Jenis Sablon 3</label></th>
-                        </tr>*@
-                    <tr>
-                        <td style="text-align:center"><input type="text" class="form-control" id="bahan3" name="bahan3" style="max-width:150px" /></td>
-                        <td style="text-align:center">
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon3" id="btnsablon3" style="width:inherit">
-                                    Jenis Sablon
-                                    <span class="caret"></span>
-                                </button>
-                                <input type="hidden" id="hiddensablon3" name="sablon3" />
-                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon3">
+                        </tr>
+                    </table>
+                    <br />
+                    <hr />
+                    <h4 style="float:left">Jenis Sablon</h4>
 
-                                    <li><a href="#/">Rubber</a></li>
-                                    <li><a href="#/">Pigmen</a></li>
-                                    <li><a href="#/">Plastisol</a></li>
-                                    <li><a href="#/">Glow in the Dark</a></li>
-                                    <li><a href="#/">Flocking</a></li>
-                                    <li><a href="#/">Glitter</a></li>
-                                    <li><a href="#/">Foil</a></li>
-                                    <li><a href="#/">DTG</a></li>
-                                    <li><a href="#/">Polyfex</a></li>
-                                    <li><a href="#/">3D</a></li>
-                                    <li><a href="#/">Jahit</a></li>
-                                    <li><a href="#/">Cat non kain</a></li>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td style="font-size:13px">Rubber</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="rubber" name="rubber" style="max-width:100px;display:inline" /></td>
+                            <td style="font-size:13px">Rubber Ekstra</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="rubberekstra" name="rubberekstra" style="max-width:100px;display:inline" /></td>
+                            <td style="font-size:13px">Rubber Matsui</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="rubbermtsui" name="rubbermatsui" style="max-width:100px;display:inline" /></td>
 
+                        </tr>
+                        <tr>
+                            <td style="font-size:13px">Pigmen</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="pigmen" name="pigmen" style="max-width:100px;display:inline" /></td>
+                            <td style="font-size:13px">Plastisol</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="plastisol" name="plastisol" style="max-width:100px;display:inline" /></td>
+                            <td style="font-size:13px">Glow in The Dark</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="gitd" name="gitd" style="max-width:100px;display:inline" /></td>
 
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="text-align:center"><input type="number" class="form-control" id="harga3" name="harga3" style="max-width:80px" /></td>
-                    </tr>
-                    @*<tr>
-                            <th style="text-align:center"><label for="namaproduk">Bahan 4</label></th>
-                            <th style="text-align:center"><label for="namaproduk">Jenis Sablon 4</label></th>
-                        </tr>*@
-                    <tr>
-                        <td style="text-align:center"><input type="text" class="form-control" id="bahan4" name="bahan4" style="max-width:150px" /></td>
-                        <td style="text-align:center">
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon4" id="btnsablon4" style="width:inherit">
-                                    Jenis Sablon
-                                    <span class="caret"></span>
-                                </button>
-                                <input type="hidden" id="hiddensablon4" name="sablon4" />
-                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon4">
+                        </tr>
+                        <tr>
+                            <td style="font-size:13px">Flocking</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="flocking" name="flocking" style="max-width:100px;display:inline" /></td>
+                            <td style="font-size:13px">Glitter</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="glitter" name="glitter" style="max-width:100px;display:inline" /></td>
+                            <td style="font-size:13px">Foil</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="foil" name="foil" style="max-width:100px;display:inline" /></td>
 
-                                    <li><a href="#/">Rubber</a></li>
-                                    <li><a href="#/">Pigmen</a></li>
-                                    <li><a href="#/">Plastisol</a></li>
-                                    <li><a href="#/">Glow in the Dark</a></li>
-                                    <li><a href="#/">Flocking</a></li>
-                                    <li><a href="#/">Glitter</a></li>
-                                    <li><a href="#/">Foil</a></li>
-                                    <li><a href="#/">DTG</a></li>
-                                    <li><a href="#/">Polyfex</a></li>
-                                    <li><a href="#/">3D</a></li>
-                                    <li><a href="#/">Jahit</a></li>
-                                    <li><a href="#/">Cat non kain</a></li>
+                        </tr>
+                        <tr>
+                            <td style="font-size:13px">DTG</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="dtg" name="dtg" style="max-width:100px;display:inline" /></td>
+                            <td style="font-size:13px">Polyfex</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="polyfex" name="polyfex" style="max-width:100px;display:inline" /></td>
+                            <td style="font-size:13px">3D</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="d3d" name="d3d" style="max-width:100px;display:inline" /></td>
 
+                        </tr>
 
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="text-align:center"><input type="number" class="form-control" id="harga4" name="harga4" style="max-width:80px" /></td>
-                    </tr>
-                    @*<tr>
-                            <th style="text-align:center"><label for="namaproduk">Bahan 5</label></th>
-                            <th style="text-align:center"><label for="namaproduk">Jenis Sablon 5</label></th>
-                        </tr>*@
-                    <tr>
-                        <td style="text-align:center"><input type="text" class="form-control" id="bahan5" name="bahan5" style="max-width:150px" /></td>
-                        <td style="text-align:center">
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon5" id="btnsablon5" style="width:inherit">
-                                    Jenis Sablon
-                                    <span class="caret"></span>
-                                </button>
-                                <input type="hidden" id="hiddensablon5" name="sablon5" />
-                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon5">
+                    </table>
+                    <br />
+                    <hr />
+                    <h4 style="float:left">Tipe Desain</h4>
 
-                                    <li><a href="#/">Rubber</a></li>
-                                    <li><a href="#/">Pigmen</a></li>
-                                    <li><a href="#/">Plastisol</a></li>
-                                    <li><a href="#/">Glow in the Dark</a></li>
-                                    <li><a href="#/">Flocking</a></li>
-                                    <li><a href="#/">Glitter</a></li>
-                                    <li><a href="#/">Foil</a></li>
-                                    <li><a href="#/">DTG</a></li>
-                                    <li><a href="#/">Polyfex</a></li>
-                                    <li><a href="#/">3D</a></li>
-                                    <li><a href="#/">Jahit</a></li>
-                                    <li><a href="#/">Cat non kain</a></li>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Icon - A4</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="da4" name="da4" style="max-width:100px;display:inline" /></td>
+                            <td>A3</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="da3" name="da3" style="max-width:100px;display:inline" /></td>
+                            <td>Blok</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="blok" name="blok" style="max-width:100px;display:inline" /></td>
 
+                        </tr>
+                        <tr>
+                            <td>Depan Belakang</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="depanbelakang" name="depanbelakang" style="max-width:100px;display:inline" /></td>
+                            <td>Bagian lengan</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="lengan" name="lengan" style="max-width:100px;display:inline" /></td>
 
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="text-align:center"><input type="number" class="form-control" id="harga5" name="harga5" style="max-width:80px" /></td>
-                    </tr>
-                </table>
-                <p style="color:lightgrey;margin-left:10px"><h6><i style="color:darkgray;margin-left:10px">*Boleh dikosongkan bila tidak diperlukan</i></h6></p>
+                        </tr>
+                    </table>
+                    <br />
+                    <hr />
+                    <h4 style="float:left">Tambahan</h4>
+
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>XXL</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="xxl" name="xxl" style="max-width:100px;display:inline" /></td>
+                            <td>Lebih dari XXL</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="lebihxxl" name="lebihxxl" style="max-width:100px;display:inline" /></td>
+                            <td>Lengan panjang</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="lenganpanjang" name="lenganpanjang" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Raglan</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="raglan" name="raglan" style="max-width:100px;display:inline" /></td>
+                            <td>Hoodie</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="hoodie" name="hoodie" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+
+                    </table>
+                </div>
+                <div id="tasdata" style="margin-left:30px;display:inline;display:none">
+                    <h4 style="float:left">Bahan</h4>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>300d</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="d300" name="d300" style="max-width:100px;display:inline" /></td>
+                            <td>400d</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="d400" name="d400" style="max-width:100px;display:inline" /></td>
+                            <td>Furing</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="furing" name="furing" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Babyripstop</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="babyripstop" name="babyripstop" style="max-width:100px;display:inline" /></td>
+                            <td>Kanvas</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="kanvas" name="kanvas" style="max-width:100px;display:inline" /></td>
+                            <td>Blacu</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="blacu" name="blacu" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+                    </table>
+                    <hr />
+                    <h4 style="float:left">Cetakan Desain</h4>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Sablon <p>Rubber</p></td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="rubbertas" name="rubbertas" style="max-width:100px;display:inline" /></td>
+                            <td>Jahit satu<p> warna</p></td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="jahitsewarna" name="jahitsewarna" style="max-width:100px;display:inline" /></td>
+                            <td>Jahit banyak <p>warna</p></td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="jahitbanyakwarna" name="jahitbanyakwarna" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+
+                    </table>
+                </div>
+                <div id="sepatudata" style="margin-left:30px;display:inline;display:none">
+                    <h4 style="float:left">Bahan</h4>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Kanvas</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="kanvassepatu" name="kanvassepatu" style="max-width:100px;display:inline" /></td>
+                            <td>Kulit</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="kulit" name="kulit" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+                    </table>
+                    <hr />
+                    <h4 style="float:left">Cetakan Desain</h4>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Cat</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="cat" name="cat" style="max-width:100px;display:inline" /></td>
+                            <td>Sablon Cap</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="sabloncap" name="sabloncap" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+                    </table>
+                </div>
+                <div id="keramikdata" style="margin-left:30px;display:inline;display:none">
+                    <h4 style="float:left">Bentuk</h4>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Datar</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="datar" name="datar" style="max-width:100px;display:inline" /></td>
+                            <td>Gelas</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="gelas" name="gelas" style="max-width:100px;display:inline" /></td>
+                            <td>Bentuk custom</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="custom" name="custom" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+
+                    </table>
+                    <hr />
+                    <h4 style="float:left">Cetakan Desain</h4>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Cat</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="catkeramik" name="catkeramik" style="max-width:100px;display:inline" /></td>
+                            <td>Cap</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="cap" name="cap" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+
+                    </table>
+                </div>
                 <br />
-
-            </div>
-        </div>
-        <div class="col-md-4 col-xs-4">
-            <div class="thumbnail clearfix" style="max-width:460px;width:100%">
-                <table style="border:0 solid;float:none;margin:0 auto" class="table">
-                    <tr>
-                        <th style="color:#47a447"><h4>Kebutuhan tambahan</h4></th>
-                        <th style="color:#47a447"><h4>Harga Tambahan</h4></th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan1" id="btntam1" style="width:150px">
-                                    Kebutuhan ...
-                                    <span class="caret"></span>
-                                </button>
-                                <input type="hidden" id="hiddentam1" name="tambahan1" />
-                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam1">
-
-                                    <li><a href="#/">XXL</a></li>
-                                    <li><a href="#/">Lebih dari XXL</a></li>
-                                    <li><a href="#/">Lengan Panjang</a></li>
-                                    <li><a href="#/">Raglan</a></li>
-                                    <li><a href="#/">Hoodie</a></li>
-
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="text-align:center"><input type="number" class="form-control" id="hargatam1" name="hargatam1" style="max-width:80px;display:inline" /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan2" id="btntam2" style="width:150px">
-                                    Kebutuhan ...
-                                    <span class="caret"></span>
-                                </button>
-                                <input type="hidden" id="hiddentam2" name="tambahan2" />
-                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam2">
-
-                                    <li><a href="#/">XXL</a></li>
-                                    <li><a href="#/">Lebih dari XXL</a></li>
-                                    <li><a href="#/">Lengan Panjang</a></li>
-                                    <li><a href="#/">Raglan</a></li>
-                                    <li><a href="#/">Hoodie</a></li>
-
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="text-align:center"><input type="number" class="form-control" id="hargatam2" name="hargatam2" style="max-width:80px;display:inline" /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan3" id="btntam3" style="width:150px">
-                                    Kebutuhan ...
-                                    <span class="caret"></span>
-                                </button>
-                                <input type="hidden" id="hiddentam3" name="tambahan3" />
-                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam3">
-
-                                    <li><a href="#/">XXL</a></li>
-                                    <li><a href="#/">Lebih dari XXL</a></li>
-                                    <li><a href="#/">Lengan Panjang</a></li>
-                                    <li><a href="#/">Raglan</a></li>
-                                    <li><a href="#/">Hoodie</a></li>
-
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="text-align:center"><input type="number" class="form-control" id="hargatam3" name="hargatam3" style="max-width:80px;display:inline" /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan4" id="btntam4" style="width:150px">
-                                    Kebutuhan ...
-                                    <span class="caret"></span>
-                                </button>
-                                <input type="hidden" id="hiddentam4" name="tambahan4" />
-                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam4">
-
-                                    <li><a href="#/">XXL</a></li>
-                                    <li><a href="#/">Lebih dari XXL</a></li>
-                                    <li><a href="#/">Lengan Panjang</a></li>
-                                    <li><a href="#/">Raglan</a></li>
-                                    <li><a href="#/">Hoodie</a></li>
-
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="text-align:center"><input type="number" class="form-control" id="hargatam4" name="hargatam4" style="max-width:80px;display:inline" /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan5" id="btntam5" style="width:150px">
-                                    Kebutuhan ...
-                                    <span class="caret"></span>
-                                </button>
-                                <input type="hidden" id="hiddentam5" name="tambahan5" />
-                                <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam5">
-
-                                    <li><a href="#/">XXL</a></li>
-                                    <li><a href="#/">Lebih dari XXL</a></li>
-                                    <li><a href="#/">Lengan Panjang</a></li>
-                                    <li><a href="#/">Raglan</a></li>
-                                    <li><a href="#/">Hoodie</a></li>
-
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="text-align:center"><input type="number" class="form-control" id="hargatam5" name="hargatam5" style="max-width:80px;display:inline" /></td>
-                    </tr>
-                </table>
-                <p style="color:lightgrey;margin-left:10px"><h6><i style="color:darkgray;margin-left:10px">*Boleh dikosongkan bila tidak diperlukan</i></h6></p>
                 <br />
                 <div class="text-center">
                     <input type="submit" value="Simpan" class="btn btn-success text-center" />
                 </div>
                 <br />
             </div>
-        </div>
+            </div>
+        <script>
+            $(document).ready(function () {
+
+                //$('#dropdownkategori').on('change', function () {
+                //    if (this.value != 'Pakaian')
+                //    //.....................^.......
+                //    {
+                //        alert('hai')
+                //        $("#pakaiandata").hide();
+                //    }
+
+                //});
+               
+
+                $(function () {
+                    var pakaian = document.getElementById('pakaiandata');
+                    var tas = document.getElementById('tasdata');
+                    var sepatu = document.getElementById('sepatudata');
+                    var keramik = document.getElementById('keramikdata');
+                    $("#dropdownkategori").on('click', 'li a', function () {
+                        $("#btnkategori").text($(this).text());
+                        $("#btnkategori").val($(this).text());
+                        $("#hiddenkategori").val($(this).text());
+                        if ($(this).text() == "Pakaian") {
+                            //alert('hai');
+                            keramik.style = 'display:none';
+                            tas.style = 'display:none';
+                            sepatu.style = 'display:none';
+                            pakaian.style = 'display:block;margin-left:30px';
+                        }
+                        if ($(this).text() == "Tas") {
+                            //alert('hai');
+                            keramik.style = 'display:none';
+                            pakaian.style = 'display:none';
+                            sepatu.style = 'display:none';
+                            tas.style = 'display:block;margin-left:30px';
+                            
+                           
+                        }
+                        if ($(this).text() == "Sepatu") {
+                            //alert('hai');
+                            pakaian.style = 'display:none';
+                            keramik.style = 'display:none';
+                            tas.style = 'display:none';
+                            sepatu.style = 'display:block;margin-left:30px';
+
+                        }
+                        if ($(this).text() == "Keramik") {
+                            //alert('hai');
+                            pakaian.style = 'display:none';
+                            
+                            tas.style = 'display:none';
+                            sepatu.style = 'display:none';
+                            keramik.style = 'display:block;margin-left:30px';
+
+                        }
+                    });
+
+                    $("#dropdowntam5").on('click', 'li a', function () {
+                        $("#btntam5").text($(this).text());
+                        $("#btntam5").val($(this).text());
+                        $("#hiddentam5").val($(this).text());
+
+                    });
+                    $("#dropdowntam4").on('click', 'li a', function () {
+                        $("#btntam4").text($(this).text());
+                        $("#btntam4").val($(this).text());
+                        $("#hiddentam4").val($(this).text());
+
+                    });
+                    $("#dropdowntam3").on('click', 'li a', function () {
+                        $("#btntam3").text($(this).text());
+                        $("#btntam3").val($(this).text());
+                        $("#hiddentam3").val($(this).text());
+
+                    });
+                    $("#dropdowntam2").on('click', 'li a', function () {
+                        $("#btntam2").text($(this).text());
+                        $("#btntam2").val($(this).text());
+                        $("#hiddentam2").val($(this).text());
+
+                    });
+                    $("#dropdowntam1").on('click', 'li a', function () {
+                        $("#btntam1").text($(this).text());
+                        $("#btntam1").val($(this).text());
+                        $("#hiddentam1").val($(this).text());
+
+                    });
+                    $("#dropdownsablon5").on('click', 'li a', function () {
+                        $("#btnsablon5").text($(this).text());
+                        $("#btnsablon5").val($(this).text());
+                        $("#hiddensablon5").val($(this).text());
+
+                    });
+                    $("#dropdownsablon4").on('click', 'li a', function () {
+                        $("#btnsablon4").text($(this).text());
+                        $("#btnsablon4").val($(this).text());
+                        $("#hiddensablon4").val($(this).text());
+
+                    });
+                    $("#dropdownsablon3").on('click', 'li a', function () {
+                        $("#btnsablon3").text($(this).text());
+                        $("#btnsablon3").val($(this).text());
+                        $("#hiddensablon3").val($(this).text());
+
+                    });
+                    $("#dropdownsablon2").on('click', 'li a', function () {
+                        $("#btnsablon2").text($(this).text());
+                        $("#btnsablon2").val($(this).text());
+                        $("#hiddensablon2").val($(this).text());
+
+                    });
+                    $("#dropdownsablon1").on('click', 'li a', function () {
+                        $("#btnsablon1").text($(this).text());
+                        $("#btnsablon1").val($(this).text());
+                        $("#hiddensablon1").val($(this).text());
+
+                    });
+                });
+
+
+
+                // Add smooth scrolling to all links
+                $("#scrolldown").on('click', function (event) {
+
+                    // Make sure this.hash has a value before overriding default behavior
+                    if (this.hash !== "") {
+                        // Prevent default anchor click behavior
+                        event.preventDefault();
+
+                        // Store hash
+                        var hash = this.hash;
+
+                        // Using jQuery's animate() method to add smooth page scroll
+                        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                        $('html, body').animate({
+                            scrollTop: $(hash).offset().top
+                        }, 500, function () {
+
+                            // Add hash (#) to URL when done scrolling (default click behavior)
+                            window.location.hash = hash;
+                        });
+                    } // End if
+                });
+            });
+
+        </script>
+        @*<div class="col-md-4 col-xs-4">
+                <div class="thumbnail clearfix" style="max-width:460px;width:100%">
+
+
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <th style="text-align:center"> <h4 style="color:#47a447">Bahan</h4></th>
+                            <th style="text-align:center"><h4 style="color:#47a447">Jenis Sablon</h4></th>
+                            <th style="text-align:center"><h4 style="color:#47a447">Harga</h4></th>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align:center;width:115px"><input type="text" class="form-control" id="bahan1" name="bahan1" style="max-width:130px" /></td>
+                            <td style="text-align:center;width:80px">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon1" id="btnsablon1" style="width:inherit">
+                                        Jenis Sablon
+                                        <span class="caret"></span>
+                                    </button>
+                                    <input type="hidden" id="hiddensablon1" name="sablon1" />
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon1">
+
+                                        <li><a href="#/">Rubber</a></li>
+                                        <li><a href="#/">Pigmen</a></li>
+                                        <li><a href="#/">Plastisol</a></li>
+                                        <li><a href="#/">Glow in the Dark</a></li>
+                                        <li><a href="#/">Flocking</a></li>
+                                        <li><a href="#/">Glitter</a></li>
+                                        <li><a href="#/">Foil</a></li>
+                                        <li><a href="#/">DTG</a></li>
+                                        <li><a href="#/">Polyfex</a></li>
+                                        <li><a href="#/">3D</a></li>
+                                        <li><a href="#/">Jahit</a></li>
+                                        <li><a href="#/">Cat non kain</a></li>
+
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="text-align:center"><input type="number" class="form-control" id="harga1" name="harga1" style="max-width:80px" /></td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align:center"><input type="text" class="form-control" id="bahan2" name="bahan2" style="max-width:150px" /></td>
+                            <td style="text-align:center">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon2" id="btnsablon2" style="width:inherit">
+                                        Jenis Sablon
+                                        <span class="caret"></span>
+                                    </button>
+                                    <input type="hidden" id="hiddensablon2" name="sablon2" />
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon2">
+
+                                        <li><a href="#/">Rubber</a></li>
+                                        <li><a href="#/">Pigmen</a></li>
+                                        <li><a href="#/">Plastisol</a></li>
+                                        <li><a href="#/">Glow in the Dark</a></li>
+                                        <li><a href="#/">Flocking</a></li>
+                                        <li><a href="#/">Glitter</a></li>
+                                        <li><a href="#/">Foil</a></li>
+                                        <li><a href="#/">DTG</a></li>
+                                        <li><a href="#/">Polyfex</a></li>
+                                        <li><a href="#/">3D</a></li>
+                                        <li><a href="#/">Jahit</a></li>
+                                        <li><a href="#/">Cat non kain</a></li>
+
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="text-align:center"><input type="number" class="form-control" id="harga2" name="harga2" style="max-width:80px" /></td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align:center"><input type="text" class="form-control" id="bahan3" name="bahan3" style="max-width:150px" /></td>
+                            <td style="text-align:center">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon3" id="btnsablon3" style="width:inherit">
+                                        Jenis Sablon
+                                        <span class="caret"></span>
+                                    </button>
+                                    <input type="hidden" id="hiddensablon3" name="sablon3" />
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon3">
+
+                                        <li><a href="#/">Rubber</a></li>
+                                        <li><a href="#/">Pigmen</a></li>
+                                        <li><a href="#/">Plastisol</a></li>
+                                        <li><a href="#/">Glow in the Dark</a></li>
+                                        <li><a href="#/">Flocking</a></li>
+                                        <li><a href="#/">Glitter</a></li>
+                                        <li><a href="#/">Foil</a></li>
+                                        <li><a href="#/">DTG</a></li>
+                                        <li><a href="#/">Polyfex</a></li>
+                                        <li><a href="#/">3D</a></li>
+                                        <li><a href="#/">Jahit</a></li>
+                                        <li><a href="#/">Cat non kain</a></li>
+
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="text-align:center"><input type="number" class="form-control" id="harga3" name="harga3" style="max-width:80px" /></td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align:center"><input type="text" class="form-control" id="bahan4" name="bahan4" style="max-width:150px" /></td>
+                            <td style="text-align:center">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon4" id="btnsablon4" style="width:inherit">
+                                        Jenis Sablon
+                                        <span class="caret"></span>
+                                    </button>
+                                    <input type="hidden" id="hiddensablon4" name="sablon4" />
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon4">
+
+                                        <li><a href="#/">Rubber</a></li>
+                                        <li><a href="#/">Pigmen</a></li>
+                                        <li><a href="#/">Plastisol</a></li>
+                                        <li><a href="#/">Glow in the Dark</a></li>
+                                        <li><a href="#/">Flocking</a></li>
+                                        <li><a href="#/">Glitter</a></li>
+                                        <li><a href="#/">Foil</a></li>
+                                        <li><a href="#/">DTG</a></li>
+                                        <li><a href="#/">Polyfex</a></li>
+                                        <li><a href="#/">3D</a></li>
+                                        <li><a href="#/">Jahit</a></li>
+                                        <li><a href="#/">Cat non kain</a></li>
+
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="text-align:center"><input type="number" class="form-control" id="harga4" name="harga4" style="max-width:80px" /></td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align:center"><input type="text" class="form-control" id="bahan5" name="bahan5" style="max-width:150px" /></td>
+                            <td style="text-align:center">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="sablon5" id="btnsablon5" style="width:inherit">
+                                        Jenis Sablon
+                                        <span class="caret"></span>
+                                    </button>
+                                    <input type="hidden" id="hiddensablon5" name="sablon5" />
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownsablon5">
+
+                                        <li><a href="#/">Rubber</a></li>
+                                        <li><a href="#/">Pigmen</a></li>
+                                        <li><a href="#/">Plastisol</a></li>
+                                        <li><a href="#/">Glow in the Dark</a></li>
+                                        <li><a href="#/">Flocking</a></li>
+                                        <li><a href="#/">Glitter</a></li>
+                                        <li><a href="#/">Foil</a></li>
+                                        <li><a href="#/">DTG</a></li>
+                                        <li><a href="#/">Polyfex</a></li>
+                                        <li><a href="#/">3D</a></li>
+                                        <li><a href="#/">Jahit</a></li>
+                                        <li><a href="#/">Cat non kain</a></li>
+
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="text-align:center"><input type="number" class="form-control" id="harga5" name="harga5" style="max-width:80px" /></td>
+                        </tr>
+                    </table>
+                    <p style="color:lightgrey;margin-left:10px"><h6><i style="color:darkgray;margin-left:10px">*Boleh dikosongkan bila tidak diperlukan</i></h6></p>
+                    <br />
+
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-4">
+                <div class="thumbnail clearfix" style="max-width:460px;width:100%">
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <th style="color:#47a447"><h4>Kebutuhan tambahan</h4></th>
+                            <th style="color:#47a447"><h4>Harga Tambahan</h4></th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan1" id="btntam1" style="width:150px">
+                                        Kebutuhan ...
+                                        <span class="caret"></span>
+                                    </button>
+                                    <input type="hidden" id="hiddentam1" name="tambahan1" />
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam1">
+
+                                        <li><a href="#/">XXL</a></li>
+                                        <li><a href="#/">Lebih dari XXL</a></li>
+                                        <li><a href="#/">Lengan Panjang</a></li>
+                                        <li><a href="#/">Raglan</a></li>
+                                        <li><a href="#/">Hoodie</a></li>
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="text-align:center"><input type="number" class="form-control" id="hargatam1" name="hargatam1" style="max-width:80px;display:inline" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan2" id="btntam2" style="width:150px">
+                                        Kebutuhan ...
+                                        <span class="caret"></span>
+                                    </button>
+                                    <input type="hidden" id="hiddentam2" name="tambahan2" />
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam2">
+
+                                        <li><a href="#/">XXL</a></li>
+                                        <li><a href="#/">Lebih dari XXL</a></li>
+                                        <li><a href="#/">Lengan Panjang</a></li>
+                                        <li><a href="#/">Raglan</a></li>
+                                        <li><a href="#/">Hoodie</a></li>
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="text-align:center"><input type="number" class="form-control" id="hargatam2" name="hargatam2" style="max-width:80px;display:inline" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan3" id="btntam3" style="width:150px">
+                                        Kebutuhan ...
+                                        <span class="caret"></span>
+                                    </button>
+                                    <input type="hidden" id="hiddentam3" name="tambahan3" />
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam3">
+
+                                        <li><a href="#/">XXL</a></li>
+                                        <li><a href="#/">Lebih dari XXL</a></li>
+                                        <li><a href="#/">Lengan Panjang</a></li>
+                                        <li><a href="#/">Raglan</a></li>
+                                        <li><a href="#/">Hoodie</a></li>
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="text-align:center"><input type="number" class="form-control" id="hargatam3" name="hargatam3" style="max-width:80px;display:inline" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan4" id="btntam4" style="width:150px">
+                                        Kebutuhan ...
+                                        <span class="caret"></span>
+                                    </button>
+                                    <input type="hidden" id="hiddentam4" name="tambahan4" />
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam4">
+
+                                        <li><a href="#/">XXL</a></li>
+                                        <li><a href="#/">Lebih dari XXL</a></li>
+                                        <li><a href="#/">Lengan Panjang</a></li>
+                                        <li><a href="#/">Raglan</a></li>
+                                        <li><a href="#/">Hoodie</a></li>
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="text-align:center"><input type="number" class="form-control" id="hargatam4" name="hargatam4" style="max-width:80px;display:inline" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" name="tambahan5" id="btntam5" style="width:150px">
+                                        Kebutuhan ...
+                                        <span class="caret"></span>
+                                    </button>
+                                    <input type="hidden" id="hiddentam5" name="tambahan5" />
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdowntam5">
+
+                                        <li><a href="#/">XXL</a></li>
+                                        <li><a href="#/">Lebih dari XXL</a></li>
+                                        <li><a href="#/">Lengan Panjang</a></li>
+                                        <li><a href="#/">Raglan</a></li>
+                                        <li><a href="#/">Hoodie</a></li>
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="text-align:center"><input type="number" class="form-control" id="hargatam5" name="hargatam5" style="max-width:80px;display:inline" /></td>
+                        </tr>
+                    </table>
+                    <p style="color:lightgrey;margin-left:10px"><h6><i style="color:darkgray;margin-left:10px">*Boleh dikosongkan bila tidak diperlukan</i></h6></p>
+                    <br />
+                    <div class="text-center">
+                        <input type="submit" value="Simpan" class="btn btn-success text-center" />
+                    </div>
+                    <br />
+                </div>
+            </div>*@
     }
 </div>
 <br />
 <br />
 
-<script>
-    $(document).ready(function () {
 
-        $(function () {
-
-            $("#dropdownkategori").on('click', 'li a', function () {
-                $("#btnkategori").text($(this).text());
-                $("#btnkategori").val($(this).text());
-                $("#hiddenkategori").val($(this).text());
-
-            });
-
-            $("#dropdowntam5").on('click', 'li a', function () {
-                $("#btntam5").text($(this).text());
-                $("#btntam5").val($(this).text());
-                $("#hiddentam5").val($(this).text());
-
-            });
-            $("#dropdowntam4").on('click', 'li a', function () {
-                $("#btntam4").text($(this).text());
-                $("#btntam4").val($(this).text());
-                $("#hiddentam4").val($(this).text());
-
-            });
-            $("#dropdowntam3").on('click', 'li a', function () {
-                $("#btntam3").text($(this).text());
-                $("#btntam3").val($(this).text());
-                $("#hiddentam3").val($(this).text());
-
-            });
-            $("#dropdowntam2").on('click', 'li a', function () {
-                $("#btntam2").text($(this).text());
-                $("#btntam2").val($(this).text());
-                $("#hiddentam2").val($(this).text());
-
-            });
-            $("#dropdowntam1").on('click', 'li a', function () {
-                $("#btntam1").text($(this).text());
-                $("#btntam1").val($(this).text());
-                $("#hiddentam1").val($(this).text());
-
-            });
-            $("#dropdownsablon5").on('click', 'li a', function () {
-                $("#btnsablon5").text($(this).text());
-                $("#btnsablon5").val($(this).text());
-                $("#hiddensablon5").val($(this).text());
-
-            });
-            $("#dropdownsablon4").on('click', 'li a', function () {
-                $("#btnsablon4").text($(this).text());
-                $("#btnsablon4").val($(this).text());
-                $("#hiddensablon4").val($(this).text());
-
-            });
-            $("#dropdownsablon3").on('click', 'li a', function () {
-                $("#btnsablon3").text($(this).text());
-                $("#btnsablon3").val($(this).text());
-                $("#hiddensablon3").val($(this).text());
-
-            });
-            $("#dropdownsablon2").on('click', 'li a', function () {
-                $("#btnsablon2").text($(this).text());
-                $("#btnsablon2").val($(this).text());
-                $("#hiddensablon2").val($(this).text());
-
-            });
-            $("#dropdownsablon1").on('click', 'li a', function () {
-                $("#btnsablon1").text($(this).text());
-                $("#btnsablon1").val($(this).text());
-                $("#hiddensablon1").val($(this).text());
-
-            });
-        });
-
-
-
-        // Add smooth scrolling to all links
-        $("#scrolldown").on('click', function (event) {
-
-            // Make sure this.hash has a value before overriding default behavior
-            if (this.hash !== "") {
-                // Prevent default anchor click behavior
-                event.preventDefault();
-
-                // Store hash
-                var hash = this.hash;
-
-                // Using jQuery's animate() method to add smooth page scroll
-                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-                $('html, body').animate({
-                    scrollTop: $(hash).offset().top
-                }, 500, function () {
-
-                    // Add hash (#) to URL when done scrolling (default click behavior)
-                    window.location.hash = hash;
-                });
-            } // End if
-        });
-    });
-
-</script>
