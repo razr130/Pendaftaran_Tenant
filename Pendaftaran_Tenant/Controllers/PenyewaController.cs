@@ -867,6 +867,7 @@ int? tc,
 int? viscose,
 int? cvc,
 int? hyget,
+int? polo,
 int? rubber,
 int? rubberekstra,
 int? rubbermatsui,
@@ -906,7 +907,30 @@ int? datar,
 int? gelas,
 int? custom,
 int? catkeramik,
-int? cap)
+int? cap,
+int? fleececotton30s,
+int? fleececotton16s,
+int? fleececvc30s,
+int? babyterry,
+int? rubberjaket,
+int? bordirjaket,
+int? dischargejaket,
+int? da4jaket,
+int? da3jaket,
+int? blokjaket,
+int? depanbelakangjaket,
+int? lenganjaket,
+int? xxljaket,
+int? lebihxxljaket,
+int? drill,
+int? hisovi,
+int? nagata,
+int? bordirkorsa,
+int? dada,
+int? belakang,
+int? lengankorsa,
+int? xxlkorsa,
+int? lebihxxlkorsa)
         {
             int idproduk = 0;
             string filePath = "";
@@ -1182,7 +1206,94 @@ int? cap)
 
                         sqlcom.ExecuteNonQuery();
                     }
+                    if (polo != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[Bahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_bahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Polo'," + polo + ")";
 
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (fleececotton30s != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[Bahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_bahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Fleece Cotton 30s'," + fleececotton30s + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (fleececotton16s != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[Bahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_bahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Fleece Cotton 16s'," + fleececotton16s + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (fleececvc30s != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[Bahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_bahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Fleece CVC 30s'," + fleececvc30s + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (babyterry != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[Bahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_bahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Babyterry'," + babyterry + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (drill != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[Bahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_bahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Drill'," + drill + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (hisovi != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[Bahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_bahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Hisovi'," + hisovi + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (nagata != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[Bahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_bahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Nagata'," + nagata + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
                     //jenissablon
                     if (rubber != null)
                     {
@@ -1395,6 +1506,52 @@ int? cap)
 
                         sqlcom.ExecuteNonQuery();
                     }
+                    if (rubberjaket != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[JenisSablon_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_sablon]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Rubber'," + rubberjaket + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (bordirjaket != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[JenisSablon_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_sablon]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Bordir'," + bordirjaket + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (dischargejaket != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[JenisSablon_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_sablon]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Discharge'," + dischargejaket + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (bordirkorsa != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[JenisSablon_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_sablon]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Bordir'," + bordirkorsa + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    
+
                     //tambahan
                     if (da4 != null)
                     {
@@ -1503,6 +1660,138 @@ int? cap)
                           ",[harga])" +
                           " VALUES" +
                           " (" + idproduk + ",'Hoodie'," + hoodie + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (da4jaket != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'A4'," + da4jaket + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (da3jaket != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'A3'," + da3jaket + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (blokjaket != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Blok'," + blokjaket + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (depanbelakangjaket != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Depan Belakang'," + depanbelakangjaket + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (lenganjaket != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Lengan'," + lenganjaket + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (xxljaket != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'XXL'," + xxljaket + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (lebihxxljaket != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Lebih dari XXL'," + lebihxxljaket + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (dada != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Dada'," + dada + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (belakang != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Belakang'," + belakang + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (lengankorsa != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Lengan'," + lengankorsa + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (xxlkorsa != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'XXL'," + xxlkorsa + ")";
+
+                        sqlcom.ExecuteNonQuery();
+                    }
+                    if (lebihxxlkorsa != null)
+                    {
+                        sqlcom.CommandText = "INSERT INTO [dbo].[TabelTambahan_" + nama_perusahaan + "]" +
+                           "([id_produk]" +
+                           ",[nama_tambahan]" +
+                           ",[harga])" +
+                           " VALUES" +
+                           " (" + idproduk + ",'Lebih dari XXL'," + lebihxxlkorsa + ")";
 
                         sqlcom.ExecuteNonQuery();
                     }
@@ -2858,10 +3147,10 @@ int? cap)
             {
                 conn.Open();
                 string query = "SELECT p.nama_produk,p.foto_produk, b.nama_bahan, b.harga as harga_bahan, j.nama_sablon, j.harga as harga_sablon,t.nama_tambahan, t.harga as harga_tambahan" +
-                    " from Produk_sung p inner" +
-                    " join Bahan_sung b on p.id_produk = b.id_produk inner" +
-                    " join JenisSablon_sung j on p.id_produk = j.id_produk inner" +
-                    " join TabelTambahan_sung t on p.id_produk = t.id_produk";
+                    " from Produk_"+nama_perusahaan+" p inner" +
+                    " join Bahan_"+nama_perusahaan+" b on p.id_produk = b.id_produk inner" +
+                    " join JenisSablon_"+nama_perusahaan+" j on p.id_produk = j.id_produk inner" +
+                    " join TabelTambahan_"+nama_perusahaan+" t on p.id_produk = t.id_produk";
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -2877,9 +3166,10 @@ int? cap)
                                 nama_sablon = reader["nama_sablon"].ToString(),
                                 foto_produk = reader["foto_produk"].ToString(),
                                 nama_tambahan = reader["nama_tambahan"].ToString(),
-                                harga = (int)reader["harga"],
-                                harga_tambahan = (int)reader["Harga_tambahan"],
-                                id_harga = (int)reader["id_harga"]
+                                harga_bahan = (int)reader["harga_bahan"],
+                                harga_sablon = (int)reader["harga_sablon"],
+                                harga_tambahan = (int)reader["harga_tambahan"],
+                               
 
                             };
                             result.Add(item);
@@ -2930,7 +3220,7 @@ int? cap)
                                 nama_sablon = reader["nama_sablon"].ToString(),
                                 foto_produk = reader["foto_produk"].ToString(),
                                 nama_tambahan = reader["nama_tambahan"].ToString(),
-                                harga = (int)reader["harga"],
+                                //harga = (int)reader["harga"],
                                 harga_tambahan = (int)reader["Harga_tambahan"],
                                 id_harga = (int)reader["id_harga"]
 

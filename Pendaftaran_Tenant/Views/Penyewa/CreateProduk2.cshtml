@@ -24,7 +24,7 @@
 <br />
 <div class="row">
     <h2 style="color:#47a447;display:inline;margin-left:36%">D A T A &nbsp;&nbsp; P R O D U K</h2>
-    @Html.ActionLink("Lanjut ke ulasan produk >>", "CreateViewHarga", "Penyewa", new { @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
+    @Html.ActionLink("Lanjut ke ulasan produk >>", "IndexProdukLengkap", "Penyewa", new { @class = "btn btn-success btn-sm", @style = "float:right;margin-right:40px" })
 </div>
 <hr />
 @*<div class="row">*@
@@ -63,11 +63,14 @@
                                 <input type="hidden" id="hiddenkategori" name="kategori" />
                                 <ul class="dropdown-menu scrollable-menu" role="menu" id="dropdownkategori">
 
+                                    <li><a href="#/">Jaket</a></li>
+                                    <li><a href="#/">Kaos</a></li>
+                                    <li><a href="#/">Korsa</a></li>
                                     <li><a href="#/">Keramik</a></li>
-                                    <li><a href="#/">Pakaian</a></li>
+
                                     <li><a href="#/">Sepatu</a></li>
                                     <li><a href="#/">Tas</a></li>
-                                   
+
 
                                 </ul>
                             </div>
@@ -132,9 +135,12 @@
                             <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="cvc" name="cvc" style="max-width:100px;display:inline" /></td>
                             <td>Hyget</td>
                             <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="hyget" name="hyget" style="max-width:100px;display:inline" /></td>
+                            <td>Polo</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="polo" name="polo" style="max-width:100px;display:inline" /></td>
 
                         </tr>
                     </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
                     <br />
                     <hr />
                     <h4 style="float:left">Jenis Sablon</h4>
@@ -178,6 +184,7 @@
                         </tr>
 
                     </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
                     <br />
                     <hr />
                     <h4 style="float:left">Tipe Desain</h4>
@@ -200,6 +207,7 @@
 
                         </tr>
                     </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
                     <br />
                     <hr />
                     <h4 style="float:left">Tambahan</h4>
@@ -223,6 +231,7 @@
                         </tr>
 
                     </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
                 </div>
                 <div id="tasdata" style="margin-left:30px;display:inline;display:none">
                     <h4 style="float:left">Bahan</h4>
@@ -246,6 +255,7 @@
 
                         </tr>
                     </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
                     <hr />
                     <h4 style="float:left">Cetakan Desain</h4>
                     <table style="border:0 solid;float:none;margin:0 auto" class="table">
@@ -260,6 +270,7 @@
                         </tr>
 
                     </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
                 </div>
                 <div id="sepatudata" style="margin-left:30px;display:inline;display:none">
                     <h4 style="float:left">Bahan</h4>
@@ -272,6 +283,7 @@
 
                         </tr>
                     </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
                     <hr />
                     <h4 style="float:left">Cetakan Desain</h4>
                     <table style="border:0 solid;float:none;margin:0 auto" class="table">
@@ -283,6 +295,7 @@
 
                         </tr>
                     </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
                 </div>
                 <div id="keramikdata" style="margin-left:30px;display:inline;display:none">
                     <h4 style="float:left">Bentuk</h4>
@@ -298,6 +311,7 @@
                         </tr>
 
                     </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
                     <hr />
                     <h4 style="float:left">Cetakan Desain</h4>
                     <table style="border:0 solid;float:none;margin:0 auto" class="table">
@@ -310,6 +324,138 @@
                         </tr>
 
                     </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
+                </div>
+                <div id="jaketdata" style="margin-left:30px;display:inline;display:none">
+                    <h4 style="float:left">Bentuk</h4>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Fleece<p>Cotton 30s</p></td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="fleececotton30s" name="fleececotton30s" style="max-width:100px;display:inline" /></td>
+                            <td>Fleece<p>Cotton 16s</p></td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="fleececotton16s" name="fleececotton16s" style="max-width:100px;display:inline" /></td>
+
+                            <td>Fleece <p>CVC 30s</p></td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="fleececvc30s" name="fleececvc30s" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Babyterry</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="babyterry" name="babyterry" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+                    </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
+                    <hr />
+                    <h4 style="float:left">Jenis Sablon</h4>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Rubber</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="rubberjaket" name="rubberjaket" style="max-width:100px;display:inline" /></td>
+                            <td>Bordir</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="bordirjaket" name="bordirjaket" style="max-width:100px;display:inline" /></td>
+                            <td>Discharge</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="dischargejaket" name="dischargejaket" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+
+                    </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
+                    <hr />
+                    <h4 style="float:left">Tipe Desain</h4>
+
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Icon - A4</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="da4jaket" name="da4jaket" style="max-width:100px;display:inline" /></td>
+                            <td>A3</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="da3jaket" name="da3jaket" style="max-width:100px;display:inline" /></td>
+                            <td>Blok</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="blokjaket" name="blokjaket" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Depan Belakang</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="depanbelakangjaket" name="depanbelakangjaket" style="max-width:100px;display:inline" /></td>
+                            <td>Bagian lengan</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="lenganjaket" name="lenganjaket" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+                    </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
+                    <hr />
+                    <h4 style="float:left">Tambahan</h4>
+
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>XXL</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="xxljaket" name="xxljaket" style="max-width:100px;display:inline" /></td>
+                            <td>Lebih dari XXL</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="lebihxxljaket" name="lebihxxljaket" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+
+                    </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
+                </div>
+                <div id="korsadata" style="margin-left:30px;display:inline;display:none">
+                    <h4 style="float:left">Bahan</h4>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Drill</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="drill" name="drill" style="max-width:100px;display:inline" /></td>
+                            <td>Hisovi</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="hisovi" name="hisovi" style="max-width:100px;display:inline" /></td>
+                            <td>Nagata</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="nagata" name="nagata" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+
+
+                    </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
+                    <hr />
+                    <h4 style="float:left">Cetakan Design</h4>
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td width="80px">Bordir</td>
+                            <td align="left">Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="bordirkorsa" name="bordirkorsa" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+
+
+                    </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
+                    <hr />
+                    <h4 style="float:left">Tipe Desain</h4>
+
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>Icon Dada</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="dada" name="dada" style="max-width:100px;display:inline" /></td>
+                            <td>Punggung</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="belakang" name="belakang" style="max-width:100px;display:inline" /></td>
+                            <td>Bagian lengan</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="lengankorsa" name="lengankorsa" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+
+                    </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
+                    <hr />
+                    <h4 style="float:left">Tambahan</h4>
+
+                    <table style="border:0 solid;float:none;margin:0 auto" class="table">
+                        <tr>
+                            <td>XXL</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="xxlkorsa" name="xxlkorsa" style="max-width:100px;display:inline" /></td>
+                            <td>Lebih dari XXL</td>
+                            <td>Rp <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)" id="lebihxxlkorsa" name="lebihxxlkorsa" style="max-width:100px;display:inline" /></td>
+
+                        </tr>
+
+                    </table>
+                    <h6 style="color:grey"><i>*Data boleh dikosongkan bila tidak digunakan atau dibutuhkan</i></h6>
                 </div>
                 <br />
                 <br />
@@ -318,7 +464,7 @@
                 </div>
                 <br />
             </div>
-            </div>
+        </div>
         <script>
             $(document).ready(function () {
 
@@ -331,49 +477,82 @@
                 //    }
 
                 //});
-               
+
 
                 $(function () {
                     var pakaian = document.getElementById('pakaiandata');
                     var tas = document.getElementById('tasdata');
                     var sepatu = document.getElementById('sepatudata');
                     var keramik = document.getElementById('keramikdata');
+                    var jaket = document.getElementById('jaketdata');
+                    var korsa = document.getElementById('korsadata');
                     $("#dropdownkategori").on('click', 'li a', function () {
                         $("#btnkategori").text($(this).text());
                         $("#btnkategori").val($(this).text());
                         $("#hiddenkategori").val($(this).text());
-                        if ($(this).text() == "Pakaian") {
+                        if ($(this).text() == "Kaos") {
                             //alert('hai');
+                            korsa.style = 'display:none';
                             keramik.style = 'display:none';
                             tas.style = 'display:none';
                             sepatu.style = 'display:none';
+                            jaket.style = 'display:none';
                             pakaian.style = 'display:block;margin-left:30px';
                         }
                         if ($(this).text() == "Tas") {
                             //alert('hai');
+                            korsa.style = 'display:none';
+
                             keramik.style = 'display:none';
                             pakaian.style = 'display:none';
                             sepatu.style = 'display:none';
+                            jaket.style = 'display:none';
                             tas.style = 'display:block;margin-left:30px';
-                            
-                           
+
+
                         }
                         if ($(this).text() == "Sepatu") {
                             //alert('hai');
+                            korsa.style = 'display:none';
+
                             pakaian.style = 'display:none';
                             keramik.style = 'display:none';
                             tas.style = 'display:none';
+                            jaket.style = 'display:none';
                             sepatu.style = 'display:block;margin-left:30px';
 
                         }
                         if ($(this).text() == "Keramik") {
                             //alert('hai');
+                            korsa.style = 'display:none';
+
                             pakaian.style = 'display:none';
-                            
+                            jaket.style = 'display:none';
                             tas.style = 'display:none';
                             sepatu.style = 'display:none';
                             keramik.style = 'display:block;margin-left:30px';
 
+                        }
+                        if ($(this).text() == "Jaket") {
+                            //alert('hai');
+                            pakaian.style = 'display:none';
+                            korsa.style = 'display:none';
+
+                            tas.style = 'display:none';
+                            sepatu.style = 'display:none';
+                            keramik.style = 'display:none';
+                            jaket.style = 'display:block;margin-left:30px';
+                        }
+                        if ($(this).text() == "Korsa") {
+                            //alert('hai');
+                            pakaian.style = 'display:none';
+
+
+                            tas.style = 'display:none';
+                            sepatu.style = 'display:none';
+                            keramik.style = 'display:none';
+                            jaket.style = 'display:none';
+                            korsa.style = 'display:block;margin-left:30px';
                         }
                     });
 

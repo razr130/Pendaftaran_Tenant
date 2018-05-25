@@ -12,7 +12,8 @@ namespace Pendaftaran_Tenant.Models
         public string nama_produk { get; set; }
         public string foto_produk { get; set; }
         public string nama_tambahan { get; set; }
-        public int harga { get; set; }
+        public int harga_bahan { get; set; }
+        public int harga_sablon { get; set; }
         public int harga_tambahan { get; set; }
         public int id_harga { get; set; }
     }
