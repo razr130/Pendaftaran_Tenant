@@ -18,23 +18,31 @@
             <tr>
                 <th style="text-align:center">
 
-                   Nama Bahan
+                    Nama Bahan
+                </th>
+                <th style="text-align:center">
+
+                    Harga
                 </th>
                 <th></th>
             </tr>
 
             @foreach (var item in Model.Select((value, i) => new { i, value }))
             {
-                <tr>
-                    <td>
-                        @*<input type="text" class="form-control" id="namabahan_@item.i.ToString()" style="display:none" />*@
-                        <p id="nama_@item.i.ToString()">@Html.DisplayFor(modelItem => item.value.nama_bahan)</p>
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "EditBahan", new { id = item.value.id_bahan, namabahan = item.value.nama_bahan }, new { @class = "btn btn-primary btn-sm" })
-                        <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteBahan", "Penyewa")?id=' + @item.value.id_bahan" class="btn btn-danger btn-sm" />
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @*<input type="text" class="form-control" id="namabahan_@item.i.ToString()" style="display:none" />*@
+                    <p id="nama_@item.i.ToString()">@Html.DisplayFor(modelItem => item.value.nama_bahan)</p>
+                </td>
+                <td>
+                    @*<input type="text" class="form-control" id="namabahan_@item.i.ToString()" style="display:none" />*@
+                    <p id="nama_@item.i.ToString()">@Html.DisplayFor(modelItem => item.value.harga)</p>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditBahan", new { id = item.value.id_bahan, namabahan = item.value.nama_bahan }, new { @class = "btn btn-primary btn-sm" })
+                    <input type="button" value="Hapus" onclick="location.href='@Url.Action("DeleteBahan", "Penyewa")?id=' + @item.value.id_bahan" class="btn btn-danger btn-sm" />
+                </td>
+            </tr>
             }
 
         </table>

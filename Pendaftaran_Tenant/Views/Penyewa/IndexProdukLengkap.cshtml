@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Pendaftaran_Tenant.Models.ProdukLengkapViewModel>
+﻿@model IEnumerable<Pendaftaran_Tenant.Models.Produk>
 
 @{
     ViewBag.Title = "IndexProdukLengkap";
@@ -34,14 +34,10 @@
 @Html.Raw(TempData["Pesan"])
 <div class="row">
 
-    @{ var tambahan = "";
-        var bahan = "";
-        var sablon = "";};
+    
     @foreach (var item in Model.GroupBy(x => x.nama_produk).Select(y => y.First()).ToList())
     {
-        //if (item.nama_produk != produk)
-        //{
-        @*@produk = item.nama_produk;*@
+        
         <div class="col-md-4">
             <h3 style="text-align:center">@item.nama_produk</h3>
             <div class="thumbnail">
@@ -57,22 +53,16 @@
 
 
                 </tr>
-                @foreach (var item2 in Model)
+                @foreach (var item2 in ViewBag.Bahan)
                 {
                     <tr>
-                        @if (item2.nama_produk == item.nama_produk)
+                        @if (item2.id_produk == item.id_produk)
                         {
-                            if (bahan != item2.nama_bahan)
-                            {
+                            
                             <td style="text-align:center">@item2.nama_bahan</td>
 
-                            <td style="text-align:center">@item2.harga_bahan</td>
-                                bahan = item2.nama_bahan;
-                            }
-                            else
-                            {
-
-                            }
+                            <td style="text-align:center">Rp @String.Format("{0:n0}", @item2.harga)</td>
+                                
 
                         }
                     </tr>
@@ -87,19 +77,16 @@
 
 
                 </tr>
-                @foreach (var item4 in Model)
+                @foreach (var item4 in ViewBag.Sablon)
                 {
                     <tr>
-                        @if (item4.nama_produk == item.nama_produk)
+                        @if (item4.id_produk == item.id_produk)
                         {
-                            if (sablon != item4.nama_sablon)
-                            {
+                           
                             <td style="text-align:center">@item4.nama_sablon</td>
 
-                            <td style="text-align:center">@item4.harga_sablon</td>
-                                sablon = item4.nama_sablon;
-                            }
-                            else { }
+                            <td style="text-align:center">Rp @String.Format("{0:n0}", @item4.harga)</td>
+                                
 
                         }
                     </tr>
@@ -114,18 +101,15 @@
 
 
                 </tr>
-                @foreach (var item3 in Model)
+                @foreach (var item3 in ViewBag.Tambahan)
                 {
                     <tr>
-                        @if (item3.nama_produk == item.nama_produk)
+                        @if (item3.id_produk == item.id_produk)
                         {
-                            if (tambahan != item3.nama_tambahan)
-                            {
+                            
                                 <td style="text-align:center">@item3.nama_tambahan</td>
-                                <td style="text-align:center">@item3.harga_tambahan</td>
-                                tambahan = item3.nama_tambahan;
-                            }
-                            else { };
+                                <td style="text-align:center">Rp @String.Format("{0:n0}", @item3.harga)</td>
+                                
 
                         }
 

@@ -13,5 +13,6 @@ namespace Pendaftaran_Tenant.Models
         public int id_produk { get; set; }
         [StringLength(50)]
         public string nama_sablon { get; set; }
+        public int harga { get; set; }
     }
 }

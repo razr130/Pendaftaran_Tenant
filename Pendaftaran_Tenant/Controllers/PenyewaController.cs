@@ -37,6 +37,35 @@ namespace Pendaftaran_Tenant.Controllers
                 return View(result);
             }
         }
+
+        public ActionResult DeleteCarausel(int id)
+        {
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "DELETE FROM [dbo].[Data_carausel]" +
+                    " WHERE [id_carausel]=" + id;
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "data produk berhasil ditambah");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+            return RedirectToAction("IndexCarausel");
+        }
         public ActionResult Login()
         {
 
@@ -1550,7 +1579,7 @@ int? lebihxxlkorsa)
 
                         sqlcom.ExecuteNonQuery();
                     }
-                    
+
 
                     //tambahan
                     if (da4 != null)
@@ -2552,6 +2581,7 @@ int? lebihxxlkorsa)
                 string query = "SELECT [id_bahan]" +
                     ",[id_produk]" +
                     ",[nama_bahan]" +
+                    ",[harga]"+
                     " FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + nama_perusahaan + "] WHERE [id_produk]=" + Session["id_produk"].ToString();
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
@@ -2565,7 +2595,8 @@ int? lebihxxlkorsa)
                             {
                                 id_bahan = (int)reader["id_bahan"],
                                 id_produk = (int)reader["id_produk"],
-                                nama_bahan = reader["nama_bahan"].ToString()
+                                nama_bahan = reader["nama_bahan"].ToString(),
+                                harga = (int)reader["harga"]
                             };
                             result.Add(item);
                         }
@@ -3135,22 +3166,162 @@ int? lebihxxlkorsa)
             return RedirectToAction("IndexViewHargaFix");
         }
 
+        public List<Bahan> getbahan()
+        {
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+
+            List<Bahan> result = new List<Bahan>();
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+
+                string query = "SELECT[id_bahan]" +
+                    ",[id_produk]" +
+                    ",[nama_bahan]" +
+                    ",[harga]" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + nama_perusahaan + "]";
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Bahan item = new Bahan()
+                            {
+                                id_bahan = (int)reader["id_bahan"],
+                                nama_bahan = reader["nama_bahan"].ToString(),
+                              
+                                id_produk = (int)reader["id_produk"],
+                                harga = (int)reader["harga"],
+                               
+
+
+                            };
+                            result.Add(item);
+                        }
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+                conn.Close();
+
+            }
+            return result;
+        }
+
+        public List<JenisSablon> getsablon()
+        {
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+
+            List<JenisSablon> result = new List<JenisSablon>();
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+
+                string query = "SELECT[id_jns_sablon]" +
+                    ",[id_produk]" +
+                    ",[nama_sablon]" +
+                    ",[harga]" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + nama_perusahaan + "]";
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            JenisSablon item = new JenisSablon()
+                            {
+                                id_jns_sablon = (int)reader["id_jns_sablon"],
+                                nama_sablon = reader["nama_sablon"].ToString(),
+
+                                id_produk = (int)reader["id_produk"],
+                                harga = (int)reader["harga"],
+
+
+
+                            };
+                            result.Add(item);
+                        }
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+                conn.Close();
+
+            }
+            return result;
+        }
+        public List<Tambahan> gettambahan()
+        {
+            string nama_perusahaan = Session["nama_perusahaan"].ToString();
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
+
+            List<Tambahan> result = new List<Tambahan>();
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+
+                string query = "SELECT[id_tambahan]" +
+                    ",[id_produk]" +
+                    ",[nama_tambahan]" +
+                    ",[harga]" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[TabelTambahan_" + nama_perusahaan + "]";
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Tambahan item = new Tambahan()
+                            {
+                                id_tambahan = (int)reader["id_tambahan"],
+                                nama_tambahan = reader["nama_tambahan"].ToString(),
+
+                                id_produk = (int)reader["id_produk"],
+                                harga = (int)reader["harga"],
+
+
+
+                            };
+                            result.Add(item);
+                        }
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+                conn.Close();
+
+            }
+            return result;
+        }
+
         public ActionResult IndexProdukLengkap()
         {
             string nama_perusahaan = Session["nama_perusahaan"].ToString();
 
 
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["PendaftaranTenant"].ConnectionString;
-            List<ProdukLengkapViewModel> result = new List<ProdukLengkapViewModel>();
+            List<Produk> result = new List<Produk>();
 
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
-                string query = "SELECT p.nama_produk,p.foto_produk, b.nama_bahan, b.harga as harga_bahan, j.nama_sablon, j.harga as harga_sablon,t.nama_tambahan, t.harga as harga_tambahan" +
-                    " from Produk_"+nama_perusahaan+" p inner" +
-                    " join Bahan_"+nama_perusahaan+" b on p.id_produk = b.id_produk inner" +
-                    " join JenisSablon_"+nama_perusahaan+" j on p.id_produk = j.id_produk inner" +
-                    " join TabelTambahan_"+nama_perusahaan+" t on p.id_produk = t.id_produk";
+                string query = "SELECT [id_produk],[nama_produk],[deskripsi],[kategori],[foto_produk] " +
+                    " FROM[MultiTenancy_Sablon].[dbo].[Produk_"+nama_perusahaan+"]";
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -3159,17 +3330,15 @@ int? lebihxxlkorsa)
                     {
                         while (reader.Read())
                         {
-                            ProdukLengkapViewModel item = new ProdukLengkapViewModel()
+                            Produk item = new Produk()
                             {
                                 nama_produk = reader["nama_produk"].ToString(),
-                                nama_bahan = reader["nama_bahan"].ToString(),
-                                nama_sablon = reader["nama_sablon"].ToString(),
+                                deskripsi = reader["deskripsi"].ToString(),
+                                kategori = reader["kategori"].ToString(),
                                 foto_produk = reader["foto_produk"].ToString(),
-                                nama_tambahan = reader["nama_tambahan"].ToString(),
-                                harga_bahan = (int)reader["harga_bahan"],
-                                harga_sablon = (int)reader["harga_sablon"],
-                                harga_tambahan = (int)reader["harga_tambahan"],
+                                id_produk = (int)reader["id_produk"],
                                
+
 
                             };
                             result.Add(item);
@@ -3182,6 +3351,9 @@ int? lebihxxlkorsa)
 
                 }
             }
+            ViewBag.Bahan = getbahan();
+            ViewBag.Sablon = getsablon();
+            ViewBag.Tambahan = gettambahan();
             return View(result);
         }
 
