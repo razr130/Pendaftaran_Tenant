@@ -2,11 +2,9 @@
 @{
     ViewBag.Title = "CreatePesananPakaian";
 }
-
 @{
     Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
 }
-
 <div class="container">
     <div class="row" style="margin-top:40px">
         <h6 style="float:left;margin-left:20px"><a href='@Url.Action("Indexku","Home")'>Beranda</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href='@Url.Action("Index","Produk")'>Produk</a>&nbsp;&nbsp;>&nbsp;&nbsp;Pemesanan</h6>
@@ -16,8 +14,6 @@
         {
             <div class="col-md-12 col-xs-12">
                 <div class="thumbnail clearfix text-center" style="max-width:1550px;width:100%">
-
-
                     @Html.AntiForgeryToken()
                     <table>
                         <tr>
@@ -25,13 +21,11 @@
                             <td><h3 style="color:@(Session["warnanavbar"].ToString())">Detail Pesanan</h3></td>
                         </tr>
                     </table>
-
                     <hr />
                     <table>
                         <tr>
                             <td style="padding-left:20px">
                                 <table style="border:0 solid;float:none;margin:0 auto;width:371px">
-
                                     <tr><td style="text-align:center"><img src="http://localhost:52494/Content/Images/@Session["fotoproduk"].ToString()" style="min-height:200px;height:200px;" /></td></tr>
                                     <tr><td></td></tr>
                                     <tr><td><p>@Session["deskripsi"].ToString()</p></td></tr>
@@ -45,7 +39,10 @@
                                             <table>
                                                 <tr>
                                                     <th style="text-align:center">
-                                                        Bahan dan jenis sablon
+                                                        Bahan
+                                                    </th>
+                                                    <th style="text-align:center">
+                                                        Jenis Sablon
                                                     </th>
                                                     <th style="text-align:center">
                                                         Desain
@@ -54,6 +51,9 @@
                                                 <tr>
                                                     <td style="padding-right:30px">
                                                         @Html.DropDownList("lstbahan", (IEnumerable<SelectListItem>)ViewBag.Bahan, new { id = "dropdownbahan", name = "bahan", @class = "form-control" })
+                                                    </td>
+                                                    <td style="padding-right:30px">
+                                                        @Html.DropDownList("lstsablon", (IEnumerable<SelectListItem>)ViewBag.Sablon, new { id = "dropdownsablon", name = "sablon", @class = "form-control" })
                                                     </td>
                                                     <td>
                                                         <input name="desain" type="file" class="form-control" />
@@ -64,12 +64,37 @@
                                     </tr>
                                     <tr>
                                         <td>
+                                            <h5 style="float:left"><b>Tipe Desain</b></h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table style="margin-bottom:20px">
+                                                <tr>
+                                                    <td style="padding-right:30px">
+                                                        <input type="checkbox" name="checka4" id="checka4" value="A4" /> A4
+                                                    </td>
+                                                    <td style="padding-right:30px">
+                                                        <input type="checkbox" name="checka3" id="checka3" value="A3" /> A3
+                                                    </td>
+                                                    <td style="padding-right:30px">
+                                                        <input type="checkbox" name="checkblok" id="checkblok" value="Blok" /> Blok
+                                                    </td>
+                                                    <td>
+                                                        <input type="checkbox" name="checkdepanbelakang" id="checkdepanbelakang" value="depanbelakang" /> Depan Belakang
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
                                             <h5 style="float:left"><b>Jumlah per Ukuran</b></h5>
                                         </td>
                                     </tr>
                                     <tr>
-
-                                        <td>
+                                        <td style="padding-bottom:20px">
                                             <table>
                                                 <tr>
                                                     <td style="padding-right:10px">Anak</td>
@@ -98,46 +123,174 @@
                                             </table>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td><h5 style="float:left"><b>Warna</b></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input checked="checked" id="putih" name="radiowarna" type="radio" value="#FFFFFF" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#ffffff;border:1px solid grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input style="padding-bottom:10px" id="hitam" name="radiowarna" type="radio" value="#000000" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#000000;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="abuterang" name="radiowarna" type="radio" value="#c9cac1" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#c9cac1;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="abusedang" name="radiowarna" type="radio" value="#4e534e" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#4e534e;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="abutua" name="radiowarna" type="radio" value="#251f21" />
+                                                    </td>
+                                                    <Td style="padding-right:10px">
+                                                        <div style="background-color:#251f21;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </Td>
+                                                    <td>
+                                                        <input id="hijaupucuk" name="radiowarna" type="radio" value="#d4efa0" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#d4efa0;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="hijauarmy" name="radiowarna" type="radio" value="#3c4833" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#3c4833;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="birubaby" name="radiowarna" type="radio" value="#c2e2ff" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#c2e2ff;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="birubenhur" name="radiowarna" type="radio" value="#2b368d" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#2b368d;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="birunavy" name="radiowarna" type="radio" value="#1a1b2b" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#1a1b2b;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="merahcabe" name="radiowarna" type="radio" value="#bc0201" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#bc0201;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="merahcabe" name="radiowarna" type="radio" value="#73120f" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#73120f;border:1px solid grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input style="padding-bottom:10px" id="merahmuda" name="radiowarna" type="radio" value="#ffc7d8" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#ffc7d8;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="kuningmangga" name="radiowarna" type="radio" value="#ffd669" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#ffd669;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="kuningemas" name="radiowarna" type="radio" value="#f0ab34" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#f0ab34;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="kuningkenari" name="radiowarna" type="radio" value="#ffe743" />
+                                                    </td>
+                                                    <Td style="padding-right:10px">
+                                                        <div style="background-color:#ffe743;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </Td>
+                                                    <td>
+                                                        <input id="kuningjeruk" name="radiowarna" type="radio" value="#cc7a0f" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#cc7a0f;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="orange" name="radiowarna" type="radio" value="#ff671b" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#ff671b;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="coklatkrem" name="radiowarna" type="radio" value="#f9e1bc" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#f9e1bc;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="coklatkhaki" name="radiowarna" type="radio" value="#c39564" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#c39564;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="coklatkopitua" name="radiowarna" type="radio" value="#32150a" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#32150a;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="ungumuda" name="radiowarna" type="radio" value="#b59bc2" />
+                                                    </td>
+                                                    <td style="padding-right:10px">
+                                                        <div style="background-color:#b59bc2;border-color:grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
-
                         </tr>
                     </table>
-
-
                     <br />
-
                     <br />
-
-
-
-
                 </div>
                 <br />
-
             </div>
             if (ViewBag.Tambahan.Count != 0)
             {
                 <div class="col-md-12 col-xs-12">
                     <div class="thumbnail clearfix text-center" style="max-width:1200px;width:100%">
-
-
-
                         <h3 class="text-center" style="color:@(Session["warnanavbar"].ToString())">Pesanan dengan Permintaan Khusus</h3>
                         <hr />
-
                         <br />
                         <table>
                             <tr>
                                 <td style="padding-left:20px">
-
                                     <table style="border:0 solid;float:none;margin:0">
-
-
-
                                         <tr>
                                             <td style="padding-right:10px">Permintaan</td>
                                             <td style="margin-right:30px;padding-bottom:10px;width:152px">
@@ -175,49 +328,31 @@
                                             <td><input type="number" class="form-control text-center" min="0" oninput="this.value = Math.abs(this.value)" style="max-width:70px" id="jmlhtambahan3" name="jmlhtambahan3" /></td>
                                         </tr>
                                     </table>
-
                                 </td>
                                 <td><div class="divider2" style="margin-left:220px"></div></td>
                                 <td style="padding-left:50px;width:480px">
-
                                     <h5><b>Catatan</b></h5>
                                     <textarea rows="4" class="form-control" id="deskripsi" name="catatan" style="max-width:850px"></textarea>
-
                                     <br />
-
-
                                 </td>
                             </tr>
                         </table>
-
-
-
                     </div>
                     <br />
                     <div class="text-center">
                         <input type="submit" value="Hitung Biaya" style="color:white;background-color:@(Session["warnanavbar"].ToString())" class="btn text-center" />
                     </div>
-
-
                 </div>
-
             }
             else
             {
                 <div class="col-md-12 col-xs-12">
-
-
-
-
                     <h3 class="text-center" style="color:@(Session["warnanavbar"].ToString());margin-top:0px">Catatan tambahan</h3>
-
-
                     <br />
                     <table>
                         <tr>
                             <td style="padding-left:230px;width:880px">
                                 <textarea rows="4" class="form-control" id="deskripsi" name="catatan" style="max-width:850px"></textarea>
-
                             </td>
                         </tr>
                     </table>
@@ -225,9 +360,7 @@
                     <div class="text-center">
                         <input type="submit" value="Hitung Biaya" style="color:white;background-color:@(Session["warnanavbar"].ToString())" class="btn text-center" />
                     </div>
-
                 </div>
-
             }
         }
     </div>

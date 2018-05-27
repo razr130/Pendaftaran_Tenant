@@ -21,12 +21,16 @@ namespace E_Commerce_MultiTenant.Controllers
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 conn.Open();
-                string query = "SELECT [id_produk]" +
-                    ",[nama_produk]" +
-                    ",[deskripsi]" +
-                    ",[kategori]" +
-                    ",[foto_produk]" +
-                    "FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "]";
+                string query = "SELECT p.[id_produk], p.[nama_produk]" +
+                    ",p.[deskripsi]" +
+                    ",p.[kategori]" +
+                    ",p.[foto_produk]" +
+                    ", MIN(b.harga) as harga" +
+                    " FROM[Produk_"+subdomain+"] p inner join Bahan_"+subdomain+" b on p.id_produk = b.id_produk where b.harga = (select min(harga) from bahan_"+subdomain+") group by p.[id_produk]" +
+                    ",p.[nama_produk]" +
+                    ",p.[deskripsi]" +
+                    ",p.[kategori]" +
+                    ",p.[foto_produk]";
 
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
@@ -41,7 +45,8 @@ namespace E_Commerce_MultiTenant.Controllers
                                 nama_produk = reader["nama_produk"].ToString(),
                                 deskripsi = reader["deskripsi"].ToString(),
                                 kategori = reader["kategori"].ToString(),
-                                foto_produk = reader["foto_produk"].ToString()
+                                foto_produk = reader["foto_produk"].ToString(),
+                                harga = (int)reader["harga"]
                             };
                             result.Add(item);
                         }
@@ -82,13 +87,9 @@ namespace E_Commerce_MultiTenant.Controllers
                 {
                     conn.Open();
                     string query = "SELECT [id_bahan]" +
-                        ",[id_jns_sablon]" +
                         ",[nama_bahan]" +
-                        ",[nama_sablon]" +
-                        ",[harga]" +
+                        "FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + subdomain + "] WHERE id_produk=" + id_produk.ToString();
 
-                        " FROM[MultiTenancy_Sablon].[dbo].[View_" + subdomain + "] WHERE id_produk=" + id_produk.ToString() +
-                        " group by nama_bahan, nama_sablon,harga,id_bahan,id_jns_sablon";
 
 
                     SqlCommand sqlcom = new SqlCommand(query, conn);
@@ -100,8 +101,8 @@ namespace E_Commerce_MultiTenant.Controllers
                             {
                                 lstbahan.Add(new SelectListItem
                                 {
-                                    Value = reader["id_bahan"].ToString() + "&" + reader["id_jns_sablon"].ToString(),
-                                    Text = reader["nama_bahan"].ToString() + " dengan sablon " + reader["nama_sablon"].ToString()
+                                    Value = reader["id_bahan"].ToString(),
+                                    Text = reader["nama_bahan"].ToString()
                                 });
                             }
                             ViewBag.Bahan = lstbahan;
@@ -189,8 +190,9 @@ namespace E_Commerce_MultiTenant.Controllers
             }
         }
         [HttpPost]
-        public ActionResult CreatePesananPakaian(string subdomain, string lstbahan, HttpPostedFileBase desain, int? anak, int? xs, int? s
-            , int? m, int? l, int? xl, int? xxl, int? xxxl, int? empatxl, int? limaxl,
+        public ActionResult CreatePesananPakaian(string subdomain, string lstbahan, string lstsablon, HttpPostedFileBase desain, string checka4, string checka3, string checkblok, string checkdepanbelakang,
+            int? anak, int? xs, int? s
+            , int? m, int? l, int? xl, int? xxl, int? xxxl, int? empatxl, int? limaxl, string radiowarna,
             string tambahan1, string ukuran1, int? jmlhtambahan1, string tambahan2, string ukuran2,
             int? jmlhtambahan2, string tambahan3, string ukuran3, int? jmlhtambahan3, string catatan)
         {
@@ -208,12 +210,27 @@ namespace E_Commerce_MultiTenant.Controllers
             {
                 catatanfull += "Tambahan " + tambahan3 + " di ukuran " + ukuran3 + " " + jmlhtambahan3 + " pcs.";
             }
+            if (checka4 != null)
+            {
+                catatanfull += " tipe desain : " + checka4;
+            }
+            if (checka3 != null)
+            {
+                catatanfull += " tipe desain : " + checka3;
+            }
+            if (checkblok != null)
+            {
+                catatanfull += " tipe desain : " + checkblok;
+            }
+            if (checkdepanbelakang != null)
+            {
+                catatanfull += " tipe desain : " + checkdepanbelakang;
+            }
+            catatanfull += " warna : " + radiowarna;
             catatanfull += " " + catatan;
-            Session["catatan"] = catatanfull;
-            var idbahan = lstbahan.Split('&')[0];
-            Session["idbahan"] = idbahan;
-            var idsablon = lstbahan.Split('&')[1];
-            Session["idsablon"] = idsablon;
+            Session["catatan"] = catatanfull;         
+            Session["idbahan"] = lstbahan;          
+            Session["idsablon"] = lstsablon;
 
             string filePath = "";
             string fileName = Guid.NewGuid().ToString() + "_" + desain.FileName;

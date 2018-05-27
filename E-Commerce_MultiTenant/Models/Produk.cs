@@ -18,5 +18,6 @@ namespace E_Commerce_MultiTenant.Models
         public string kategori { get; set; }
         [StringLength(100)]
         public string foto_produk { get; set; }
+        public int harga { get; set; }
     }
 }

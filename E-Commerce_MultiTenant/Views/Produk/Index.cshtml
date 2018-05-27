@@ -18,7 +18,7 @@
                 <div class="thumbnail">
                     <img src="http://localhost:52494/Content/Images/@item.foto_produk" style="min-height:200px;height:200px;" />
                 </div>
-               
+                <p class="text-center">Harga mulai dari Rp @String.Format("{0:n0}", @item.harga)  / pcs</p>
                 <hr />
                 @*<button class="btn btn-primary" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")'">Pesan</button>*@
                 @if (Session["role"] == null)
