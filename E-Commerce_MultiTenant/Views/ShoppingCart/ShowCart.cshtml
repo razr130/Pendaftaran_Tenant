@@ -71,6 +71,22 @@
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>
+            <tr>
+                <th>Ukuran</th>
+                <th>Jumlah</th>
+                <th>Tambahan</th>
+            </tr>
+            foreach (var item2 in ViewBag.Ukuran)
+            {
+                if (item2.no_detail == item.no_detail)
+                {
+                    <tr>
+                        <td>@item2.ukuran</td>
+                        <td>@item2.jumlah</td>
+                        <td>@item2.tambahan</td>
+                    </tr>
+                }
+            }
         }
 
     </table>

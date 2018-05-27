@@ -13,6 +13,7 @@ namespace E_Commerce_MultiTenant.Models
         public int id_bahan { get; set; }
         public int id_jns_sablon { get; set; }
         public string desain { get; set; }
+        public string warna { get; set; }
         public int jumlah { get; set; }
         public int subtotal { get; set; }
         public string namaproduk { get; set; }

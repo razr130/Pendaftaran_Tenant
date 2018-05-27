@@ -19,9 +19,53 @@ namespace E_Commerce_MultiTenant.Controllers
         {
             return View();
         }
+        public List<UkuranOrder> getukuran()
+        {
+            
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
 
+            List<UkuranOrder> result = new List<UkuranOrder>();
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+
+                string query = "SELECT o.[id_ukuran_order], o.[id_ukuran],o.[no_detail],o.[jumlah],o.[tambahan],u.ukuran FROM[MultiTenancy_Sablon].[dbo].[UkuranOrder_"+Session["subdomain"].ToString()+"] o inner join Ukuran_"+ Session["subdomain"].ToString() + " u on o.id_ukuran = u.id_ukuran";
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            UkuranOrder item = new UkuranOrder()
+                            {
+                                id_ukuran_order = (int)reader["id_ukuran_order"],
+                                id_ukuran = (int)reader["id_ukuran"],
+
+                                no_detail = (int)reader["no_detail"],
+                                jumlah = (int)reader["jumlah"],
+                                ukuran = reader["ukuran"].ToString(),
+                                tambahan = reader["tambahan"].ToString()
+
+
+                            };
+                            result.Add(item);
+                        }
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+                conn.Close();
+
+            }
+            return result;
+        }
         public ActionResult ShowCart(string subdomain)
         {
+            Session["subdomain"] = subdomain;
             if (Session["noorder"] != null)
             {
 
@@ -81,6 +125,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                     conn.Close();
                 }
+                ViewBag.Ukuran = getukuran();
                 return View(result);
             }
             else
@@ -239,8 +284,6 @@ namespace E_Commerce_MultiTenant.Controllers
             }
 
         }
-
-
         public ActionResult KonfirmasiKirim()
         {
             return View();
@@ -293,13 +336,14 @@ namespace E_Commerce_MultiTenant.Controllers
                                 ",[id_produk]" +
                                 ",[id_bahan]" +
                                 ",[id_jns_sablon]" +
+                                ",[warna]"+
                                 ",[desain]" +
                                 ",[jumlah]" +
                                 ",[subtotal]," +
                                 "[catatan])" +
                                 " output INSERTED.no_detail VALUES" +
                                 " (" + no_order + "," + Session["id_produk"].ToString() + "," + Session["idbahan"] +
-                                "," + Session["idsablon"] + ",'" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
+                                "," + Session["idsablon"] + ",'"+Session["warna"].ToString()+"','" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
                                 "," + Session["totalhargaall"].ToString() + ",'" + Session["catatan"].ToString() + "')";
 
                             no_detail = (int)sqlcom.ExecuteScalar();
@@ -423,7 +467,375 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
+                            if(Session["jmlhtambahan1"] != null)
+                            {
+                                if (Session["ukuran1"].ToString() == "Anak")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (1" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'"+Session["tambahan1"].ToString()+"')";
 
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran1"].ToString() == "XS")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (2" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran1"].ToString() == "S")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (3" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran1"].ToString() == "M")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (4" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran1"].ToString() == "L")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (5" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran1"].ToString() == "XL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (6" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran1"].ToString() == "XXL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (7" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran1"].ToString() == "XXXL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (8" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran1"].ToString() == "4XL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (9" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran1"].ToString() == "5XL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (10" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                            }
+                            if (Session["jmlhtambahan2"] != null)
+                            {
+                                if (Session["ukuran2"].ToString() == "Anak")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (1" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran2"].ToString() == "XS")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (2" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran2"].ToString() == "S")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (3" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran2"].ToString() == "M")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (4" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran2"].ToString() == "L")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (5" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran2"].ToString() == "XL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (6" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran2"].ToString() == "XXL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (7" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran2"].ToString() == "XXXL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (8" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran2"].ToString() == "4XL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (9" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran2"].ToString() == "5XL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (10" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                            }
+                            if (Session["jmlhtambahan3"] != null)
+                            {
+                                if (Session["ukuran3"].ToString() == "Anak")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (1" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran3"].ToString() == "XS")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (2" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran3"].ToString() == "S")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (3" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran3"].ToString() == "M")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (4" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran3"].ToString() == "L")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (5" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran3"].ToString() == "XL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (6" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran3"].ToString() == "XXL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (7" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran3"].ToString() == "XXXL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (8" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran3"].ToString() == "4XL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (9" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                                if (Session["ukuran3"].ToString() == "5XL")
+                                {
+                                    sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                        "([id_ukuran]" +
+                                        ",[no_detail] ,[jumlah],[tambahan])" +
+                                        " VALUES" +
+                                        " (10" +
+                                        "," + no_detail +
+                                        "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                    sqlcom.ExecuteNonQuery();
+                                }
+                            }
                         }
                         else
                         {
@@ -432,13 +844,14 @@ namespace E_Commerce_MultiTenant.Controllers
                                 ",[id_produk]" +
                                 ",[id_bahan]" +
                                 ",[id_jns_sablon]" +
+                                ",[warna]"+
                                 ",[desain]" +
                                 ",[jumlah]" +
                                 ",[subtotal]," +
                                 "[catatan])" +
                                 " VALUES" +
                                 "(" + no_order + "," + Session["id_produk"].ToString() + "," + Session["idbahan"] +
-                                "," + Session["idsablon"] + ",'" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
+                                "," + Session["idsablon"] + ",'"+Session["warna"].ToString()+"','" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
                                 "," + Session["totalhargaall"].ToString() + ",'" + Session["catatan"].ToString() + "')";
 
                             sqlcom.ExecuteNonQuery();
@@ -464,13 +877,14 @@ namespace E_Commerce_MultiTenant.Controllers
                                 ",[id_produk]" +
                                 ",[id_bahan]" +
                                 ",[id_jns_sablon]" +
+                                ",[warna]" +
                                 ",[desain]" +
                                 ",[jumlah]" +
                                 ",[subtotal]," +
                                 "[catatan])" +
                                 " output INSERTED.no_detail VALUES" +
                                 "(" + Session["noorder"].ToString() + "," + Session["id_produk"].ToString() + "," + Session["idbahan"] +
-                                "," + Session["idsablon"] + ",'" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
+                                "," + Session["idsablon"] + ",'"+Session["warna"].ToString()+"','" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
                                 "," + Session["totalhargaall"].ToString() + ",'" + Session["catatan"].ToString() + "')";
 
                     SqlCommand sqlcom = new SqlCommand(query, conn);
@@ -598,6 +1012,375 @@ namespace E_Commerce_MultiTenant.Controllers
                                 "," + Session["5xl"].ToString() + ")";
 
                             sqlcom.ExecuteNonQuery();
+                        }
+                        if (Session["jmlhtambahan1"] != null)
+                        {
+                            if (Session["ukuran1"].ToString() == "Anak")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (1" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran1"].ToString() == "XS")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (2" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran1"].ToString() == "S")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (3" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran1"].ToString() == "M")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (4" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran1"].ToString() == "L")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (5" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+                                
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran1"].ToString() == "XL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (6" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran1"].ToString() == "XXL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (7" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran1"].ToString() == "XXXL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (8" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran1"].ToString() == "4XL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (9" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran1"].ToString() == "5XL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (10" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                        }
+                        if (Session["jmlhtambahan2"] != null)
+                        {
+                            if (Session["ukuran2"].ToString() == "Anak")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (1" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran2"].ToString() == "XS")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (2" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran2"].ToString() == "S")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (3" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran2"].ToString() == "M")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (4" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran2"].ToString() == "L")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (5" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran2"].ToString() == "XL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (6" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran2"].ToString() == "XXL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (7" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran2"].ToString() == "XXXL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (8" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran2"].ToString() == "4XL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (9" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran2"].ToString() == "5XL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (10" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan2"].ToString() + ",'" + Session["tambahan2"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                        }
+                        if (Session["jmlhtambahan3"] != null)
+                        {
+                            if (Session["ukuran3"].ToString() == "Anak")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (1" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran3"].ToString() == "XS")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (2" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran3"].ToString() == "S")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (3" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran3"].ToString() == "M")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (4" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran3"].ToString() == "L")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (5" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran3"].ToString() == "XL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (6" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran3"].ToString() == "XXL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (7" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran3"].ToString() == "XXXL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (8" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran3"].ToString() == "4XL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (9" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
+                            if (Session["ukuran3"].ToString() == "5XL")
+                            {
+                                sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
+                                    "([id_ukuran]" +
+                                    ",[no_detail] ,[jumlah],[tambahan])" +
+                                    " VALUES" +
+                                    " (10" +
+                                    "," + no_detail +
+                                    "," + Session["jmlhtambahan3"].ToString() + ",'" + Session["tambahan3"].ToString() + "')";
+
+                                sqlcom.ExecuteNonQuery();
+                            }
                         }
                     }
                     catch (Exception)

@@ -338,6 +338,18 @@ namespace E_Commerce_MultiTenant.Controllers
                             Session["role"] = "customer";
                         }
                     }
+
+                    sqlcom.CommandText = "SELECT [email] FROM [MultiTenancy_Sablon].[dbo].[Penyewa] WHERE nama_perusahaan='" + subdomain + "'";
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+
+                            
+                            Session["emailperusahaan"] = reader["email"].ToString();
+                           
+                        }
+                    }
                     conn.Close();
                     if (result != "")
                     {

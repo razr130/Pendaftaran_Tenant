@@ -196,7 +196,9 @@ namespace E_Commerce_MultiTenant.Controllers
             string tambahan1, string ukuran1, int? jmlhtambahan1, string tambahan2, string ukuran2,
             int? jmlhtambahan2, string tambahan3, string ukuran3, int? jmlhtambahan3, string catatan)
         {
-            
+            int hargasatuan = 0;
+            int hargabahan = 0;
+            int hargasablon = 0;
             var catatanfull = "";
             if (tambahan1 != "")
             {
@@ -226,12 +228,12 @@ namespace E_Commerce_MultiTenant.Controllers
             {
                 catatanfull += " tipe desain : " + checkdepanbelakang;
             }
-            catatanfull += " warna : " + radiowarna;
+            
             catatanfull += " " + catatan;
             Session["catatan"] = catatanfull;         
             Session["idbahan"] = lstbahan;          
             Session["idsablon"] = lstsablon;
-
+            Session["warna"] = radiowarna;
             string filePath = "";
             string fileName = Guid.NewGuid().ToString() + "_" + desain.FileName;
             if (desain.ContentLength > 0)
@@ -289,9 +291,10 @@ namespace E_Commerce_MultiTenant.Controllers
             Session["jmlhtambahan1"] = jmlhtambahan1.ToString();
             Session["jmlhtambahan2"] = jmlhtambahan2.ToString();
             Session["jmlhtambahan3"] = jmlhtambahan3.ToString();
-            Session["ukuran1"] = ukuran1;
-            Session["ukuran2"] = ukuran2;
-            Session["ukuran3"] = ukuran3;
+            Session["ukuran1"] = ukuran1.Replace(" ","");
+            Session["ukuran2"] = ukuran2.Replace(" ", "");
+            Session["ukuran3"] = ukuran3.Replace(" ", "");
+            
 
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connstring))
@@ -314,15 +317,30 @@ namespace E_Commerce_MultiTenant.Controllers
                     }
                     sqlcom.CommandText = "SELECT [harga]" +
 
-                 " FROM[MultiTenancy_Sablon].[dbo].[Harga_" + subdomain + "] WHERE id_jns_sablon=" + Session["idsablon"].ToString() + " AND id_bahan=" + Session["idbahan"].ToString() +
+                 " FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + subdomain + "] WHERE id_bahan=" + Session["idbahan"].ToString() +
                  " AND id_produk=" + Session["id_produk"].ToString();
                     using (SqlDataReader reader = sqlcom.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            Session["hargasatuan"] = reader["harga"].ToString();
+                            hargabahan = (int)reader["harga"];
                         }
                     }
+                    sqlcom.CommandText = "SELECT [harga]" +
+
+                " FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + subdomain + "] WHERE id_jns_sablon=" + Session["idsablon"].ToString() +
+                " AND id_produk=" + Session["id_produk"].ToString();
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            hargasablon = (int)reader["harga"];
+                        }
+                    }
+
+                    hargasatuan = hargabahan + hargasablon;
+                    Session["hargasatuan"] = hargasatuan.ToString();
+
                     sqlcom.CommandText = "SELECT [harga]" +
 
                     " FROM[MultiTenancy_Sablon].[dbo].[TabelTambahan_" + subdomain + "] WHERE id_produk=" + Session["id_produk"].ToString() + " AND nama_tambahan='Lebih dari XXL'";

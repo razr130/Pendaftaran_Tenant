@@ -3922,6 +3922,7 @@ int? lebihxxlkorsa)
                     "[id_produk] [int] NULL," +
                     "[id_bahan] [int] NULL," +
                     "[id_jns_sablon] [int] NULL," +
+                    "[warna][varchar](12) NULL," +
                     "[desain] [varchar](100) NULL," +
                     "[jumlah] [int] NULL," +
                     "[subtotal] [int] NULL," +
@@ -3971,6 +3972,7 @@ int? lebihxxlkorsa)
                     "[id_ukuran][int] NULL," +
                     "[no_detail][int] NULL," +
                     "[jumlah][int] NULL," +
+                    "[tambahan][varchar](100) NULL," +
                     "CONSTRAINT[PK_UkuranOrder_" + nama_perusahaan + "]" + " PRIMARY KEY CLUSTERED" +
                     "(" +
                     "[id_ukuran_order] ASC" +
