@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Emailterkirim";
+}
+
+@{
+    Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
+}
+<div class="container" style="margin-top:5%">
+    <div class="col-md-12 col-xs-12">
+        <div class="thumbnail clearfix text-center" style="max-width:500px;width:100%;margin-left:28%">
+            <br />
+            <br />
+            <p>Pesanan anda telah terkirim</p>
+            <div class="text-center">
+                <button class="btn btn-success hvr-grow" onclick="location.href='@Url.Action("Indexku","Home")'">Kembali ke Beranda</button>
+
+            </div>
+            <br />
+            <br />
+        </div>
+    </div>
+</div>

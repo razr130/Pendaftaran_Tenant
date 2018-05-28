@@ -197,6 +197,15 @@ namespace E_Commerce_MultiTenant.Controllers
                                 result.Add(item);
                             }
                         }
+                        sqlcom.CommandText = "SELECT [email] FROM [MultiTenancy_Sablon].[dbo].[Penyewa] WHERE nama_perusahaan='" + subdomain + "'";
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                Session["emailperusahaan"] = reader["email"].ToString();
+                            }
+                            
+                        }
 
                         sqlcom.CommandText = "SELECT TOP (1) [nama_produk],[foto_produk]" +
                             " FROM[MultiTenancy_Sablon].[dbo].[Produk_"+subdomain+"]" +
@@ -339,17 +348,7 @@ namespace E_Commerce_MultiTenant.Controllers
                         }
                     }
 
-                    sqlcom.CommandText = "SELECT [email] FROM [MultiTenancy_Sablon].[dbo].[Penyewa] WHERE nama_perusahaan='" + subdomain + "'";
-                    using (SqlDataReader reader = sqlcom.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-
-                            
-                            Session["emailperusahaan"] = reader["email"].ToString();
-                           
-                        }
-                    }
+                   
                     conn.Close();
                     if (result != "")
                     {

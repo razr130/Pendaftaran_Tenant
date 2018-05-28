@@ -12,8 +12,8 @@
             <br />
             <p>Apakah pesanan akan dikirim ke alamat @Session["alamat"].ToString() ? </p>
             <div class="text-center">
-                <button class="btn btn-success hvr-grow" onclick="location.href='@Url.Action("Invoice","ShoppingCart")/?kirim=ya'">YA</button>
-                <button class="btn btn-danger hvr-grow" onclick="location.href='@Url.Action("Invoice","ShoppingCart")/?kirim=tidak'">TIDAK</button>
+                <button class="btn btn-success hvr-grow" onclick="location.href='@Url.Action("updatekirim","ShoppingCart")/?kirim=ya'">YA</button>
+                <button class="btn btn-danger hvr-grow" onclick="location.href='@Url.Action("updatekirim","ShoppingCart")/?kirim=tidak'">TIDAK</button>
 
             </div>
             <br />
@@ -21,3 +21,4 @@
         </div>
     </div>
 </div>
+

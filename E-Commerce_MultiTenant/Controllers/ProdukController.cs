@@ -200,18 +200,18 @@ namespace E_Commerce_MultiTenant.Controllers
             int hargabahan = 0;
             int hargasablon = 0;
             var catatanfull = "";
-            if (tambahan1 != "")
-            {
-                catatanfull += "Tambahan " + tambahan1 + " di ukuran " + ukuran1 + " " + jmlhtambahan1 + " pcs.";
-            }
-            if (tambahan2 != "")
-            {
-                catatanfull += "Tambahan " + tambahan2 + " di ukuran " + ukuran2 + " " + jmlhtambahan2 + " pcs.";
-            }
-            if (tambahan3 != "")
-            {
-                catatanfull += "Tambahan " + tambahan3 + " di ukuran " + ukuran3 + " " + jmlhtambahan3 + " pcs.";
-            }
+            //if (tambahan1 != "")
+            //{
+            //    catatanfull += "Tambahan " + tambahan1 + " di ukuran " + ukuran1 + " " + jmlhtambahan1 + " pcs.";
+            //}
+            //if (tambahan2 != "")
+            //{
+            //    catatanfull += "Tambahan " + tambahan2 + " di ukuran " + ukuran2 + " " + jmlhtambahan2 + " pcs.";
+            //}
+            //if (tambahan3 != "")
+            //{
+            //    catatanfull += "Tambahan " + tambahan3 + " di ukuran " + ukuran3 + " " + jmlhtambahan3 + " pcs.";
+            //}
             if (checka4 != null)
             {
                 catatanfull += " tipe desain : " + checka4;

@@ -63,6 +63,46 @@ namespace E_Commerce_MultiTenant.Controllers
             }
             return result;
         }
+        public List<Desain> getdesain()
+        {
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+
+            List<Desain> result = new List<Desain>();
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+
+                string query = "SELECT [desain] FROM[MultiTenancy_Sablon].[dbo].[DetailOrder_" + Session["subdomain"].ToString() + "] WHERE no_order=" + Session["noorder"].ToString();
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Desain item = new Desain()
+                            {
+                               
+                                desain = reader["desain"].ToString()
+                               
+
+
+                            };
+                            result.Add(item);
+                        }
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+                conn.Close();
+
+            }
+            return result;
+        }
         public ActionResult ShowCart(string subdomain)
         {
             Session["subdomain"] = subdomain;
@@ -81,6 +121,7 @@ namespace E_Commerce_MultiTenant.Controllers
                         ",d.[id_produk]" +
                         ",d.[id_bahan]" +
                         ",d.[id_jns_sablon]" +
+                        ",d.[warna]" +
                         ",d.[desain]" +
                         ",d.[jumlah]" +
                         ",d.[subtotal]" +
@@ -106,16 +147,21 @@ namespace E_Commerce_MultiTenant.Controllers
                                     id_bahan = (int)reader["id_bahan"],
                                     id_jns_sablon = (int)reader["id_jns_sablon"],
                                     desain = reader["desain"].ToString(),
+                                    warna = reader["warna"].ToString(),
                                     jumlah = (int)reader["jumlah"],
                                     subtotal = (int)reader["subtotal"],
                                     namaproduk = reader["nama_produk"].ToString(),
                                     namabahan = reader["nama_bahan"].ToString(),
-                                    namasablon = reader["nama_sablon"].ToString()
-
+                                    namasablon = reader["nama_sablon"].ToString(),
+                                    catatan = reader["catatan"].ToString()
+                                    
                                 };
+                                
+                                Session["desainkirim"] = item.desain;
                                 result.Add(item);
                             }
                         }
+                       
 
                     }
                     catch (Exception)
@@ -126,6 +172,7 @@ namespace E_Commerce_MultiTenant.Controllers
                     conn.Close();
                 }
                 ViewBag.Ukuran = getukuran();
+                ViewBag.desain = getdesain();
                 return View(result);
             }
             else
@@ -284,8 +331,126 @@ namespace E_Commerce_MultiTenant.Controllers
             }
 
         }
+        public ActionResult updatekirim(string subdomain,string kirim)
+        {
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "UPDATE [dbo].[Order_" + subdomain + "] SET [dikirim]='" + kirim + "' WHERE no_order=" + Session["noorder"].ToString();
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {       
+                    sqlcom.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                }
+                conn.Close();
+            }
+            //SendMailToUser2();
+                    return RedirectToAction("Emailterkirim", "ShoppingCart");
+        }
+
+        public ActionResult Emailterkirim()
+        {
+            return View();
+        }
+
+        public string RenderRazorViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext,
+                                                                         viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View,
+                                             ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+        public JsonResult SendMailToUser2(string table)
+        {
+           //var body =  RenderRazorViewToString("ShowCart",new List<DetailOrder>());
+            bool result = false;
+
+            result = SendEmail2(Session["emailperusahaan"].ToString(), "Data pesanan " + Session["user"].ToString(),
+                
+                "Pesanan : <br />" +
+                table +
+                "<br />");
+           
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public bool SendEmail2(string toEmail, string subject, string emailBody)
+        {
+
+            try
+            {
+                string senderEmail = System.Configuration.ConfigurationManager.AppSettings["SenderEmail"].ToString();
+                string senderPassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
+
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.Timeout = 100000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential(senderEmail, senderPassword);
+
+                MailMessage mailMessage = new MailMessage(senderEmail, toEmail, subject, emailBody);
+                mailMessage.IsBodyHtml = true;
+                mailMessage.BodyEncoding = UTF8Encoding.UTF8;
+                //System.Net.Mail.Attachment attachment;
+                //attachment = new System.Net.Mail.Attachment("~/Content/Images/" + Session["desainkirim"].ToString());
+                string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+
+                
+                using (SqlConnection conn = new SqlConnection(connstring))
+                {
+                    conn.Open();
+
+                    string query = "SELECT [desain] FROM[MultiTenancy_Sablon].[dbo].[DetailOrder_" + Session["subdomain"].ToString() + "] WHERE no_order=" + Session["noorder"].ToString();
+                    SqlCommand sqlcom = new SqlCommand(query, conn);
+                    try
+                    {
+                        using (SqlDataReader reader = sqlcom.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                                mailMessage.Attachments.Add(new Attachment(Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), reader["desain"].ToString())));                                                       
+                            }
+
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    conn.Close();
+
+                }
+                      
+                client.Send(mailMessage);
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+
+            }
+
+        }
         public ActionResult KonfirmasiKirim()
         {
+           
             return View();
         }
         public ActionResult AddtoCart(string subdomain)

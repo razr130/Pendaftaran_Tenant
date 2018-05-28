@@ -205,6 +205,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DataCarausel.cs" />
     <Compile Include="Models\DataUI.cs" />
+    <Compile Include="Models\Desain.cs" />
     <Compile Include="Models\DetailOrder.cs" />
     <Compile Include="Models\ECommerce.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -300,6 +301,7 @@
     <Content Include="Views\ShoppingCart\CartKosong.cshtml" />
     <Content Include="Views\ShoppingCart\Invoice.cshtml" />
     <Content Include="Views\ShoppingCart\KonfirmasiKirim.cshtml" />
+    <Content Include="Views\ShoppingCart\Emailterkirim.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,5 +19,6 @@ namespace E_Commerce_MultiTenant.Models
         public string namaproduk { get; set; }
         public string namabahan { get; set; }
         public string namasablon { get; set; }
+        public string catatan { get; set; }
     }
 }
