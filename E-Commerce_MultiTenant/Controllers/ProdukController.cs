@@ -63,9 +63,89 @@ namespace E_Commerce_MultiTenant.Controllers
             return View(result);
         }
 
+        public List<Bahan> gethargabahan()
+        {
 
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+
+            List<Bahan> result = new List<Bahan>();
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+
+                string query = "SELECT [harga],[id_bahan] FROM[MultiTenancy_Sablon].[dbo].[Bahan_" + Session["subdomain"].ToString() + "]";
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Bahan item = new Bahan()
+                            {
+                                harga = (int)reader["harga"],
+                                id_bahan = (int)reader["id_bahan"]
+                               
+
+
+                            };
+                            result.Add(item);
+                        }
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+                conn.Close();
+
+            }
+            return result;
+        }
+        public List<JenisSablon> gethargasablon()
+        {
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+
+            List<JenisSablon> result = new List<JenisSablon>();
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+
+                string query = "SELECT [harga],[id_jns_sablon] FROM[MultiTenancy_Sablon].[dbo].[JenisSablon_" + Session["subdomain"].ToString() + "]";
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            JenisSablon item = new JenisSablon()
+                            {
+                                harga = (int)reader["harga"],
+                                id_jns_sablon = (int)reader["id_jns_sablon"]
+
+
+
+                            };
+                            result.Add(item);
+                        }
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+                conn.Close();
+
+            }
+            return result;
+        }
         public ActionResult CreatePesananPakaian(string subdomain, int id_produk)
         {
+            Session["subdomain"] = subdomain;
             if (Session["user"] == null)
             {
                 Session["idproduklogin"] = id_produk;
@@ -185,7 +265,8 @@ namespace E_Commerce_MultiTenant.Controllers
 
                     conn.Close();
                 }
-
+                ViewBag.HargaBahan = gethargabahan();
+                ViewBag.HargaSablon = gethargasablon();
                 return View();
             }
         }

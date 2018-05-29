@@ -33,9 +33,10 @@
                                 </td>
 
 
-                                <td><b>Subtotal : </b></td>
+                                <td><b>Harga Sementara : </b></td>
                                 <td align="left">
-                                    Rp @String.Format("{0:n0}", item.value.subtotal)
+                                    Rp @String.Format("{0:n0}", item.value.subtotal) 
+                                    <p style="color:red">*harga belum termasuk harga desain</p>
                                 </td>
                                 <td>
                                     @Html.ActionLink("Delete", "Delete", null, new { @class = "btn btn-danger" })

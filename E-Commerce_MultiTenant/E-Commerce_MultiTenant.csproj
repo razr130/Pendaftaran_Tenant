@@ -202,6 +202,7 @@
     </Compile>
     <Compile Include="Helpers\Message.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Bahan.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DataCarausel.cs" />
     <Compile Include="Models\DataUI.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Models\DetailOrder.cs" />
     <Compile Include="Models\ECommerce.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\JenisSablon.cs" />
     <Compile Include="Models\Karyawan.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
