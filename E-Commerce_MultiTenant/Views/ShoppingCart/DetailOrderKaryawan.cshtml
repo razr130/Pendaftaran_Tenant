@@ -1,0 +1,73 @@
+﻿@model IEnumerable<E_Commerce_MultiTenant.Models.DetailOrder>
+
+@{
+    ViewBag.Title = "DetailOrderKaryawan";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
+}
+<div class="container" id="keranjang" style="margin-top:5%">
+    <h3 class="text-center">Keranjang Belanja</h3>
+    <hr />
+    <br />
+    <table id="tabelpesanan" class="table table-striped">
+        @foreach (var item in Model.Select((value, i) => new { i, value }))
+        {
+            <tr>
+                <td>
+                    <div class="thumbnail clearfix text-center" style="max-width:1500px;width:100%">
+                        <table class="table">
+                            <tr>
+                                <th colspan="6" style="padding-left:30px">
+                                    <h3>  @item.value.namaproduk @item.value.namabahan - @item.value.namasablon</h3>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td align="center" rowspan="2"> <img src="~/Content/Images/@item.value.desain" class="img-responsive" style="max-height:100px;max-width:100px" /></td>
+                                <td>
+                                    <b> Warna :</b>
+                                </td>
+                                <td align="left">
+                                    <div style="background-color:@item.value.warna;border:1px solid grey;width:30px;height:30px;display:inline-block;border-radius:5px"></div>
+                                </td>
+
+
+                                <td><b>Subtotal : </b></td>
+                                <td align="left">
+                                    Rp @String.Format("{0:n0}", item.value.subtotal)
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-xs" onclick="location.href='@Url.Action("EditHargaDetail","ShoppingCart")/?id=@item.value.no_detail'">Ubah Harga</button>
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td align="left" colspan="5" style="padding-left:80px">
+                                    @foreach (var item2 in ViewBag.Ukuran)
+                                    {
+                                        if (item2.no_detail == item.value.no_detail)
+                                        {
+                                            <p style="font-size:10px">@item2.ukuran @item2.tambahan - @item2.jumlah</p>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p>@item.value.catatan</p></td>
+                                <td><b>Jumlah : </b></td>
+                                <td align="left">@item.value.jumlah</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+
+
+
+
+        }
+    </table>
+    <br />
+</div>

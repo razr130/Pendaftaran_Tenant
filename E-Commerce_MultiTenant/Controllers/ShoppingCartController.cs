@@ -19,9 +19,257 @@ namespace E_Commerce_MultiTenant.Controllers
         {
             return View();
         }
+        public ActionResult GetAllOrder(string subdomain)
+        {
+
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            List<Order> result = new List<Order>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [no_order]" +
+                    ",[id_customer]" +
+                    ",[status_bayar]" +
+                    ",[tgl_order]" +
+                    ",[tgl_konfirmasi]" +
+                    ",[total_harga]" +
+                    ",[dikirim]" +
+                    ",c.nama_customer" +
+                    " FROM[MultiTenancy_Sablon].[dbo].[Order_" + subdomain + "] o inner join [MultiTenancy_Sablon].[dbo].[Customer_sung] c on o.id_customer = c.id_cutomer order by [tgl_order] desc";
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader["total_harga"] == DBNull.Value)
+                            {
+                                if(reader["tgl_konfirmasi"]==DBNull.Value)
+                                {
+                                    Order item = new Order()
+                                    {
+                                        no_order = (int)reader["no_order"],
+                                        id_customer = (int)reader["id_customer"],
+                                        status_bayar = reader["status_bayar"].ToString(),
+                                        tgl_order = ((DateTime)reader["tgl_order"]).ToString("dd-MMMM-yyyy"),
+
+                                        dikirim = reader["dikirim"].ToString(),
+                                        total_harga = 0,
+                                        nama_customer = reader["nama_customer"].ToString(),
+                                        //tgl_konfirmasi = ((DateTime)reader["tgl_konfirmasi"]).ToString("yyyy-MM-dd")
+                                    };
+                                    result.Add(item);
+                                }
+                                else
+                                {
+                                    Order item = new Order()
+                                    {
+                                        no_order = (int)reader["no_order"],
+                                        id_customer = (int)reader["id_customer"],
+                                        status_bayar = reader["status_bayar"].ToString(),
+                                        tgl_order = ((DateTime)reader["tgl_order"]).ToString("dd-MMMM-yyyy"),
+
+                                        dikirim = reader["dikirim"].ToString(),
+                                        total_harga = 0,
+                                        nama_customer = reader["nama_customer"].ToString(),
+                                        tgl_konfirmasi = ((DateTime)reader["tgl_konfirmasi"]).ToString("yyyy-MM-dd")
+                                    };
+                                    result.Add(item);
+                                }
+                                
+                            }
+                            else
+                            {
+                                if (reader["tgl_konfirmasi"] == DBNull.Value)
+                                {
+                                    Order item = new Order()
+                                    {
+                                        no_order = (int)reader["no_order"],
+                                        id_customer = (int)reader["id_customer"],
+                                        status_bayar = reader["status_bayar"].ToString(),
+                                        tgl_order = ((DateTime)reader["tgl_order"]).ToString("dd-MMMM-yyyy"),
+
+                                        dikirim = reader["dikirim"].ToString(),
+                                        total_harga = 0,
+                                        nama_customer = reader["nama_customer"].ToString(),
+                                        //tgl_konfirmasi = ((DateTime)reader["tgl_konfirmasi"]).ToString("yyyy-MM-dd")
+                                    };
+                                    result.Add(item);
+                                }
+                                else
+                                {
+                                    Order item = new Order()
+                                    {
+                                        no_order = (int)reader["no_order"],
+                                        id_customer = (int)reader["id_customer"],
+                                        status_bayar = reader["status_bayar"].ToString(),
+                                        tgl_order = ((DateTime)reader["tgl_order"]).ToString("dd-MMMM-yyyy"),
+
+                                        dikirim = reader["dikirim"].ToString(),
+                                        total_harga = 0,
+                                        nama_customer = reader["nama_customer"].ToString(),
+                                        tgl_konfirmasi = ((DateTime)reader["tgl_konfirmasi"]).ToString("yyyy-MM-dd")
+                                    };
+                                    result.Add(item);
+                                }
+                            }
+                            
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            return View(result);
+        }
+        public ActionResult DetailOrderKaryawan(string subdomain, int id)
+        {
+            Session["noorder"] = id.ToString();
+            Session["subdomain"] = subdomain;
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            List<DetailOrder> result = new List<DetailOrder>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT d.[no_detail]" +
+                    ", d.[no_order]" +
+                    ",d.[id_produk]" +
+                    ",d.[id_bahan]" +
+                    ",d.[id_jns_sablon]" +
+                    ",d.[warna]" +
+                    ",d.[desain]" +
+                    ",d.[jumlah]" +
+                    ",d.[subtotal]" +
+                    ",d.[catatan]," +
+                    "p.nama_produk," +
+                    "b.nama_bahan," +
+                    "j.nama_sablon" +
+                    " FROM DetailOrder_" + subdomain + " d inner join Produk_" + subdomain + " p on d.id_produk = p.id_produk inner join Bahan_" + subdomain + " b on d.id_bahan = b.id_bahan" +
+                    " inner join JenisSablon_" + subdomain + " j on d.id_jns_sablon = j.id_jns_sablon WHERE d.no_order =" + id;
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DetailOrder item = new DetailOrder()
+                            {
+                                no_detail = (int)reader["no_detail"],
+                                no_order = (int)reader["no_order"],
+                                id_produk = (int)reader["id_produk"],
+                                id_bahan = (int)reader["id_bahan"],
+                                id_jns_sablon = (int)reader["id_jns_sablon"],
+                                desain = reader["desain"].ToString(),
+                                warna = reader["warna"].ToString(),
+                                jumlah = (int)reader["jumlah"],
+                                subtotal = (int)reader["subtotal"],
+                                namaproduk = reader["nama_produk"].ToString(),
+                                namabahan = reader["nama_bahan"].ToString(),
+                                namasablon = reader["nama_sablon"].ToString(),
+                                catatan = reader["catatan"].ToString()
+
+                            };
+
+                            Session["desainkirim"] = item.desain;
+                            result.Add(item);
+                        }
+                    }
+
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            ViewBag.Ukuran = getukuran();
+            ViewBag.desain = getdesain();
+            return View(result);
+        }
+        public ActionResult EditHargaDetail(string subdomain, int id)
+        {
+            Session["subdomain"] = subdomain;
+            Session["no_detail"] = id.ToString();
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            DetailOrder result = new DetailOrder();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "SELECT [subtotal]" +
+                    
+                    " FROM[MultiTenancy_Sablon].[dbo].[DetailOrder_" + subdomain + "] WHERE [no_detail]=" + id.ToString();
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    using (SqlDataReader reader = sqlcom.ExecuteReader())
+                    {
+
+                        if (reader.Read())
+                        {
+                            result.subtotal = (int)reader["subtotal"];
+                            
+                        };
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                conn.Close();
+            }
+            return View(result);
+
+            
+        }
+        [HttpPost]
+        public ActionResult EditHargaDetail(int subtotal)
+        {
+            int no_detail = Convert.ToInt32(Session["noorder"]);
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                    "UPDATE [dbo].[DetailOrder_" + Session["subdomain"] + "]" +
+                    " SET [subtotal] =" + subtotal + 
+                    " WHERE [no_detail]=" + Session["no_detail"].ToString();
+
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    
+                }
+                catch (Exception )
+                {
+                    
+                }
+
+                conn.Close();
+            }
+            return Redirect("http://" + Session["subdomain"].ToString() + ".multitenant.local:58131/ShoppingCart/DetailOrderKaryawan/?id=" + no_detail);
+            
+        }
         public List<UkuranOrder> getukuran()
         {
-            
+
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
 
             List<UkuranOrder> result = new List<UkuranOrder>();
@@ -29,7 +277,7 @@ namespace E_Commerce_MultiTenant.Controllers
             {
                 conn.Open();
 
-                string query = "SELECT o.[id_ukuran_order], o.[id_ukuran],o.[no_detail],o.[jumlah],o.[tambahan],u.ukuran FROM[MultiTenancy_Sablon].[dbo].[UkuranOrder_"+Session["subdomain"].ToString()+"] o inner join Ukuran_"+ Session["subdomain"].ToString() + " u on o.id_ukuran = u.id_ukuran";
+                string query = "SELECT o.[id_ukuran_order], o.[id_ukuran],o.[no_detail],o.[jumlah],o.[tambahan],u.ukuran FROM[MultiTenancy_Sablon].[dbo].[UkuranOrder_" + Session["subdomain"].ToString() + "] o inner join Ukuran_" + Session["subdomain"].ToString() + " u on o.id_ukuran = u.id_ukuran";
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
                 {
@@ -83,9 +331,9 @@ namespace E_Commerce_MultiTenant.Controllers
                         {
                             Desain item = new Desain()
                             {
-                               
+
                                 desain = reader["desain"].ToString()
-                               
+
 
 
                             };
@@ -154,14 +402,14 @@ namespace E_Commerce_MultiTenant.Controllers
                                     namabahan = reader["nama_bahan"].ToString(),
                                     namasablon = reader["nama_sablon"].ToString(),
                                     catatan = reader["catatan"].ToString()
-                                    
+
                                 };
-                                
+
                                 Session["desainkirim"] = item.desain;
                                 result.Add(item);
                             }
                         }
-                       
+
 
                     }
                     catch (Exception)
@@ -200,9 +448,9 @@ namespace E_Commerce_MultiTenant.Controllers
                 {
                     totalharga = (int)sqlcom.ExecuteScalar();
 
-                    sqlcom.CommandText = "UPDATE [dbo].[Order_" + subdomain + "] SET [total_harga]=" + totalharga + ", [dikirim]='"+kirim+"' WHERE no_order=" + Session["noorder"].ToString();
+                    sqlcom.CommandText = "UPDATE [dbo].[Order_" + subdomain + "] SET [total_harga]=" + totalharga + ", [dikirim]='" + kirim + "' WHERE no_order=" + Session["noorder"].ToString();
                     sqlcom.ExecuteNonQuery();
-                    
+
 
                     sqlcom.CommandText = "SELECT [nama_customer],[no_telp],[alamat]" +
                " FROM[MultiTenancy_Sablon].[dbo].[Customer_" + subdomain + "] WHERE email_customer='" + Session["email"].ToString() + "'";
@@ -223,7 +471,7 @@ namespace E_Commerce_MultiTenant.Controllers
                         if (reader.Read())
                         {
                             ViewBag.tglorder = Convert.ToDateTime(reader["tgl_order"]).ToString("yyyy-MM-dd");
-                            Session["dikirim"]= reader["dikirim"].ToString();
+                            Session["dikirim"] = reader["dikirim"].ToString();
 
                             ViewBag.totalharga = reader["total_harga"].ToString();
                         }
@@ -279,16 +527,16 @@ namespace E_Commerce_MultiTenant.Controllers
 
         public JsonResult SendMailToUser(string table)
         {
-           
+
             bool result = false;
 
             result = SendEmail(Session["email"].ToString(), "Konfirmasi pemesanan dan informasi pembayaran",
                 "<p>Pemesanan anda telah berhasil,<br />" +
-               
-                "Pesanan yang telah dilakukan berupa : <br />"+
+
+                "Pesanan yang telah dilakukan berupa : <br />" +
                 table +
                 "<br />" +
-                "Dengan total biaya sebesar : "+ ViewBag.totalharga +
+                "Dengan total biaya sebesar : " + ViewBag.totalharga +
                 "Biaya pemesanan dapat dibayarkan melalui rekening : <br />" +
                 "BNI : 344449404940 <br />" +
                 "BCA : 28102819111829 <br />" +
@@ -331,8 +579,9 @@ namespace E_Commerce_MultiTenant.Controllers
             }
 
         }
-        public ActionResult updatekirim(string subdomain,string kirim)
+        public JsonResult updatekirim(string subdomain, string kirim)
         {
+            bool result = false;
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connstring))
             {
@@ -340,8 +589,9 @@ namespace E_Commerce_MultiTenant.Controllers
                 string query = "UPDATE [dbo].[Order_" + subdomain + "] SET [dikirim]='" + kirim + "' WHERE no_order=" + Session["noorder"].ToString();
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
-                {       
+                {
                     sqlcom.ExecuteNonQuery();
+                    result = true;
                 }
                 catch (Exception)
                 {
@@ -349,7 +599,7 @@ namespace E_Commerce_MultiTenant.Controllers
                 conn.Close();
             }
             //SendMailToUser2();
-                    return RedirectToAction("Emailterkirim", "ShoppingCart");
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Emailterkirim()
@@ -357,31 +607,18 @@ namespace E_Commerce_MultiTenant.Controllers
             return View();
         }
 
-        public string RenderRazorViewToString(string viewName, object model)
-        {
-            ViewData.Model = model;
-            using (var sw = new StringWriter())
-            {
-                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext,
-                                                                         viewName);
-                var viewContext = new ViewContext(ControllerContext, viewResult.View,
-                                             ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-                return sw.GetStringBuilder().ToString();
-            }
-        }
+
         public JsonResult SendMailToUser2(string table)
         {
-           //var body =  RenderRazorViewToString("ShowCart",new List<DetailOrder>());
+            //var body =  RenderRazorViewToString("ShowCart",new List<DetailOrder>());
             bool result = false;
 
             result = SendEmail2(Session["emailperusahaan"].ToString(), "Data pesanan " + Session["user"].ToString(),
-                
+
                 "Pesanan : <br />" +
                 table +
                 "<br />");
-           
+
 
             return Json(result, JsonRequestBehavior.AllowGet);
 
@@ -409,7 +646,7 @@ namespace E_Commerce_MultiTenant.Controllers
                 //attachment = new System.Net.Mail.Attachment("~/Content/Images/" + Session["desainkirim"].ToString());
                 string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
 
-                
+
                 using (SqlConnection conn = new SqlConnection(connstring))
                 {
                     conn.Open();
@@ -423,7 +660,7 @@ namespace E_Commerce_MultiTenant.Controllers
                             while (reader.Read())
                             {
 
-                                mailMessage.Attachments.Add(new Attachment(Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), reader["desain"].ToString())));                                                       
+                                mailMessage.Attachments.Add(new Attachment(Path.Combine(HttpContext.Server.MapPath("~/Content/Images"), reader["desain"].ToString())));
                             }
 
                         }
@@ -435,7 +672,7 @@ namespace E_Commerce_MultiTenant.Controllers
                     conn.Close();
 
                 }
-                      
+
                 client.Send(mailMessage);
 
                 return true;
@@ -450,7 +687,7 @@ namespace E_Commerce_MultiTenant.Controllers
         }
         public ActionResult KonfirmasiKirim()
         {
-           
+
             return View();
         }
         public ActionResult AddtoCart(string subdomain)
@@ -501,14 +738,14 @@ namespace E_Commerce_MultiTenant.Controllers
                                 ",[id_produk]" +
                                 ",[id_bahan]" +
                                 ",[id_jns_sablon]" +
-                                ",[warna]"+
+                                ",[warna]" +
                                 ",[desain]" +
                                 ",[jumlah]" +
                                 ",[subtotal]," +
                                 "[catatan])" +
                                 " output INSERTED.no_detail VALUES" +
                                 " (" + no_order + "," + Session["id_produk"].ToString() + "," + Session["idbahan"] +
-                                "," + Session["idsablon"] + ",'"+Session["warna"].ToString()+"','" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
+                                "," + Session["idsablon"] + ",'" + Session["warna"].ToString() + "','" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
                                 "," + Session["totalhargaall"].ToString() + ",'" + Session["catatan"].ToString() + "')";
 
                             no_detail = (int)sqlcom.ExecuteScalar();
@@ -632,7 +869,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if(Session["jmlhtambahan1"] != null)
+                            if (Session["jmlhtambahan1"] != null)
                             {
                                 if (Session["ukuran1"].ToString() == "Anak")
                                 {
@@ -642,7 +879,7 @@ namespace E_Commerce_MultiTenant.Controllers
                                         " VALUES" +
                                         " (1" +
                                         "," + no_detail +
-                                        "," + Session["jmlhtambahan1"].ToString() + ",'"+Session["tambahan1"].ToString()+"')";
+                                        "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
 
                                     sqlcom.ExecuteNonQuery();
                                 }
@@ -1009,14 +1246,14 @@ namespace E_Commerce_MultiTenant.Controllers
                                 ",[id_produk]" +
                                 ",[id_bahan]" +
                                 ",[id_jns_sablon]" +
-                                ",[warna]"+
+                                ",[warna]" +
                                 ",[desain]" +
                                 ",[jumlah]" +
                                 ",[subtotal]," +
                                 "[catatan])" +
                                 " VALUES" +
                                 "(" + no_order + "," + Session["id_produk"].ToString() + "," + Session["idbahan"] +
-                                "," + Session["idsablon"] + ",'"+Session["warna"].ToString()+"','" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
+                                "," + Session["idsablon"] + ",'" + Session["warna"].ToString() + "','" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
                                 "," + Session["totalhargaall"].ToString() + ",'" + Session["catatan"].ToString() + "')";
 
                             sqlcom.ExecuteNonQuery();
@@ -1049,7 +1286,7 @@ namespace E_Commerce_MultiTenant.Controllers
                                 "[catatan])" +
                                 " output INSERTED.no_detail VALUES" +
                                 "(" + Session["noorder"].ToString() + "," + Session["id_produk"].ToString() + "," + Session["idbahan"] +
-                                "," + Session["idsablon"] + ",'"+Session["warna"].ToString()+"','" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
+                                "," + Session["idsablon"] + ",'" + Session["warna"].ToString() + "','" + Session["desain"].ToString() + "'," + Session["jumlahorder"].ToString() +
                                 "," + Session["totalhargaall"].ToString() + ",'" + Session["catatan"].ToString() + "')";
 
                     SqlCommand sqlcom = new SqlCommand(query, conn);
@@ -1237,7 +1474,7 @@ namespace E_Commerce_MultiTenant.Controllers
                                     " (5" +
                                     "," + no_detail +
                                     "," + Session["jmlhtambahan1"].ToString() + ",'" + Session["tambahan1"].ToString() + "')";
-                                
+
                                 sqlcom.ExecuteNonQuery();
                             }
                             if (Session["ukuran1"].ToString() == "XL")

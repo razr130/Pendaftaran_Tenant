@@ -302,6 +302,9 @@
     <Content Include="Views\ShoppingCart\Invoice.cshtml" />
     <Content Include="Views\ShoppingCart\KonfirmasiKirim.cshtml" />
     <Content Include="Views\ShoppingCart\Emailterkirim.cshtml" />
+    <Content Include="Views\ShoppingCart\GetAllOrder.cshtml" />
+    <Content Include="Views\ShoppingCart\DetailOrderKaryawan.cshtml" />
+    <Content Include="Views\ShoppingCart\EditHargaDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

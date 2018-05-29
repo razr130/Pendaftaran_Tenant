@@ -38,11 +38,11 @@
                                     Rp @String.Format("{0:n0}", item.value.subtotal)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Delete", "Delete",null, new { @class = "btn btn-danger" })
+                                    @Html.ActionLink("Delete", "Delete", null, new { @class = "btn btn-danger" })
                                 </td>
                             </tr>
                             <tr>
-                                
+
                                 <td align="left" colspan="5" style="padding-left:80px">
                                     @foreach (var item2 in ViewBag.Ukuran)
                                     {
@@ -80,27 +80,87 @@
         <button class="btn btn-primary hvr-grow" onclick="kirim()">Kirim Pesanan</button>
     </div>
 </div>
-<script type="text/javascript">
-        var kirim = function() {
-            //send email button click event
+<div class="modal fade" id="modalkirim">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Kirim Pesanan</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Apakah pesanan akan dikirim ke alamat @Session["alamat"].ToString() ?</h4>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <a href="#" class="btn btn-danger" onclick="tidakdikirim()">Tidak</a>
+                    <a href="#" class="btn btn-success" onclick="dikirim()">Ya</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                //get the table content
-            var tablevalue = "<table>" + $("#tabelpesanan").html() + "</table>";
-                //using Ajax to call the action method
+</div>
+<script type="text/javascript">
+    var kirim = function () {
+        $("#modalkirim").modal('show');
+    };
+        var dikirim = function() {
+            
                 $.ajax({
-                    url: '@Url.Action("SendMailToUser2", "ShoppingCart")', //
+                    url: '@Url.Action("updatekirim", "ShoppingCart")', //
                     dataType: "json",
-                    data: JSON.stringify({ table: tablevalue }),
+                    data: JSON.stringify({ kirim:"ya" }),
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
                     success: function (result) {
-                        alert("success");
+                        sendmail();
                     },
                     error: function (xhr) {
                         alert("error");
                     }
                 });
                 return false;
+
+
+    };
+    var sendmail = function () {
+        
+                        var tablevalue = "<table>" + $("#tabelpesanan").html() + "</table>";
+                         $.ajax({
+                    url: '@Url.Action("SendMailToUser2", "ShoppingCart")', //
+                    dataType: "json",
+                    data: JSON.stringify({ table:tablevalue }),
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        alert("email terkirim");
+                        $("#modalkirim").modal('hide');
+                       
+                    },
+                    error: function (xhr) {
+                        alert("error");
+                    }
+                });
+    };
+     var tidakdikirim = function() {
+            //send email button click event
+
+                //get the table content
+            $.ajax({
+                    url: '@Url.Action("updatekirim", "ShoppingCart")', //
+                    dataType: "json",
+                    data: JSON.stringify({ kirim:"tidak" }),
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        sendmail();
+                    },
+                    error: function (xhr) {
+                        alert("error");
+                    }
+                });
+                return false;
+
 
 
     };

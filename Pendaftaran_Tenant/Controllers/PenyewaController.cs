@@ -3894,6 +3894,7 @@ int? lebihxxlkorsa)
 
                      "[status_bayar] [char](5) NULL," +
                       "[tgl_order] [date] NULL," +
+                      "[tgl_konfirmasi] [date] NULL," +
                     "[total_harga] [int] NULL," +
                     "[dikirim] [char](5) NULL," +
                     " CONSTRAINT[PK_Order_" + nama_perusahaan + "] PRIMARY KEY CLUSTERED" +

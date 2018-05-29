@@ -2,19 +2,28 @@
 
 @if (@Session["user"] != null)
 {
-    
+
     using (Html.BeginForm("Logout", "Home", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li  class="hvr-pop">
-                <a href="~/ShoppingCart/ShowCart" style="color:white"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-            </li>
-            <li  class="hvr-pop">
+            @if (Session["role"].ToString() == "customer")
+            {
+                <li class="hvr-pop">
+                    <a href="~/ShoppingCart/ShowCart" style="color:white"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                </li>
+            }
+            @if (Session["role"].ToString() == "karyawan")
+            {
+                <li class="hvr-pop">
+                    @Html.ActionLink("List Order", "GetAllOrder", "ShoppingCart", null, new { @style = "color:white;font-family:'Roboto'" })
+                </li>
+            }
+            <li class="hvr-pop">
                 @Html.ActionLink("Hello " + Session["user"].ToString() + "!", "Indexku", "Home", null, new { @style = "color:white;font-family:'Roboto'" })
             </li>
-            <li  class="hvr-pop"><a style="color:white;font-family:'Roboto'" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li class="hvr-pop"><a style="color:white;font-family:'Roboto'" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     }
 }
@@ -22,6 +31,6 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         <li style="color:white" class="hvr-pop">@Html.ActionLink("Daftar", "Create", "Home", null, new { @style = "color:white;font-family:'Roboto'" })</li>
-        <li style="color:white" class="hvr-pop">@Html.ActionLink("Log in", "Login", "Home",null, new { @style = "color:white;font-family:'Roboto'" })</li>
+        <li style="color:white" class="hvr-pop">@Html.ActionLink("Log in", "Login", "Home", null, new { @style = "color:white;font-family:'Roboto'" })</li>
     </ul>
 }
