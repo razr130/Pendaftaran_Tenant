@@ -24,17 +24,24 @@
                         <tr><td style="text-align:center"><img src="http://localhost:52494/Content/Images/@Session["fotoproduk"].ToString()" style="min-height:200px;height:200px;" /></td></tr>
 
                     </table>
-
+                    <table style="border:0 solid;float:none;margin:0 auto"> 
+                    <tr>
+                        <td><h4>Rp</h4></td>
+                        <td><h4 id="hargahitung">@String.Format("{0:n0}", 0)</h4></td></tr> </table>
                     <br />
-
                     <br />
-
-
                 </div>
                 <br />
 
             </div>
-
+            foreach (var hargabahan in ViewBag.HargaBahan)
+            {
+                <input type="hidden" name="hargabahan_@hargabahan.id_bahan" value="@hargabahan.harga" id="hargabahan_@hargabahan.id_bahan" />
+            }
+            foreach (var hargasablon in ViewBag.HargaSablon)
+            {
+                <input type="hidden" name="hargasablon_@hargasablon.id_jns_sablon" value="@hargasablon.harga" id="hargasablon_@hargasablon.id_jns_sablon" />
+            }
             <div class="col-md-8 col-xs-8">
                 <div class="thumbnail clearfix text-center" style="max-width:700px;width:100%">
 
@@ -44,15 +51,21 @@
                         <table style="border:0 solid;float:none;margin-left:70px">
                             <tr>
                                 <th style="text-align:center">
-                                    Bahan dan jenis sablon
+                                    Bahan
+                                </th>
+                                <th style="text-align:center">
+                                    Jenis Sablon
                                 </th>
                                 <th style="text-align:center">
                                     Desain
                                 </th>
                             </tr>
                             <tr>
-                                <td style="padding-right:20px">
+                                <td style="padding-right:30px">
                                     @Html.DropDownList("lstbahan", (IEnumerable<SelectListItem>)ViewBag.Bahan, new { id = "dropdownbahan", name = "bahan", @class = "form-control" })
+                                </td>
+                                <td style="padding-right:30px">
+                                    @Html.DropDownList("lstsablon", (IEnumerable<SelectListItem>)ViewBag.Sablon, new { id = "dropdownsablon", name = "sablon", @class = "form-control" })
                                 </td>
                                 <td>
                                     <input name="desain" type="file" class="form-control" />
@@ -64,7 +77,7 @@
 
                     <div class="row" style="margin-left:15px">
                         <h5 style="text-align:center;margin-right:50px"><b>Jumlah</b></h5>
-                        <div class="text-center" style="margin-left:39%"><input type="text" name="jumlah" class="form-control" style="max-width:100px" /></div>
+                        <div class="text-center" style="margin-left:39%"><input type="text" name="jumlah" id="jumlah" class="form-control" style="max-width:100px" /></div>
                     </div>
                     <div class="row">
                         <h5 style="text-align:center;margin-right:20px"><b>Catatan</b></h5>
@@ -80,3 +93,34 @@
         }
     </div>
 </div>
+<script>
+    var jumlah = 0;
+    var valbahanawal = $("#dropdownbahan").val();
+    var hargabahan = parseInt($("#hargabahan_" + valbahanawal).val());
+    var valsablonawal = $("#dropdownsablon").val();
+    var hargasablon = parseInt($("#hargasablon_" + valsablonawal).val());
+
+    $("#dropdownbahan").change(function () {
+        var tes = document.getElementById('dropdownbahan').selectedOptions[0].value
+        //alert(tes);
+        hargabahan = parseInt($("#hargabahan_" + tes).val());
+        hitung();
+        //alert(hargabahan);
+    });
+    $("#dropdownsablon").change(function () {
+        var tes = document.getElementById('dropdownsablon').selectedOptions[0].value
+        //alert(tes);
+        hargasablon = parseInt($("#hargasablon_" + tes).val());
+        hitung();
+        //alert(hargasablon);
+    });
+    $("#jumlah").keyup(function () {
+        jumlah = parseInt($("#jumlah").val())
+        hitung();
+    });
+
+    var hitung = function () {
+        var totalharga = (hargasablon + hargabahan) * jumlah;
+        $("#hargahitung").text(totalharga);
+    }
+</script>

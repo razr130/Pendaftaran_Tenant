@@ -701,8 +701,8 @@ namespace E_Commerce_MultiTenant.Controllers
             if (Session["noorder"] == null)
             {
 
-                var tes = Session["ukuran1"].ToString();
-                var a = 0;
+                
+               
                 string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
                 using (SqlConnection conn = new SqlConnection(connstring))
                 {
@@ -1271,6 +1271,7 @@ namespace E_Commerce_MultiTenant.Controllers
             }
             else
             {
+                Session["warna"] = "";
                 string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
                 using (SqlConnection conn = new SqlConnection(connstring))
                 {
