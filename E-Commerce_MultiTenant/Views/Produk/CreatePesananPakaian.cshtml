@@ -5,6 +5,10 @@
 @{
     Layout = "~/Views/Shared/_LayoutNoWhiteBar.cshtml";
 }
+@{
+    var hargatambahanxxl = Session["hargatambahanxxl"].ToString();
+    var hargatambahanlebihxxl = Session["hargatambahanlebihdarixxl"].ToString();
+}
 <div class="container">
     <div class="row" style="margin-top:40px">
         <h6 style="float:left;margin-left:20px"><a href='@Url.Action("Indexku","Home")'>Beranda</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href='@Url.Action("Index","Produk")'>Produk</a>&nbsp;&nbsp;>&nbsp;&nbsp;Pemesanan</h6>
@@ -12,6 +16,8 @@
         <hr />
         @using (Html.BeginForm("CreatePesananPakaian", "Produk", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
         {
+            <input type="hidden" name="hargaxxl" value="@hargatambahanxxl" id="hargaxxl" />
+            <input type="hidden" name="hargalebihxxl" value="@hargatambahanlebihxxl" id="hargalebihxxl" />
             <div class="col-md-12 col-xs-12">
                 <div class="thumbnail clearfix text-center" style="max-width:1550px;width:100%">
                     @Html.AntiForgeryToken()
@@ -26,23 +32,44 @@
                         <tr>
                             <td style="padding-left:20px">
                                 <table style="border:0 solid;float:none;margin:0 auto;width:371px">
-                                    <tr><td style="text-align:center"><img src="http://localhost:52494/Content/Images/@Session["fotoproduk"].ToString()" style="min-height:200px;height:200px;" /></td></tr>
+                                    <tr>
+                                        <td style="text-align:center">
+
+                                            <img src="http://localhost:52494/Content/Images/@Session["fotoproduk"].ToString()" style="min-height:200px;height:200px;z-index:900;" />
+                                            @*<div id="canvas" style="width:200px;height:200px;opacity:0.3;z-index:999;position:absolute;background-color:black"></div>*@
+                                        </td>
+                                    </tr>
                                     <tr><td></td></tr>
                                     <tr><td><p>@Session["deskripsi"].ToString()</p></td></tr>
-                                    <tr><td colspan="2"><h4>Rp </h4></td>
-                                        <td><h4 id="hargahitung">0</h4></td></tr>
+                                    <tr>
+                                        <td>
+                                            <table style="margin-left:150px">
+                                                <tr>
+                                                    <td><h4>Rp </h4></td>
+                                                    <td><h4 id="hargahitung">@String.Format("{0:n0}", 0)</h4></td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+                                    </tr>
                                 </table>
                             </td>
                             <td><div class="divider" style="margin-left:40px"></div></td>
                             <td style="padding-left:100px">
                                 @foreach (var hargabahan in ViewBag.HargaBahan)
-    {
-                            <input type="hidden" name="hargabahan_@hargabahan.id_bahan" value="@hargabahan.harga" id="hargabahan_@hargabahan.id_bahan" />
-}
+                                {
+                                    <input type="hidden" name="hargabahan_@hargabahan.id_bahan" value="@hargabahan.harga" id="hargabahan_@hargabahan.id_bahan" />
+                                }
                                 @foreach (var hargasablon in ViewBag.HargaSablon)
-    {
-                            <input type="hidden" name="hargasablon_@hargasablon.id_jns_sablon" value="@hargasablon.harga" id="hargasablon_@hargasablon.id_jns_sablon" />
-}
+                                {
+                                    <input type="hidden" name="hargasablon_@hargasablon.id_jns_sablon" value="@hargasablon.harga" id="hargasablon_@hargasablon.id_jns_sablon" />
+                                }
+                                @foreach (var hargatambahan in ViewBag.HargaTambahan)
+                                {
+                                    <input type="hidden" name="hargatambahan_@hargatambahan.id_tambahan" value="@hargatambahan.harga" id="hargatambahan_@hargatambahan.id_tambahan" />
+                                }
+
+
                                 <table style="border:0 solid;float:none">
                                     <tr>
                                         <td style="padding-bottom:20px">
@@ -82,14 +109,12 @@
                                             <table style="margin-bottom:20px">
                                                 <tr>
                                                     <td style="padding-right:30px">
-                                                        <input checked="checked" type="checkbox" name="checka4" id="checka4" value="A4" /> A4
+                                                        <input checked="checked" type="radio" name="ukurandesain" id="checka4" value="A4" /> A4
                                                     </td>
                                                     <td style="padding-right:30px">
-                                                        <input type="checkbox" name="checka3" id="checka3" value="A3" /> A3
+                                                        <input type="radio" name="ukurandesain" id="checka3" value="A3" /> A3
                                                     </td>
-                                                    <td style="padding-right:30px">
-                                                        <input type="checkbox" name="checkblok" id="checkblok" value="Blok" /> Blok
-                                                    </td>
+
                                                     <td>
                                                         <input type="checkbox" name="checkdepanbelakang" id="checkdepanbelakang" value="depanbelakang" /> Depan Belakang
                                                     </td>
@@ -108,7 +133,13 @@
                                             <table>
                                                 <tr>
                                                     <td style="padding-right:10px">Anak</td>
-                                                    <td><input type="number" class="form-control text-center" min="0" oninput="this.value = Math.abs(this.value)" style="max-width:70px" id="anak" name="anak" /></td>
+
+                                                    <td>
+                                                        <input type="number" class="form-control text-center" min="0"
+                                                               oninput="this.value = Math.abs(this.value)" style="max-width:70px"
+                                                               onblur="jumlaah()" id="anak" name="anak" />
+                                                    </td>
+
                                                     <td style="padding-right:10px;padding-left:10px">XS</td>
                                                     <td><input type="number" class="form-control text-center" min="0" oninput="this.value = Math.abs(this.value)" style="max-width:70px" id="xs" name="xs" /></td>
                                                     <td style="padding-right:10px;padding-left:10px">S</td>
@@ -306,7 +337,7 @@
                                             <td style="margin-right:30px;padding-bottom:10px;width:152px">
                                                 @Html.DropDownList("tambahan1", (IEnumerable<SelectListItem>)ViewBag.Tambahan, string.Empty, new { id = "dropdowntambahan1", name = "tambahan1", @class = "form-control" })
                                             </td>
-                                            <td style="padding-left:30px">di ukuran </td>
+                                            <td style="padding-left:30px"> ukuran </td>
                                             <td>
                                                 @Html.DropDownList("ukuran1", (IEnumerable<SelectListItem>)ViewBag.Ukuran, string.Empty, new { id = "dropdownukuran1", name = "ukuran1", @class = "form-control" })
                                             </td>
@@ -318,7 +349,7 @@
                                             <td style="padding-bottom:10px">
                                                 @Html.DropDownList("tambahan2", (IEnumerable<SelectListItem>)ViewBag.Tambahan, string.Empty, new { id = "dropdowntambahan2", name = "tambahan2", @class = "form-control" })
                                             </td>
-                                            <td style="padding-left:30px">di ukuran </td>
+                                            <td style="padding-left:30px"> ukuran </td>
                                             <td>
                                                 @Html.DropDownList("ukuran2", (IEnumerable<SelectListItem>)ViewBag.Ukuran, string.Empty, new { id = "dropdownukuran2", name = "ukuran2", @class = "form-control" })
                                             </td>
@@ -330,7 +361,7 @@
                                             <td style="padding-bottom:10px">
                                                 @Html.DropDownList("tambahan3", (IEnumerable<SelectListItem>)ViewBag.Tambahan, string.Empty, new { id = "dropdowntambahan3", name = "tambahan3", @class = "form-control" })
                                             </td>
-                                            <td style="padding-left:30px">di ukuran </td>
+                                            <td style="padding-left:30px"> ukuran </td>
                                             <td>
                                                 @Html.DropDownList("ukuran3", (IEnumerable<SelectListItem>)ViewBag.Ukuran, string.Empty, new { id = "dropdownukuran3", name = "ukuran3", @class = "form-control" })
                                             </td>
@@ -377,30 +408,466 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        var hargabahan = 0;
-        var hargasablon = 0;
-        var hargafinal = 0;
-        $("#dropdownbahan").change(function () {
-            var tes = document.getElementById('dropdownbahan').selectedOptions[0].value
-            //alert(tes);
-             hargabahan = parseInt($("#hargabahan_" + tes).val());
-            hitung();
-            alert(hargabahan);
+
+
+
+    //perhitungan awal saat halaman terbuka, untuk kasih text default ke harga
+    var anak = 0;
+    var xs = 0;
+    var s = 0;
+    var m = 0;
+    var l = 0;
+    var xl = 0;
+    var xxl = 0;
+    var xxxl = 0;
+    var empatxl = 0;
+    var limaxl = 0;
+    var hargatambahanlebihxxl = 0;
+    var hargatambahanlebihxxlkhusus = 0;
+    var jumlahpermintaan1 = 0;
+    var jumlahpermintaan2 = 0;
+    var jumlahpermintaan3 = 0;
+    var hargatambahanxxl = 0;
+    var hargatambahanxxlkhusus = 0;
+    var hargatambahan1 = 0;
+    var hargatambahan2 = 0;
+    var hargatambahan3 = 0;
+    if ($("#anak").val() != "") {
+        anak = parseInt($("#anak").val());
+
+        $(function () {
+            hitungjumlah();
         })
-        $("#dropdownsablon").change(function () {
-            var tes = document.getElementById('dropdownsablon').selectedOptions[0].value
-            //alert(tes);
-            hargasablon = parseInt($("#hargasablon_" + tes).val());
+    }
+    else {
+
+        anak = 0;
+
+    }
+    if ($("#xs").val() != "") {
+        xs = parseInt($("#xs").val());
+        //alert('a')
+        $(function () {
+            hitungjumlah();
+        })
+    }
+    else {
+        xs = 0;
+
+    }
+    if ($("#s").val() != "") {
+        s = parseInt($("#s").val());
+        $(function () {
+            hitungjumlah();
+        })
+    }
+    else {
+        s = 0;
+    }
+    if ($("#m").val() != "") {
+        m = parseInt($("#m").val());
+        $(function () {
+            hitungjumlah();
+        })
+    }
+    else {
+        m = 0;
+    }
+    if ($("#l").val() != "") {
+        l = parseInt($("#l").val());
+        $(function () {
+            hitungjumlah();
+        })
+    }
+    else {
+        l = 0;
+    }
+    if ($("#xl").val() != "") {
+        xl = parseInt($("#xl").val());
+        $(function () {
+            hitungjumlah();
+        })
+    }
+    else {
+        xl = 0;
+    }
+    if ($("#xxl").val() != "") {
+        hargatambahanxxl = parseInt($("#hargaxxl").val());
+        jumlahpesanxxl = parseInt($("#xxl").val());
+
+    }
+    else {
+        xxl = 0;
+    }
+    if ($("#xxxl").val() != "") {
+        xxxl = parseInt($("#xxxl").val());
+        hargatambahanlebihxxl = parseInt($("#hargalebihxxl").val());
+        //alert('cek ' + hargatambahanlebihxxl)
+        $(function () {
+            hitungjumlahlebihxxl();
+        })
+    }
+    else {
+        xxxl = 0;
+    }
+    if ($("#4xl").val() != "") {
+        empatxl = parseInt($("#4xl").val());
+        hargatambahanlebihxxl = parseInt($("#hargalebihxxl").val());
+        $(function () {
+            hitungjumlahlebihxxl();
+        })
+    }
+    else {
+        empatxl = 0;
+    }
+    if ($("#5xl").val() != "") {
+        limaxl = parseInt($("#5xl").val());
+        hargatambahanlebihxxl = parseInt($("#hargalebihxxl").val());
+        $(function () {
+            hitungjumlahlebihxxl();
+        })
+    }
+    else {
+        limaxl = 0;
+    }
+    if ($("#dropdowntambahan1").val() != "") {
+        var tes = $("#dropdowntambahan1").val();
+        hargatambahan1 = parseInt($("#hargatambahan_" + tes).val());
+        //alert('hargatambahan :'+hargatambahan1) 
+        $(function () {
             hitung();
-            alert(hargasablon);
+        })
+        
+       
+    }
+    else {
+        hargatambahan1 = 0;
+    }
+    if ($("#dropdowntambahan2").val() != "") {
+        var tes = $("#dropdowntambahan2").val();
+        hargatambahan2 = parseInt($("#hargatambahan_" + tes).val());
+        //alert(hargatambahan1)      
+        $(function () {
+            hitung();
         })
 
-        var hitung = function() {
-            hargafinal = hargabahan + hargasablon;
-            $("#hargahitung").text(hargafinal);
-            //alert(hargafinal);
+    }
+    else {
+        hargatambahan2 = 0;
+    }
+    if ($("#dropdowntambahan3").val() != "") {
+        var tes = $("#dropdowntambahan3").val();
+        hargatambahan3 = parseInt($("#hargatambahan_" + tes).val());
+        //alert(hargatambahan1)      
+        $(function () {
+            hitung();
+        })
+
+    }
+    else {
+        hargatambahan3 = 0;
+    }
+    if ($("#dropdownukuran1").val() != "") {
+        var tes = $("#dropdownukuran1").val();
+        //alert(tes)
+        if (tes == "7") {
+            hargatambahanxxlkhusus = parseInt($("#hargaxxl").val());
+            //alert(hargatambahanxxlkhusus);
         }
-        
-    })
+        else if (tes == "8" || tes == "9" || tes == "10") {
+            hargatambahanlebihxxlkhusus = parseInt($("#hargalebihxxl").val())
+            //alert('hai')
+        }
+    }
+    else {
+        hargatambahanlebihxxlkhusus = 0;
+        hargatambahanxxlkhusus = 0;
+    }
+    if ($("#dropdownukuran2").val() != "") {
+        var tes = $("#dropdownukuran2").val();
+        //alert(tes)
+        if (tes == "7") {
+            hargatambahanxxlkhusus = parseInt($("#hargaxxl").val());
+            //alert(hargatambahanxxlkhusus);
+        }
+        else if (tes == "8" || tes == "9" || tes == "10") {
+            hargatambahanlebihxxlkhusus = parseInt($("#hargalebihxxl").val())
+            //alert('hai')
+        }
+    }
+    else {
+        hargatambahanlebihxxlkhusus = 0;
+        hargatambahanxxlkhusus = 0;
+    }
+    if ($("#dropdownukuran3").val() != "") {
+        var tes = $("#dropdownukuran3").val();
+        //alert(tes)
+        if (tes == "7") {
+            hargatambahanxxlkhusus = parseInt($("#hargaxxl").val());
+            //alert(hargatambahanxxlkhusus);
+        }
+        else if (tes == "8" || tes == "9" || tes == "10") {
+            hargatambahanlebihxxlkhusus = parseInt($("#hargalebihxxl").val())
+            //alert('hai')
+        }
+    }
+    else {
+        hargatambahanlebihxxlkhusus = 0;
+        hargatambahanxxlkhusus = 0;
+    }
+    if ($("#jmlhtambahan1").val() != "") {
+        jumlahpermintaan1 = parseInt($("#jmlhtambahan1").val())
+        //alert('jumlah : '+jumlahpermintaan1)
+        $(function () {
+            hitung();
+        })
+    }
+    else {
+        jumlahpermintaan1 = 0;
+    }
+    if ($("#jmlhtambahan2").val() != "") {
+        jumlahpermintaan2 = parseInt($("#jmlhtambahan2").val())
+
+        $(function () {
+            hitung();
+        })
+    }
+    else {
+        jumlahpermintaan2 = 0;
+    }
+    if ($("#jmlhtambahan3").val() != "") {
+        jumlahpermintaan3 = parseInt($("#jmlhtambahan3").val())
+
+        $(function () {
+            hitung();
+        })
+    }
+    else {
+        jumlahpermintaan3 = 0;
+    }
+   
+    var valbahanawal = $("#dropdownbahan").val();
+    var hargabahan = parseInt($("#hargabahan_" + valbahanawal).val());
+    var valsablonawal = $("#dropdownsablon").val();
+    var hargasablon = parseInt($("#hargasablon_" + valsablonawal).val());
+    var valtambahan1 = $("#dropdowntambahan1").val();
+    if ($("#hargatambahan_" + valtambahan1).val() != null) {
+        hargatambahan1 = parseInt($("#hargatambahan_" + valtambahan1).val());
+    }
+    else {
+        hargatambahan1 = 0;
+    }
+
+    var valtambahan2 = $("#dropdowntambahan2").val();
+    if ($("#hargatambahan_" + valtambahan2).val() != null) {
+        hargatambahan2 = parseInt($("#hargatambahan_" + valtambahan2).val());
+    }
+    else {
+        hargatambahan2 = 0;
+    }
+    var valtambahan3 = $("#dropdowntambahan3").val();
+    if ($("#hargatambahan_" + valtambahan3).val() != null) {
+        hargatambahan3 = parseInt($("#hargatambahan_" + valtambahan3).val());
+    }
+    else {
+        hargatambahan3 = 0;
+    }
+    var jumlahpesan = 0;
+    var jumlahpesanxxl = 0;
+    var jumlahpesanlebihxxl = 0;
+    var hargaawal = (hargabahan + hargasablon) * jumlahpesan;
+    $("#hargahitung").text(hargaawal);
+    var hargafinal = 0;
+
+    $("#dropdownbahan").change(function () {
+        var tes = document.getElementById('dropdownbahan').selectedOptions[0].value
+        //alert(tes);
+        hargabahan = parseInt($("#hargabahan_" + tes).val());
+        hitung();
+        //alert(hargabahan);
+    });
+    $("#dropdownsablon").change(function () {
+        var tes = document.getElementById('dropdownsablon').selectedOptions[0].value
+        //alert(tes);
+        hargasablon = parseInt($("#hargasablon_" + tes).val());
+        hitung();
+        //alert(hargasablon);
+    });
+    $("#dropdowntambahan1").change(function () {
+        var tes = document.getElementById('dropdowntambahan1').selectedOptions[0].value
+        //alert(tes);
+        hargatambahan1 = parseInt($("#hargatambahan_" + tes).val());
+        //alert(hargatambahan1)
+        hitung();
+        //alert(hargabahan);
+    });
+    $("#dropdowntambahan2").change(function () {
+        var tes = document.getElementById('dropdowntambahan2').selectedOptions[0].value
+        //alert(tes);
+        hargatambahan2 = parseInt($("#hargatambahan_" + tes).val());
+        //alert(hargatambahan2)
+        hitung();
+        //alert(hargabahan);
+    });
+    $("#dropdowntambahan3").change(function () {
+        var tes = document.getElementById('dropdowntambahan3').selectedOptions[0].value
+        //alert(tes);
+        hargatambahan3 = parseInt($("#hargatambahan_" + tes).val());
+        //alert(hargatambahan3)
+        hitung();
+        //alert(hargabahan);
+    });
+    $("#dropdownukuran1").change(function () {
+        var tes = document.getElementById('dropdownukuran1').selectedOptions[0].value;
+        //alert(tes)
+        if (tes == "7") {
+            hargatambahanxxlkhusus = parseInt($("#hargaxxl").val());
+            //alert(hargatambahanxxlkhusus);
+        }
+        else if (tes == "8" || tes == "9" || tes == "10") {
+            hargatambahanlebihxxlkhusus = parseInt($("#hargalebihxxl").val())
+            //alert('hai')
+        }
+
+        //hargatambahan1 = parseInt($("#hargatambahan_" + tes).val());
+
+        //hitung();
+        //alert(hargabahan);
+    });
+    $("#dropdownukuran2").change(function () {
+        var tes = document.getElementById('dropdownukuran2').selectedOptions[0].value
+
+        if (tes == "7") {
+            hargatambahanxxlkhusus = parseInt($("#hargaxxl").val());
+        }
+        else if (tes == "8" || tes == "9" || tes == "10") {
+            hargatambahanlebihxxlkhusus = parseInt($("#hargalebihxxl").val())
+        }
+        //hargatambahan2 = parseInt($("#hargatambahan_" + tes).val());
+
+        //hitung();
+        //alert(hargabahan);
+    });
+    $("#dropdownukuran3").change(function () {
+        var tes = document.getElementById('dropdownukuran3').selectedOptions[0].value
+
+        if (tes == "7") {
+            hargatambahanxxlkhusus = parseInt($("#hargaxxl").val());
+        }
+        else if (tes == "8" || tes == "9" || tes == "10") {
+            hargatambahanlebihxxlkhusus = parseInt($("#hargalebihxxl").val())
+        }
+        //hargatambahan3 = parseInt($("#hargatambahan_" + tes).val());
+
+        //hitung();
+        //alert(hargabahan);
+    });
+    $("#anak").keyup(function () {
+
+
+        anak = parseInt($("#anak").val())
+        hitungjumlah();
+    });
+    $("#xs").keyup(function () {
+        xs = parseInt($("#xs").val())
+        hitungjumlah();
+    });
+    $("#s").keyup(function () {
+        s = parseInt($("#s").val())
+        hitungjumlah();
+    });
+    $("#m").keyup(function () {
+        m = parseInt($("#m").val())
+        hitungjumlah();
+    });
+    $("#l").keyup(function () {
+        l = parseInt($("#l").val())
+        hitungjumlah();
+    });
+    $("#xl").keyup(function () {
+        xl = parseInt($("#xl").val())
+        hitungjumlah();
+    });
+    $("#xxl").keyup(function () {
+        hargatambahanxxl = parseInt($("#hargaxxl").val());
+        jumlahpesanxxl = parseInt($("#xxl").val())
+
+        hitung();
+    });
+    $("#xxxl").keyup(function () {
+        hargatambahanlebihxxl = parseInt($("#hargalebihxxl").val());
+        xxxl = parseInt($("#xxxl").val())
+
+        hitungjumlahlebihxxl();
+    });
+    $("#4xl").keyup(function () {
+        hargatambahanlebihxxl = parseInt($("#hargalebihxxl").val());
+        empatxl = parseInt($("#4xl").val())
+
+        hitungjumlahlebihxxl();
+    });
+    $("#5xl").keyup(function () {
+        hargatambahanlebihxxl = parseInt($("#hargalebihxxl").val());
+        limaxl = parseInt($("#5xl").val())
+
+        hitungjumlahlebihxxl();
+    });
+    $("#jmlhtambahan1").keyup(function () {
+
+        jumlahpermintaan1 = parseInt($("#jmlhtambahan1").val())
+
+        hitung();
+    });
+    $("#jmlhtambahan2").keyup(function () {
+
+        jumlahpermintaan2 = parseInt($("#jmlhtambahan2").val())
+
+        hitung();
+    });
+    $("#jmlhtambahan3").keyup(function () {
+
+        jumlahpermintaan3 = parseInt($("#jmlhtambahan3").val())
+
+        hitung();
+    });
+    function jumlaah() {
+        //alert('hai');
+    };
+    var hitungjumlah = function () {
+        //alert(anak);
+
+        jumlahpesan = anak + xs + s + m + l + xl;
+        hitung();
+    };
+    var hitungjumlahlebihxxl = function () {
+        jumlahpesanlebihxxl = xxxl + empatxl + limaxl;
+        hitung();
+    }
+    var hitung = function () {
+        //alert(jumlahpesan)
+        //alert('ngitung');
+        //alert("((" + hargabahan + "+" + hargasablon+")"+ "*"+ jumlahpesan+")"+ "+"+ "((" + hargabahan + "+" + hargasablon +"+"+ hargatambahanxxl +")"+ "*" + jumlahpesanxxl+")" + "+" +"((" +hargabahan + "+"+ hargasablon + "+"+ hargatambahanlebihxxl +") * " +jumlahpesanlebihxxl+"))")
+        //alert(hargatambahanxxlkhusus);
+        //alert(hargatambahanlebihxxl)
+        hargafinal = ((hargabahan + hargasablon) * jumlahpesan) +
+            ((hargabahan + hargasablon + hargatambahanxxl) * jumlahpesanxxl) +
+            ((hargabahan + hargasablon + hargatambahanlebihxxl) * jumlahpesanlebihxxl) +
+            ((hargabahan + hargasablon + hargatambahan1 + hargatambahanxxlkhusus) * jumlahpermintaan1) +
+            ((hargabahan + hargasablon + hargatambahan2 + hargatambahanxxlkhusus) * jumlahpermintaan2) +
+            ((hargabahan + hargasablon + hargatambahan3 + hargatambahanxxlkhusus) * jumlahpermintaan3);
+        $("#hargahitung").text(hargafinal);
+        //alert(hargafinal);
+    };
+
+        //$('input:radio[name="radiowarna"]').change(
+        //    function () {
+        //        alert($(this).val());
+
+
+        //            // appends the 'appended' element to the 'body' tag
+        //            document.getElementById("canvas").style.backgroundColor = $(this).val();
+
+
+        //    });
+
 </script>

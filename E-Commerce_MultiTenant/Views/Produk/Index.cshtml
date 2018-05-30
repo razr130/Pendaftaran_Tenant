@@ -23,14 +23,14 @@
                 @*<button class="btn btn-primary" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")'">Pesan</button>*@
                 @if (Session["role"] == null)
                 {
-                    if (item.kategori == "Pakaian")
+                    if (item.kategori == "Kaos" || item.kategori == "Jaket" || item.kategori == "Korsa")
                     {
                         <p>
                                 <button class="btn btn-success" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")/?id_produk=@item.id_produk'">Pesan</button>
                             </p>
                         @*@Html.ActionLink("Beli", "CreatePesananPakaian", new { id_produk = item.id_produk }, null)*@
                     }
-                    else if (item.kategori != "Pakaian")
+                    else if (item.kategori != "Kaos" && item.kategori != "Jaket" && item.kategori != "Korsa")
                     {
                         <p>
                             <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananNonPakaian", "Produk")/?id_produk=@item.id_produk'" class="btn btn-success" />
@@ -40,13 +40,13 @@
                 }
                 else if (Session["role"].ToString() == "customer")
                 {
-                    if (item.kategori == "Pakaian")
+                    if (item.kategori == "Kaos" || item.kategori == "Jaket" || item.kategori == "Korsa")
                     {
                         <p>
                             <button class="btn btn-success hvr-grow" onclick="location.href='@Url.Action("CreatePesananPakaian","Produk")/?id_produk=@item.id_produk'">Pesan</button>
                         </p>
                     }
-                    else if (item.kategori != "Pakaian")
+                    else if (item.kategori != "Kaos" && item.kategori != "Jaket" && item.kategori != "Korsa")
                     {
                         <p>
                             <input type="button" value="Pesan" onclick="location.href='@Url.Action("CreatePesananNonPakaian", "Produk")/?id_produk=@item.id_produk'" class="btn btn-success hvr-grow" />

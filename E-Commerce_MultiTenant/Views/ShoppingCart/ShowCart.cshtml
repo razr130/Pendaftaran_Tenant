@@ -33,10 +33,10 @@
                                 </td>
 
 
-                                <td><b>Harga Sementara : </b></td>
+                                <td><b>Harga : </b></td>
                                 <td align="left">
-                                    Rp @String.Format("{0:n0}", item.value.subtotal) 
-                                    <p style="color:red">*harga belum termasuk harga desain</p>
+                                    Rp @String.Format("{0:n0}", item.value.subtotal)
+                                    
                                 </td>
                                 <td>
                                     @Html.ActionLink("Delete", "Delete", null, new { @class = "btn btn-danger" })
@@ -70,15 +70,15 @@
 
         }
     </table>
-    <br />
-    <p class="text-center" style="font-size:11px;color:red">*Harga di atas merupakan <b>harga sementara</b>, belum termasuk diskon serta perhitungan harga desain dan warna</p>
-    <p class="text-center" style="font-size:11px;color:red">Pesanan di atas akan dikirimkan ke email konveksi untuk dilihat desain dan permintaannya untuk menentukan harga fix</p>
-    <p class="text-center" style="font-size:11px;color:red">Harga fix akan diinfokan oleh konveksi melalui e-mail pembeli yang terdaftar</p>
-    <p class="text-center" style="font-size:11px;color:red">Harga fix bisa lebih atau kurang dari harga sementara</p>
-    <br />
+    
+    @*<p class="text-center" style="font-size:11px;color:red">*Harga di atas merupakan <b>harga sementara</b>, belum termasuk diskon serta perhitungan harga desain dan warna</p>
+        <p class="text-center" style="font-size:11px;color:red">Pesanan di atas akan dikirimkan ke email konveksi untuk dilihat desain dan permintaannya untuk menentukan harga fix</p>
+        <p class="text-center" style="font-size:11px;color:red">Harga fix akan diinfokan oleh konveksi melalui e-mail pembeli yang terdaftar</p>
+        <p class="text-center" style="font-size:11px;color:red">Harga fix bisa lebih atau kurang dari harga sementara</p>*@
+    
     <div class="text-center">
         @*@Html.ActionLink("Kirim Pesanan", "KonfirmasiKirim", "ShoppingCart", null, new { onclick = "return confirm('Anda yakin sudah selesai melakukan pemesanan? Data keranjang belanja akan kosong setelah invoice dicetak')", @class = "btn btn-primary hvr-grow" })*@
-        <button class="btn btn-primary hvr-grow" onclick="kirim()">Kirim Pesanan</button>
+        <button class="btn btn-primary hvr-grow" onclick="kirim()">Pesan</button>
     </div>
 </div>
 <div class="modal fade" id="modalkirim">
@@ -106,7 +106,7 @@
         $("#modalkirim").modal('show');
     };
         var dikirim = function() {
-            
+
                 $.ajax({
                     url: '@Url.Action("updatekirim", "ShoppingCart")', //
                     dataType: "json",
@@ -121,28 +121,8 @@
                     }
                 });
                 return false;
-
-
     };
-    var sendmail = function () {
-        
-                        var tablevalue = "<table>" + $("#tabelpesanan").html() + "</table>";
-                         $.ajax({
-                    url: '@Url.Action("SendMailToUser2", "ShoppingCart")', //
-                    dataType: "json",
-                    data: JSON.stringify({ table:tablevalue }),
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (result) {
-                        alert("email terkirim");
-                        $("#modalkirim").modal('hide');
-                       
-                    },
-                    error: function (xhr) {
-                        alert("error");
-                    }
-                });
-    };
+    
      var tidakdikirim = function() {
             //send email button click event
 
@@ -161,8 +141,28 @@
                     }
                 });
                 return false;
+    };
+    var sendmail = function () {
 
-
-
+                        var tablevalue = "<table>" + $("#tabelpesanan").html() + "</table>";
+                         $.ajax({
+                    url: '@Url.Action("SendMailToUser2", "ShoppingCart")', //
+                    dataType: "json",
+                    data: JSON.stringify({ table:tablevalue }),
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        alert("email terkirim");
+                        $("#modalkirim").modal('hide');
+                        invoice();
+                    },
+                    error: function (xhr) {
+                        alert("error");
+                    }
+                });
+    };
+    var invoice = function () {       
+        var url = "Invoice";
+        window.location.href = url;
     };
 </script>

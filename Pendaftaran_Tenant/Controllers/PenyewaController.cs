@@ -1153,7 +1153,7 @@ int? lebihxxlkorsa)
                            ",[nama_bahan]" +
                            ",[harga])" +
                            " VALUES" +
-                           " (" + idproduk + ",'Cardet 30s'," + ca30s + ")";
+                           " (" + idproduk + ",'Baby Ripstop'," + babyripstop + ")";
 
                         sqlcom.ExecuteNonQuery();
                     }

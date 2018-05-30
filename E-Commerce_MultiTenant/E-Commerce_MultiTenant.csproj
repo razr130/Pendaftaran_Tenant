@@ -216,6 +216,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Penyewa.cs" />
     <Compile Include="Models\Produk.cs" />
+    <Compile Include="Models\Tambahan.cs" />
     <Compile Include="Models\UkuranOrder.cs" />
     <Compile Include="Models\ViewHarga.cs" />
     <Compile Include="Models\ViewHargaViewModel.cs" />

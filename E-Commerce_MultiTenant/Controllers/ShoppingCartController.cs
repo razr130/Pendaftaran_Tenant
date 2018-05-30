@@ -433,7 +433,7 @@ namespace E_Commerce_MultiTenant.Controllers
             return View();
         }
 
-        public ActionResult Invoice(string subdomain, string kirim)
+        public ActionResult Invoice(string subdomain)
         {
             int totalharga = 0;
             ViewBag.noorder = Session["noorder"].ToString();
@@ -448,7 +448,7 @@ namespace E_Commerce_MultiTenant.Controllers
                 {
                     totalharga = (int)sqlcom.ExecuteScalar();
 
-                    sqlcom.CommandText = "UPDATE [dbo].[Order_" + subdomain + "] SET [total_harga]=" + totalharga + ", [dikirim]='" + kirim + "' WHERE no_order=" + Session["noorder"].ToString();
+                    sqlcom.CommandText = "UPDATE [dbo].[Order_" + subdomain + "] SET [total_harga]=" + totalharga + " WHERE no_order=" + Session["noorder"].ToString();
                     sqlcom.ExecuteNonQuery();
 
 
@@ -701,7 +701,8 @@ namespace E_Commerce_MultiTenant.Controllers
             if (Session["noorder"] == null)
             {
 
-
+                var tes = Session["ukuran1"].ToString();
+                var a = 0;
                 string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
                 using (SqlConnection conn = new SqlConnection(connstring))
                 {
@@ -871,7 +872,7 @@ namespace E_Commerce_MultiTenant.Controllers
                             }
                             if (Session["jmlhtambahan1"] != null)
                             {
-                                if (Session["ukuran1"].ToString() == "Anak")
+                                if (Session["ukuran1"].ToString() == "1")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -883,7 +884,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran1"].ToString() == "XS")
+                                if (Session["ukuran1"].ToString() == "2")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -895,7 +896,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran1"].ToString() == "S")
+                                if (Session["ukuran1"].ToString() == "3")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -907,7 +908,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran1"].ToString() == "M")
+                                if (Session["ukuran1"].ToString() == "4")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -919,7 +920,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran1"].ToString() == "L")
+                                if (Session["ukuran1"].ToString() == "5")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -931,7 +932,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran1"].ToString() == "XL")
+                                if (Session["ukuran1"].ToString() == "6")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -943,7 +944,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran1"].ToString() == "XXL")
+                                if (Session["ukuran1"].ToString() == "7")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -955,7 +956,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran1"].ToString() == "XXXL")
+                                if (Session["ukuran1"].ToString() == "8")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -967,7 +968,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran1"].ToString() == "4XL")
+                                if (Session["ukuran1"].ToString() == "9")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -979,7 +980,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran1"].ToString() == "5XL")
+                                if (Session["ukuran1"].ToString() == "10")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -994,7 +995,7 @@ namespace E_Commerce_MultiTenant.Controllers
                             }
                             if (Session["jmlhtambahan2"] != null)
                             {
-                                if (Session["ukuran2"].ToString() == "Anak")
+                                if (Session["ukuran2"].ToString() == "1")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1006,7 +1007,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran2"].ToString() == "XS")
+                                if (Session["ukuran2"].ToString() == "2")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1018,7 +1019,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran2"].ToString() == "S")
+                                if (Session["ukuran2"].ToString() == "3")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1030,7 +1031,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran2"].ToString() == "M")
+                                if (Session["ukuran2"].ToString() == "4")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1042,7 +1043,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran2"].ToString() == "L")
+                                if (Session["ukuran2"].ToString() == "5")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1054,7 +1055,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran2"].ToString() == "XL")
+                                if (Session["ukuran2"].ToString() == "6")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1066,7 +1067,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran2"].ToString() == "XXL")
+                                if (Session["ukuran2"].ToString() == "7")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1078,7 +1079,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran2"].ToString() == "XXXL")
+                                if (Session["ukuran2"].ToString() == "8")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1090,7 +1091,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran2"].ToString() == "4XL")
+                                if (Session["ukuran2"].ToString() == "9")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1102,7 +1103,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran2"].ToString() == "5XL")
+                                if (Session["ukuran2"].ToString() == "10")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1117,7 +1118,7 @@ namespace E_Commerce_MultiTenant.Controllers
                             }
                             if (Session["jmlhtambahan3"] != null)
                             {
-                                if (Session["ukuran3"].ToString() == "Anak")
+                                if (Session["ukuran3"].ToString() == "1")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1129,7 +1130,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran3"].ToString() == "XS")
+                                if (Session["ukuran3"].ToString() == "2")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1141,7 +1142,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran3"].ToString() == "S")
+                                if (Session["ukuran3"].ToString() == "3")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1153,7 +1154,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran3"].ToString() == "M")
+                                if (Session["ukuran3"].ToString() == "4")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1165,7 +1166,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran3"].ToString() == "L")
+                                if (Session["ukuran3"].ToString() == "5")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1177,7 +1178,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran3"].ToString() == "XL")
+                                if (Session["ukuran3"].ToString() == "6")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1189,7 +1190,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran3"].ToString() == "XXL")
+                                if (Session["ukuran3"].ToString() == "7")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1201,7 +1202,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran3"].ToString() == "XXXL")
+                                if (Session["ukuran3"].ToString() == "8")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1213,7 +1214,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran3"].ToString() == "4XL")
+                                if (Session["ukuran3"].ToString() == "9")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1225,7 +1226,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                     sqlcom.ExecuteNonQuery();
                                 }
-                                if (Session["ukuran3"].ToString() == "5XL")
+                                if (Session["ukuran3"].ToString() == "10")
                                 {
                                     sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                         "([id_ukuran]" +
@@ -1417,7 +1418,7 @@ namespace E_Commerce_MultiTenant.Controllers
                         }
                         if (Session["jmlhtambahan1"] != null)
                         {
-                            if (Session["ukuran1"].ToString() == "Anak")
+                            if (Session["ukuran1"].ToString() == "1")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1429,7 +1430,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran1"].ToString() == "XS")
+                            if (Session["ukuran1"].ToString() == "2")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1441,7 +1442,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran1"].ToString() == "S")
+                            if (Session["ukuran1"].ToString() == "3")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1453,7 +1454,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran1"].ToString() == "M")
+                            if (Session["ukuran1"].ToString() == "4")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1465,7 +1466,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran1"].ToString() == "L")
+                            if (Session["ukuran1"].ToString() == "5")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1477,7 +1478,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran1"].ToString() == "XL")
+                            if (Session["ukuran1"].ToString() == "6")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1489,7 +1490,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran1"].ToString() == "XXL")
+                            if (Session["ukuran1"].ToString() == "7")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1501,7 +1502,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran1"].ToString() == "XXXL")
+                            if (Session["ukuran1"].ToString() == "8")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1513,7 +1514,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran1"].ToString() == "4XL")
+                            if (Session["ukuran1"].ToString() == "9")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1525,7 +1526,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran1"].ToString() == "5XL")
+                            if (Session["ukuran1"].ToString() == "10")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1540,7 +1541,7 @@ namespace E_Commerce_MultiTenant.Controllers
                         }
                         if (Session["jmlhtambahan2"] != null)
                         {
-                            if (Session["ukuran2"].ToString() == "Anak")
+                            if (Session["ukuran2"].ToString() == "1")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1552,7 +1553,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran2"].ToString() == "XS")
+                            if (Session["ukuran2"].ToString() == "2")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1564,7 +1565,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran2"].ToString() == "S")
+                            if (Session["ukuran2"].ToString() == "3")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1576,7 +1577,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran2"].ToString() == "M")
+                            if (Session["ukuran2"].ToString() == "4")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1588,7 +1589,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran2"].ToString() == "L")
+                            if (Session["ukuran2"].ToString() == "5")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1600,7 +1601,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran2"].ToString() == "XL")
+                            if (Session["ukuran2"].ToString() == "6")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1612,7 +1613,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran2"].ToString() == "XXL")
+                            if (Session["ukuran2"].ToString() == "7")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1624,7 +1625,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran2"].ToString() == "XXXL")
+                            if (Session["ukuran2"].ToString() == "8")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1636,7 +1637,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran2"].ToString() == "4XL")
+                            if (Session["ukuran2"].ToString() == "9")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1648,7 +1649,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran2"].ToString() == "5XL")
+                            if (Session["ukuran2"].ToString() == "10")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1663,7 +1664,7 @@ namespace E_Commerce_MultiTenant.Controllers
                         }
                         if (Session["jmlhtambahan3"] != null)
                         {
-                            if (Session["ukuran3"].ToString() == "Anak")
+                            if (Session["ukuran3"].ToString() == "1")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1675,7 +1676,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran3"].ToString() == "XS")
+                            if (Session["ukuran3"].ToString() == "2")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1687,7 +1688,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran3"].ToString() == "S")
+                            if (Session["ukuran3"].ToString() == "3")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1699,7 +1700,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran3"].ToString() == "M")
+                            if (Session["ukuran3"].ToString() == "4")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1711,7 +1712,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran3"].ToString() == "L")
+                            if (Session["ukuran3"].ToString() == "5")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1723,7 +1724,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran3"].ToString() == "XL")
+                            if (Session["ukuran3"].ToString() == "6")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1735,7 +1736,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran3"].ToString() == "XXL")
+                            if (Session["ukuran3"].ToString() == "7")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1747,7 +1748,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran3"].ToString() == "XXXL")
+                            if (Session["ukuran3"].ToString() == "8")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1759,7 +1760,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran3"].ToString() == "4XL")
+                            if (Session["ukuran3"].ToString() == "9")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +
@@ -1771,7 +1772,7 @@ namespace E_Commerce_MultiTenant.Controllers
 
                                 sqlcom.ExecuteNonQuery();
                             }
-                            if (Session["ukuran3"].ToString() == "5XL")
+                            if (Session["ukuran3"].ToString() == "10")
                             {
                                 sqlcom.CommandText = "INSERT INTO[dbo].[UkuranOrder_" + subdomain + "] " +
                                     "([id_ukuran]" +

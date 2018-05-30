@@ -170,7 +170,7 @@
                 @if (Session["tambahan1"].ToString() != "")
                 {
                     <tr>
-                        <td align="right" style="padding-right:40px">@Session["tambahan1"].ToString() ukuran @Session["ukuran1"].ToString() : </td>
+                        <td align="right" style="padding-right:40px">@Session["tambahan1"].ToString() ukuran @ViewBag.ukuran1 : </td>
                         <td style="padding-right:40px">
                             @Session["jmlhtambahan1"].ToString()
                         </td>
@@ -180,7 +180,7 @@
                 @if (Session["tambahan2"].ToString() != "")
                 {
                     <tr>
-                        <td align="right" style="padding-right:40px">@Session["tambahan2"].ToString() ukuran @Session["ukuran2"].ToString() : </td>
+                        <td align="right" style="padding-right:40px">@Session["tambahan2"].ToString() ukuran @ViewBag.ukuran2 : </td>
                         <td style="padding-right:40px">
                             @Session["jmlhtambahan2"].ToString()
                         </td>
@@ -190,7 +190,7 @@
                 @if (Session["tambahan3"].ToString() != "")
                 {
                     <tr>
-                        <td align="right" style="padding-right:40px">@Session["tambahan3"].ToString() ukuran @Session["ukuran3"].ToString() : </td>
+                        <td align="right" style="padding-right:40px">@Session["tambahan3"].ToString() ukuran @ViewBag.ukuran3 : </td>
                         <td style="padding-right:40px">
                             @Session["jmlhtambahan3"].ToString()
                         </td>
