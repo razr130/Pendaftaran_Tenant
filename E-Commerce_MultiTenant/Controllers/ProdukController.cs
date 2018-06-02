@@ -26,7 +26,9 @@ namespace E_Commerce_MultiTenant.Controllers
                     ",p.[kategori]" +
                     ",p.[foto_produk]" +
                     ", MIN(b.harga) as harga" +
-                    " FROM[Produk_" + subdomain + "] p inner join Bahan_" + subdomain + " b on p.id_produk = b.id_produk where b.harga = (select min(harga) from bahan_" + subdomain + " where id_produk=p.id_produk) group by p.[id_produk]" +
+                    " FROM[Produk_" + subdomain + "] p inner join Bahan_" + subdomain +
+                    " b on p.id_produk = b.id_produk where b.harga = (select min(harga) from bahan_" + subdomain +
+                    " where id_produk=p.id_produk) group by p.[id_produk]" +
                     ",p.[nama_produk]" +
                     ",p.[deskripsi]" +
                     ",p.[kategori]" +
@@ -51,7 +53,6 @@ namespace E_Commerce_MultiTenant.Controllers
                             result.Add(item);
                         }
                     }
-
                 }
                 catch (Exception)
                 {
@@ -399,9 +400,21 @@ namespace E_Commerce_MultiTenant.Controllers
             Session["jmlhtambahan1"] = jmlhtambahan1.ToString();
             Session["jmlhtambahan2"] = jmlhtambahan2.ToString();
             Session["jmlhtambahan3"] = jmlhtambahan3.ToString();
-            Session["ukuran1"] = ukuran1.Replace(" ", "");
-            Session["ukuran2"] = ukuran2.Replace(" ", "");
-            Session["ukuran3"] = ukuran3.Replace(" ", "");
+            if(ukuran1!= null)
+            {
+                Session["ukuran1"] = ukuran1.Replace(" ", "");
+            }
+            if (ukuran2 != null)
+            {
+                Session["ukuran2"] = ukuran2.Replace(" ", "");
+            }
+            if (ukuran3 != null)
+            {
+                Session["ukuran3"] = ukuran3.Replace(" ", "");
+            }
+            
+            
+            
 
 
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;

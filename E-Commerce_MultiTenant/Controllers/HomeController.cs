@@ -159,21 +159,16 @@ namespace E_Commerce_MultiTenant.Controllers
 
         public ActionResult Indexku(string subdomain)
         {
-            //var host = this.Request.Headers["Host"].Split('.');
-            //string nama_perusahaan = host[0];
             Session["nama_perusahaan"] = subdomain;
-
             Session["warnanavbar"] = getWarnaNavbar(subdomain);
             Session["warnabg"] = getWarnaBG(subdomain);
             Session["logo"] = getLogo(subdomain);
-
             using (PenyewaDAL penyewa = new PenyewaDAL())
             {
                 int id_penyewa = penyewa.GetIDPenyewa(subdomain);
                 int id_ui = penyewa.GetIDUI(id_penyewa);
                 string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["Ecommerce"].ConnectionString;
                 List<DataCarausel> result = new List<DataCarausel>();
-
                 using (SqlConnection conn = new SqlConnection(connstring))
                 {
                     conn.Open();
@@ -203,10 +198,8 @@ namespace E_Commerce_MultiTenant.Controllers
                             if (reader.Read())
                             {
                                 Session["emailperusahaan"] = reader["email"].ToString();
-                            }
-                            
+                            }                       
                         }
-
                         sqlcom.CommandText = "SELECT TOP (1) [nama_produk],[foto_produk]" +
                             " FROM[MultiTenancy_Sablon].[dbo].[Produk_"+subdomain+"]" +
                             " ORDER BY NEWID()";
@@ -218,7 +211,6 @@ namespace E_Commerce_MultiTenant.Controllers
                                 ViewBag.fotoproduk1 = reader["foto_produk"].ToString();
                             }
                         }
-
                         sqlcom.CommandText = "SELECT TOP (1) [nama_produk],[foto_produk]" +
                           " FROM[MultiTenancy_Sablon].[dbo].[Produk_" + subdomain + "]" +
                           " ORDER BY NEWID()";
@@ -303,9 +295,7 @@ namespace E_Commerce_MultiTenant.Controllers
             {
                 conn.Open();
                 string query = "SELECT [nama_karyawan]" +
-
                     "FROM[MultiTenancy_Sablon].[dbo].[Karyawan_" + subdomain + "] WHERE email_karyawan='" + email + "' AND password='" + password + "'";
-
                 SqlCommand sqlcom = new SqlCommand(query, conn);
                 try
                 {
@@ -313,18 +303,15 @@ namespace E_Commerce_MultiTenant.Controllers
                     {
                         while (reader.Read())
                         {
-
                             result = reader["nama_karyawan"].ToString();
                             Session["user"] = result;
                             Session["email"] = email;
                             Session["role"] = "karyawan";
                         }
                     }
-
                 }
                 catch (Exception)
                 {
-
                 }
                 if (result != "")
                 {
@@ -339,16 +326,13 @@ namespace E_Commerce_MultiTenant.Controllers
                     {
                         if (reader.Read())
                         {
-
                             result = reader["nama_customer"].ToString();
                             Session["alamat"] = reader["alamat"].ToString();
                             Session["user"] = result;
                             Session["email"] = email;
                             Session["role"] = "customer";
                         }
-                    }
-
-                   
+                    }                  
                     conn.Close();
                     if (result != "")
                     {
@@ -366,8 +350,7 @@ namespace E_Commerce_MultiTenant.Controllers
                         else
                         {
                             return RedirectToAction("Indexku", "Home");
-                        }
-                        
+                        }            
                     }
                     else
                     {
