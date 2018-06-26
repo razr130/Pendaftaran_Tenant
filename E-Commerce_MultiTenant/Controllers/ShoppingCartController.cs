@@ -93,7 +93,7 @@ namespace E_Commerce_MultiTenant.Controllers
                                         tgl_order = ((DateTime)reader["tgl_order"]).ToString("dd-MMMM-yyyy"),
 
                                         dikirim = reader["dikirim"].ToString(),
-                                        total_harga = 0,
+                                        total_harga = (int)reader["total_harga"],
                                         nama_customer = reader["nama_customer"].ToString(),
                                         //tgl_konfirmasi = ((DateTime)reader["tgl_konfirmasi"]).ToString("yyyy-MM-dd")
                                     };
@@ -109,7 +109,7 @@ namespace E_Commerce_MultiTenant.Controllers
                                         tgl_order = ((DateTime)reader["tgl_order"]).ToString("dd-MMMM-yyyy"),
 
                                         dikirim = reader["dikirim"].ToString(),
-                                        total_harga = 0,
+                                        total_harga = (int)reader["total_harga"],
                                         nama_customer = reader["nama_customer"].ToString(),
                                         tgl_konfirmasi = ((DateTime)reader["tgl_konfirmasi"]).ToString("yyyy-MM-dd")
                                     };

@@ -13,25 +13,25 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.no_order)
+                No.Order
             </th>
             <th>
                 Nama Customer
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.tgl_order)
+               Tanggal Pesan
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.status_bayar)
+                Status Bayar
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.tgl_konfirmasi)
+               Tanggal Konfirmasi
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.total_harga)
+                Total Harga
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dikirim)
+                Dikirim
             </th>
             <th></th>
         </tr>
@@ -68,7 +68,8 @@
                 else
                 {
                     <td>
-                        @Html.DisplayFor(modelItem => item.total_harga)
+                       
+                        Rp @String.Format("{0:n0}", item.total_harga)
                     </td>
                 }
 
@@ -77,8 +78,7 @@
                 </td>
                 <td>
                     <button class="btn btn-primary btn-xs" onclick="location.href='@Url.Action("DetailOrderKaryawan","ShoppingCart")/?id=@item.no_order'">Lihat Detail</button>
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    
                 </td>
             </tr>
         }

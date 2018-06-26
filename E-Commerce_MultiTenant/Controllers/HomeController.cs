@@ -192,7 +192,8 @@ namespace E_Commerce_MultiTenant.Controllers
                                 result.Add(item);
                             }
                         }
-                        sqlcom.CommandText = "SELECT [email] FROM [MultiTenancy_Sablon].[dbo].[Penyewa] WHERE nama_perusahaan='" + subdomain + "'";
+                        sqlcom.CommandText = "SELECT [email] FROM [MultiTenancy_Sablon].[dbo].[Penyewa] WHERE nama_perusahaan='"
+                            + subdomain + "'";
                         using (SqlDataReader reader = sqlcom.ExecuteReader())
                         {
                             if (reader.Read())
