@@ -75,7 +75,7 @@ namespace E_Commerce_MultiTenant.Controllers
                                         dikirim = reader["dikirim"].ToString(),
                                         total_harga = 0,
                                         nama_customer = reader["nama_customer"].ToString(),
-                                        tgl_konfirmasi = ((DateTime)reader["tgl_konfirmasi"]).ToString("yyyy-MM-dd")
+                                        tgl_konfirmasi = ((DateTime)reader["tgl_konfirmasi"]).ToString("dd-MMMM-yyyy")
                                     };
                                     result.Add(item);
                                 }
@@ -111,7 +111,7 @@ namespace E_Commerce_MultiTenant.Controllers
                                         dikirim = reader["dikirim"].ToString(),
                                         total_harga = (int)reader["total_harga"],
                                         nama_customer = reader["nama_customer"].ToString(),
-                                        tgl_konfirmasi = ((DateTime)reader["tgl_konfirmasi"]).ToString("yyyy-MM-dd")
+                                        tgl_konfirmasi = ((DateTime)reader["tgl_konfirmasi"]).ToString("dd-MMMM-yyyy")
                                     };
                                     result.Add(item);
                                 }
@@ -129,6 +129,36 @@ namespace E_Commerce_MultiTenant.Controllers
                 conn.Close();
             }
             return View(result);
+        }
+
+        public ActionResult KonfirmasiBayar(string subdomain, int id)
+        {
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ECommerce"].ConnectionString;
+            List<Order> result = new List<Order>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                string query = "USE [MultiTenancy_Sablon]" +
+                   "UPDATE [dbo].[Order_" + subdomain + "]" +
+                   " SET [status_bayar]= 'Sudah', [tgl_konfirmasi]='" + DateTime.Now.ToString("yyyy-MM-dd") + "'" +
+                   " WHERE no_order=" + id;
+                SqlCommand sqlcom = new SqlCommand(query, conn);
+                try
+                {
+                    sqlcom.ExecuteNonQuery();
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
+                                          "success", "pembayaran berhasil dikonfirmasi");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Pesan"] = Helpers.Message.GetPesan("Error !",
+                                          "danger", ex.Message);
+                }
+
+                conn.Close();
+            }
+                return RedirectToAction("GetAllOrder");
         }
         public ActionResult DetailOrderKaryawan(string subdomain, int id)
         {
