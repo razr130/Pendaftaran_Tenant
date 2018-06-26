@@ -409,7 +409,7 @@ namespace E_Commerce_MultiTenant.Controllers
                     Session["email"] = email;
                     Session["alamat"] = alamat;
                     TempData["Pesan"] = Helpers.Message.GetPesan("Berhasil !",
-                                          "success", "data karyawan ditambah, data karyawan dapat direview ulang melalui Beranda setelah menyelesaikan proses pendaftaran");
+                                          "success", "Pendaftaran akun berhasil !");
                 }
                 catch (Exception ex)
                 {

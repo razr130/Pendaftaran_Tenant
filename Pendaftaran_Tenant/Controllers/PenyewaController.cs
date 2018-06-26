@@ -827,7 +827,7 @@ namespace Pendaftaran_Tenant.Controllers
 
                 conn.Close();
             }
-            return RedirectToAction("IndexProdukBig");
+            return RedirectToAction("IndexKaryawan");
         }
         public ActionResult CreateProduk()
         {
