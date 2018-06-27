@@ -9,7 +9,7 @@
         <h1 style="font-family:Roboto"><b>SELAMAT DATANG </b><span style="font-family:'Compass LT';color:#47a447">@Session["nama_perusahaan"].ToString()</span></h1>
         <hr />
 
-        <div class="col-md-4 col-xs-4">
+        <div class="col-md-6 col-xs-4">
             <div class="thumbnail clearfix text-center">
                 <span class="glyphicon glyphicon-book" style="font-size:50px"></span>
                 <p style="font-size:15px">Lihat produk dan detailnya</p>
@@ -17,7 +17,7 @@
                 @*<p>@Html.ActionLin*@@*k("Lihat Produk", "IndexProdukBig", "Penyewa", new { @class = "btn btn-success btn-lg"})</p>*@
             </div>
         </div>
-        <div class="col-md-4 col-xs-4">
+        <div class="col-md-6 col-xs-4">
             <div class="thumbnail clearfix text-center">
                 <span class="glyphicon glyphicon-certificate" style="font-size:50px"></span>
                 <p style="font-size:15px">Lihat data karyawan</p>
@@ -25,14 +25,7 @@
 
             </div>
         </div>
-        <div class="col-md-4 col-xs-4">
-            <div class="thumbnail clearfix text-center">
-                <span class="glyphicon glyphicon-cog" style="font-size:50px"></span>
-                <p style="font-size:15px">Lihat data desain web</p>
-                <p><a onclick="location.href='@Url.Action("IndexViewHargaFix", "Penyewa")'" class="btn btn-success btn-lg">Lihat harga</a></p>
-
-            </div>
-        </div>
+       
     }
     else
     {
